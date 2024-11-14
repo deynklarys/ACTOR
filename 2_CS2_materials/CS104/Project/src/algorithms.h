@@ -1,5 +1,7 @@
-#define ALGORITHMS_H
 #ifndef ALGORITHMS_H
+#define ALGORITHMS_H
+
+#include <stdbool.h>
 
 void printArray(int array[], int size);
 void swap(int *a, int *b);
