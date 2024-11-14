@@ -71,6 +71,10 @@ Algorithms
 	4. Count Sort
 	5. Random Sort
 	6. Merge Sort
-	7. Quick Sort
+	7. Quick Sort 
+		1) Lomuto's Partition
+		2) Hoare's Partition
 	8. Radix Sort
+		1) LSD
+		2) MSD
 	9. Heap Sort
