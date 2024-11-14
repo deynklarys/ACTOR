@@ -265,40 +265,50 @@ void heapSort(int array[], int size) {
   }
 }
 
-void sort(int array[], int size, char sortType[]) {
-  printf("Original Array:\n");
+void sort(int array[], int size, int sortType) {
+  printf("Given Array:\n");
   printArray(array, size);
 
-  if (sortType == "insertion") {
-    printf("Insertion Sort:\n");
-    insertionSort(array, size);
-  } else if (sortType == "selection") {
-    printf("Selection Sort:\n");
-    selectionSort(array, size);
-  } else if (sortType == "bubble") {
-    printf("Bubble Sort:\n");
-    bubbleSort(array, size);
-  } else if (sortType == "count") {
-    printf("Count Sort: \n");
-    countSort(array, size);
-  } else if (sortType == "random") {
-    printf("Random Sort: \n");
-    randomSort(array, size);
-  } else if (sortType == "merge") {
-    printf("Merge Sort: \n");
-    mergeSort(array, 0, size - 1);
-  } else if (sortType == "quickLomuto") {
-    printf("Quick Sort: \n");
-    quickSortLomuto(array, 0, size - 1);
-  } else if (sortType == "quickHoare") {
-    printf("Quick Sort: \n");
-    quickSortHoare(array, 0, size - 1);
-  } else if (sortType == "radix") {
-    printf("Radix Sort: \n");
-    radixSort(array, size);
-  } else if (sortType == "heap") {
-    printf("Heap Sort: \n");
-    heapSort(array, size);
+  switch (sortType) {
+    case 1:
+      printf("Selection Sort:\n");
+      selectionSort(array, size);
+      break;
+    case 2:
+      printf("Bubble Sort:\n");
+      bubbleSort(array, size);
+      break;
+    case 3:
+      printf("Insertion Sort:\n");
+      insertionSort(array, size);
+      break;
+    case 4:
+      printf("Count Sort:\n");
+      countSort(array, size);
+      break;
+    case 5:
+      printf("Random Sort:\n");
+      randomSort(array, size);
+      break;
+    case 6:
+      printf("Merge Sort:\n");
+      mergeSort(array, 0, size - 1);
+      break;
+    case 7:
+      printf("Quick Sort (Lomuto):\n");
+      quickSortLomuto(array, 0, size - 1);
+      break;
+    case 8:
+      printf("Radix Sort:\n");
+      radixSort(array, size);
+      break;
+    case 9:
+      printf("Heap Sort:\n");
+      heapSort(array, size);
+      break;
+    default:
+      printf("Invalid choice\n");
+      break;
   }
 
   printArray(array, size);
