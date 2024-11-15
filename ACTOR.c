@@ -20,7 +20,8 @@ int main () {
 
   int anyChar; 
 
-  scanf("%d", &anyChar);
+  anyChar = _getch(); // Use _getch() to read a single character without echoing
+  showCursor();
 
   char *userMenu[] = {"Data Structures", "Algorithms", "About", "Quit"};
   int userMenuSize = sizeof(userMenu)/sizeof(userMenu[0]);
