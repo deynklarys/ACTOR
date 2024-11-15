@@ -34,6 +34,7 @@ void array ( ) {
 }
 */
 
+// Prints without the border. It can be later modified to include borderlines if I'm already certain that the application has borderlines throughout. 
 void displayCenterText(char *message) {
   int length = strlen(message);
   int startIndex = (terminalWidth - length) / 2;
