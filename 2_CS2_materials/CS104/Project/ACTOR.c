@@ -36,9 +36,7 @@ void array ( ) {
 
 void displayCenterText(char *message) {
   int length = strlen(message);
-
   int startIndex = (terminalWidth - length) / 2;
-  printf("|");
   for (int i = 0; i < startIndex - 1; i++) {
     printf(" ");
   }
@@ -47,59 +45,47 @@ void displayCenterText(char *message) {
   for (int i = 0; i < startIndex; i++) {
     printf(" ");
   }
-  printf("|");
 }
-
 
 void welcomeScreen () {
   system("cls");
-  printf(" ");
-  for (int i = 0; i < terminalWidth-2; i++) {
-    printf("-");
+  for (int i = 1; i <= terminalWidth; i++) {
+    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
   }
   printf("\n");
 
-  for (int i = 1; i < terminalHeight - 1; i++) {
-    if (i == terminalHeight / 4) {
-      displayCenterText("WELCOME TO DATA STRUCTURES AND ALGORITHMS");
-      printf("\n");
-      continue;
-    }
-    if (i == 4 * (terminalHeight / 6)) {
-      displayCenterText("Deanne Clarice C. Bea");
-      printf("\n");
-      continue;
-    }
-    if (i == 4 * (terminalHeight / 6) + 1) {
-      displayCenterText("BS Computer Science 2A");
-      printf("\n");
-      continue;
-    }
-    if (i == terminalHeight - 4) {
-      displayCenterText("Press Any Key To Continue");
-      printf("\n");
+  for (int i = 2; i < terminalHeight; i++) {
+    if (i == terminalHeight / 3 || i == 4 * (terminalHeight / 6) || i == 4 * (terminalHeight / 6) + 1 || i == terminalHeight - 3) {
+      printf("|");
+      if (i == terminalHeight / 3)
+        displayCenterText("WELCOME TO DATA STRUCTURES AND ALGORITHMS");
+      if (i == 4 * (terminalHeight / 6))
+        displayCenterText("Deanne Clarice C. Bea");
+      if (i == 4 * (terminalHeight / 6) + 1)
+        displayCenterText("BS Computer Science 2A");
+      if (i == terminalHeight - 3)
+        displayCenterText("Press Any Key To Continue");
+      printf("|\n");
       continue;
     }
     for (int j = 1 ; j <= terminalWidth; j++) {
-      if (j == terminalWidth)
-        printf("|");
-      else {j == 1 ? printf("|") : printf(" ");}
-      }
+      j == 1 || j == terminalWidth ? printf("|") : printf(" ");
+    }
     printf("\n");
   }
 
-  printf(" ");
-  for (int i = 0; i < terminalWidth-2; i++) {
-  printf("-");
+  for (int i = 1; i <= terminalWidth; i++) {
+    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
   }
+    printf("\n");
 }
 
 
 int main () {
-  // getTerminalSize();
   welcomeScreen();
-
-
+  getTerminalSize();
+                  
+                   
   return 0;
   
 }
