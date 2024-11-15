@@ -8,9 +8,9 @@
 int terminalWidth = 80;
 int terminalHeight = 24;
 
+// Utility functions 
 void getTerminalSize();
 void displayCenterText(char *message);
-void welcomeScreen ();
 void hideCursor();
 void showCursor();
 void getCursorPos(int *Xpos, int *Ypos);
@@ -19,6 +19,27 @@ void clearLines(int startLine, int endLine);
 void clearWord(int Ypos, int startX, int endX);
 void clearPrompts(char *header);
 void programHeader(char *header);
+void exitScreen();
+
+// Screen handlers
+void welcomeScreen ();
+void dataStructures ();
+  void linearDS();
+    void arrays();
+    void linkedLists();
+    void stacks();
+    void queues();
+  void nonLinearDS();
+    void trees();
+    void graphs();
+  void strings();
+void algorithms();
+  void searching();
+  void sorting();
+    void partitionScheme(); // for quick sort
+    void digitOrder(); // for radix sort
+void about();
+
 
 int main () {
   welcomeScreen();
@@ -82,6 +103,7 @@ int main () {
   return 0;
 }
 
+// Utility function definitions
 void getTerminalSize() {
     /* Function to get the terminal size. */
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -91,24 +113,6 @@ void getTerminalSize() {
 
   printf("terminalWidth: %d \nterminalHeight: %d \n", terminalWidth, terminalHeight);
 }
-
-/*
-void array ( ) {
-  int arrSize;
-  int givenArray[ARRAY_MAX_LENGTH];
-  printf("Enter array size: ");
-  scanf("%d", &arrSize);
-  printf("Enter your elements in the array:\n");
-  for (int i = 0; i < arrSize; i++) {
-    printf("\tarray[%d]: ", i);
-    scanf("%d", &givenArray[i]);
-  }
-
-  sort (givenArray, arrSize, 1);
-
-}
-*/
-
 // Prints without the border. It can be later modified to include borderlines if I'm already certain that the application has borderlines throughout. 
 void displayCenterText(char *message) {
   int length = strlen(message);
@@ -122,42 +126,6 @@ void displayCenterText(char *message) {
     printf(" ");
   }
 }
-
-void welcomeScreen () {
-  // system("cls");
-  for (int i = 1; i <= terminalWidth; i++) {
-    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
-  }
-  printf("\n");
-
-  for (int i = 2; i < terminalHeight; i++) {
-    if (i == terminalHeight / 3 || i == 4 * (terminalHeight / 6) || i == 4 * (terminalHeight / 6) + 1 || i == terminalHeight - 3) {
-      printf("|");
-      if (i == terminalHeight / 3)
-        displayCenterText("WELCOME TO DATA STRUCTURES AND ALGORITHMS");
-      if (i == 4 * (terminalHeight / 6))
-        displayCenterText("Deanne Clarice C. Bea");
-      if (i == 4 * (terminalHeight / 6) + 1)
-        displayCenterText("BS Computer Science 2A");
-      if (i == terminalHeight - 3)
-        displayCenterText("Press Any Key To Continue");
-      printf("|\n");
-      continue;
-    }
-    for (int j = 1 ; j <= terminalWidth; j++) {
-      j == 1 || j == terminalWidth ? printf("|") : printf(" ");
-    }
-    printf("\n");
-  }
-
-  for (int i = 1; i <= terminalWidth; i++) {
-    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
-  }
-    printf("\n");
-
-  hideCursor();
-}
-
 void hideCursor() {
   HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
   CONSOLE_CURSOR_INFO info;
@@ -226,6 +194,42 @@ void programHeader(char *header) {
     printf("-");
   }
   printf("\n\n");
+}
+
+// Screen handlers function definitions
+void welcomeScreen () {
+  // system("cls");
+  for (int i = 1; i <= terminalWidth; i++) {
+    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
+  }
+  printf("\n");
+
+  for (int i = 2; i < terminalHeight; i++) {
+    if (i == terminalHeight / 3 || i == 4 * (terminalHeight / 6) || i == 4 * (terminalHeight / 6) + 1 || i == terminalHeight - 3) {
+      printf("|");
+      if (i == terminalHeight / 3)
+        displayCenterText("WELCOME TO DATA STRUCTURES AND ALGORITHMS");
+      if (i == 4 * (terminalHeight / 6))
+        displayCenterText("Deanne Clarice C. Bea");
+      if (i == 4 * (terminalHeight / 6) + 1)
+        displayCenterText("BS Computer Science 2A");
+      if (i == terminalHeight - 3)
+        displayCenterText("Press Any Key To Continue");
+      printf("|\n");
+      continue;
+    }
+    for (int j = 1 ; j <= terminalWidth; j++) {
+      j == 1 || j == terminalWidth ? printf("|") : printf(" ");
+    }
+    printf("\n");
+  }
+
+  for (int i = 1; i <= terminalWidth; i++) {
+    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
+  }
+    printf("\n");
+
+  hideCursor();
 }
 
 
