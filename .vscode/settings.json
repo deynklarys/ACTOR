@@ -2,7 +2,8 @@
   "files.associations": {
     "stdbool.h": "c",
     "stdio.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "algorithms.h": "c"
   },
   "C_Cpp.dimInactiveRegions": false
 }

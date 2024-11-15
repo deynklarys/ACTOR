@@ -1,6 +1,7 @@
 // Analyze. Code. Test. Optimize. Repeat
 #include <stdio.h>
 #include <windows.h>
+#include <conio.h> // for _getch()
 #include "src/algorithms.h"
 
 #define ARRAY_MAX_LENGTH 1000
@@ -10,6 +11,8 @@ int terminalHeight = 24;
 void getTerminalSize();
 void displayCenterText(char *message);
 void welcomeScreen ();
+void hideCursor();
+void showCursor();
 
 int main () {
   welcomeScreen();
@@ -23,7 +26,8 @@ int main () {
                   
                    
   return 0;
-  
+}
+
 void getTerminalSize() {
     /* Function to get the terminal size. */
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -66,7 +70,7 @@ void displayCenterText(char *message) {
 }
 
 void welcomeScreen () {
-  system("cls");
+  // system("cls");
   for (int i = 1; i <= terminalWidth; i++) {
     i == 1 || i == terminalWidth ? printf(" ") : printf("-");
   }
@@ -96,5 +100,22 @@ void welcomeScreen () {
     i == 1 || i == terminalWidth ? printf(" ") : printf("-");
   }
     printf("\n");
+
+  hideCursor();
 }
+
+void hideCursor() {
+  HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+  CONSOLE_CURSOR_INFO info;
+  info.dwSize = 100;
+  info.bVisible = FALSE;
+  SetConsoleCursorInfo(consoleHandle, &info);
+}
+void showCursor() {
+  /* Function to show the cursor */
+  HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+  CONSOLE_CURSOR_INFO info;
+  info.dwSize = 100;
+  info.bVisible = TRUE;
+  SetConsoleCursorInfo(consoleHandle, &info);
 }
