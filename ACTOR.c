@@ -7,6 +7,23 @@
 int terminalWidth = 80;
 int terminalHeight = 24;
 
+void getTerminalSize();
+void displayCenterText(char *message);
+void welcomeScreen ();
+
+int main () {
+  welcomeScreen();
+  // getTerminalSize();
+
+  int anyChar; 
+
+  scanf("%d", &anyChar);
+
+
+                  
+                   
+  return 0;
+  
 void getTerminalSize() {
     /* Function to get the terminal size. */
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -80,13 +97,4 @@ void welcomeScreen () {
   }
     printf("\n");
 }
-
-
-int main () {
-  welcomeScreen();
-  getTerminalSize();
-                  
-                   
-  return 0;
-  
 }
