@@ -198,7 +198,7 @@ void programHeader(char *header) {
 
 // Screen handlers function definitions
 void welcomeScreen () {
-  // system("cls");
+  system("cls");
   for (int i = 1; i <= setWidth; i++) {
     i == 1 || i == setWidth ? printf(" ") : printf("-");
   }
