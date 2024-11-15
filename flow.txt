@@ -78,3 +78,21 @@ Algorithms
 		1) LSD
 		2) MSD
 	9. Heap Sort
+
+
+/*
+void array ( ) {
+  int arrSize;
+  int givenArray[ARRAY_MAX_LENGTH];
+  printf("Enter array size: ");
+  scanf("%d", &arrSize);
+  printf("Enter your elements in the array:\n");
+  for (int i = 0; i < arrSize; i++) {
+    printf("\tarray[%d]: ", i);
+    scanf("%d", &givenArray[i]);
+  }
+
+  sort (givenArray, arrSize, 1);
+
+}
+*/

@@ -5,8 +5,8 @@
 #include "src/algorithms.h"
 
 #define ARRAY_MAX_LENGTH 1000
-int terminalWidth = 80;
-int terminalHeight = 24;
+int setWidth = 80;
+int setHeight = 24;
 
 // Utility functions 
 void getTerminalSize();
@@ -79,7 +79,7 @@ int main () {
           break;
         case 4: 
           system("cls");
-          moveCursor(0, terminalHeight / 2 - 1);
+          moveCursor(0, setHeight / 2 - 1);
           displayCenterText("Quitting ACTOR...");
           Sleep(1000);
           break;
@@ -88,7 +88,7 @@ int main () {
       }
 
     } else { 
-      clearWord(cursorYpos, strlen("Choose a number: "), terminalWidth);
+      clearWord(cursorYpos, strlen("Choose a number: "), setWidth);
 
       moveCursor(0, cursorYpos + 2);
 
@@ -108,15 +108,15 @@ void getTerminalSize() {
     /* Function to get the terminal size. */
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	terminalWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	terminalHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;  
+	setWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	setHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;  
 
-  printf("terminalWidth: %d \nterminalHeight: %d \n", terminalWidth, terminalHeight);
+  printf("setWidth: %d \nsetHeight: %d \n", setWidth, setHeight);
 }
 // Prints without the border. It can be later modified to include borderlines if I'm already certain that the application has borderlines throughout. 
 void displayCenterText(char *message) {
   int length = strlen(message);
-  int startIndex = (terminalWidth - length) / 2;
+  int startIndex = (setWidth - length) / 2;
   for (int i = 0; i < startIndex - 1; i++) {
     printf(" ");
   }
@@ -160,7 +160,7 @@ void clearLines(int startLine, int endLine) {
     hideCursor();
 	for (int i = startLine; i <= endLine; i++) {
 		moveCursor(0, i);
-		for (int j = 0; j < terminalWidth; j++) {
+		for (int j = 0; j < setWidth; j++) {
 			printf(" ");
 		}
 	}
@@ -182,7 +182,7 @@ void programHeader(char *header) {
   /* Move cursor at the top of the file */
   moveCursor(0,0);
   
-  for (int i = 1; i <= terminalWidth; i++) {
+  for (int i = 1; i <= setWidth; i++) {
     printf("-");
   }
   printf("\n");
@@ -190,7 +190,7 @@ void programHeader(char *header) {
   displayCenterText(header);
   printf("\n");
 
-  for (int i = 1; i <= terminalWidth; i++) {
+  for (int i = 1; i <= setWidth; i++) {
     printf("-");
   }
   printf("\n\n");
@@ -199,33 +199,33 @@ void programHeader(char *header) {
 // Screen handlers function definitions
 void welcomeScreen () {
   // system("cls");
-  for (int i = 1; i <= terminalWidth; i++) {
-    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
+  for (int i = 1; i <= setWidth; i++) {
+    i == 1 || i == setWidth ? printf(" ") : printf("-");
   }
   printf("\n");
 
-  for (int i = 2; i < terminalHeight; i++) {
-    if (i == terminalHeight / 3 || i == 4 * (terminalHeight / 6) || i == 4 * (terminalHeight / 6) + 1 || i == terminalHeight - 3) {
+  for (int i = 2; i < setHeight; i++) {
+    if (i == setHeight / 3 || i == 4 * (setHeight / 6) || i == 4 * (setHeight / 6) + 1 || i == setHeight - 3) {
       printf("|");
-      if (i == terminalHeight / 3)
+      if (i == setHeight / 3)
         displayCenterText("WELCOME TO DATA STRUCTURES AND ALGORITHMS");
-      if (i == 4 * (terminalHeight / 6))
+      if (i == 4 * (setHeight / 6))
         displayCenterText("Deanne Clarice C. Bea");
-      if (i == 4 * (terminalHeight / 6) + 1)
+      if (i == 4 * (setHeight / 6) + 1)
         displayCenterText("BS Computer Science 2A");
-      if (i == terminalHeight - 3)
+      if (i == setHeight - 3)
         displayCenterText("Press Any Key To Continue");
       printf("|\n");
       continue;
     }
-    for (int j = 1 ; j <= terminalWidth; j++) {
-      j == 1 || j == terminalWidth ? printf("|") : printf(" ");
+    for (int j = 1 ; j <= setWidth; j++) {
+      j == 1 || j == setWidth ? printf("|") : printf(" ");
     }
     printf("\n");
   }
 
-  for (int i = 1; i <= terminalWidth; i++) {
-    i == 1 || i == terminalWidth ? printf(" ") : printf("-");
+  for (int i = 1; i <= setWidth; i++) {
+    i == 1 || i == setWidth ? printf(" ") : printf("-");
   }
     printf("\n");
 
