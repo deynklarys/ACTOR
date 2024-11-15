@@ -1,0 +1,80 @@
+80 by 24 screen size
+
+1
+Welcome to Data Structures and Algorithm
+
+Deanne Clarice C. Bea
+
+BSCS 2A
+
+
+Press any key to continue
+
+2
+1) Data Structures
+2) Algorithms
+3) About [optional]
+	Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.
+
+	Pens and papers is one way of learning, making an application is another level of it.
+	Pens and papers is one way of learning; practical implementation is understanding
+
+4) Quit
+
+[always]Choose a number:
+
+3
+Data Structures
+1) Linear Data Structures
+	1) Arrays
+		1) Traverse
+		2) Search
+		3) Insert
+		4) Delete
+		5) Merge
+		6) Sort
+	2) Linked Lists
+		1) Traverse
+		2) Search
+		3) Insert
+		4) Delete
+		5) Merge
+		6) Sort
+	3) Stacks
+		1) Push
+		2) Pop
+		3) Peek
+		4) isFull
+		5) isEmpty
+	4) Queues
+		1) Push
+		2) Pop
+		3) Peek
+		4) isFull
+		5) isEmpty
+
+2) Nonlinear Data Structures
+	1) Trees
+	2) Graphs
+
+3) Strings
+4) Exit
+
+Algorithms
+1) Searching
+	1. Linear Search
+	2. Binary Search
+2) Sorting
+	1. Selection Sort
+	2. Bubble Sort
+	3. Insertion Sort
+	4. Count Sort
+	5. Random Sort
+	6. Merge Sort
+	7. Quick Sort 
+		1) Lomuto's Partition
+		2) Hoare's Partition
+	8. Radix Sort
+		1) LSD
+		2) MSD
+	9. Heap Sort
