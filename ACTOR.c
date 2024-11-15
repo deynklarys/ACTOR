@@ -25,8 +25,9 @@ int main () {
   // getTerminalSize();
 
   int anyChar; 
-
   anyChar = _getch(); // Use _getch() to read a single character without echoing
+
+  system("cls");
   showCursor();
 
   char *userMenu[] = {"Data Structures", "Algorithms", "About", "Quit"};
@@ -35,17 +36,48 @@ int main () {
   int chosenOption;
 
   do {
-    system("cls");
-    
     programHeader("Data Structures and Algorithms");
 
+    printf("What do you want to learn about?\n");
     for (int i = 0; i < userMenuSize; i++) {
       printf("%d) %s\n", i+1, userMenu[i]);
     }
     printf("Choose a number: ");
+    /* Get the current position of the cursor after the prompt. This coordinate will be used to bring back the cursor at this position when the user inputs an invalid option and the option that they typed is cleared. */
+    int cursorXpos, cursorYpos;
+    getCursorPos(&cursorXpos, &cursorYpos);
     scanf("%d", &chosenOption);
 
-  } while (chosenOption != userMenuSize);                  
+    if (chosenOption > 0 && chosenOption <= userMenuSize) {
+      switch (chosenOption) {
+        case 1: 
+          break;
+        case 2:
+          break;
+        case 3: 
+          break;
+        case 4: 
+          system("cls");
+          moveCursor(0, terminalHeight / 2 - 1);
+          displayCenterText("Quitting ACTOR...");
+          Sleep(1000);
+          break;
+        default:
+          break; 
+      }
+
+    } else { 
+      clearWord(cursorYpos, strlen("Choose a number: "), terminalWidth);
+
+      moveCursor(0, cursorYpos + 2);
+
+      displayCenterText("Invalid Choice");
+      printf("\n");
+      displayCenterText("Please pick a number from the given options only");
+      printf("\n");
+    }
+
+  } while (chosenOption != userMenuSize);             
                    
   return 0;
 }
