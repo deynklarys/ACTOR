@@ -1,6 +1,6 @@
 80 by 24 screen size
 
-1
+Screen 1
 Welcome to Data Structures and Algorithm
 
 Deanne Clarice C. Bea
@@ -10,7 +10,7 @@ BSCS 2A
 
 Press any key to continue
 
-2
+Screen 2
 1) Data Structures
 2) Algorithms
 3) About [optional]
@@ -23,7 +23,7 @@ Press any key to continue
 
 [always]Choose a number:
 
-3
+Screen 3 and so on
 Data Structures
 1) Linear Data Structures
 	1) Arrays

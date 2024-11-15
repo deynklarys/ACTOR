@@ -22,8 +22,21 @@ int main () {
 
   scanf("%d", &anyChar);
 
+  char *userMenu[] = {"Data Structures", "Algorithms", "About", "Quit"};
+  int userMenuSize = sizeof(userMenu)/sizeof(userMenu[0]);
 
-                  
+  int chosenOption;
+
+  do {
+    system("cls");
+
+    for (int i = 0; i < userMenuSize; i++) {
+      printf("%d) %s\n", i+1, userMenu[i]);
+    }
+    printf("Choose a number: ");
+    scanf("%d", &chosenOption);
+
+  } while (chosenOption != userMenuSize);                  
                    
   return 0;
 }
