@@ -13,7 +13,12 @@ void displayCenterText(char *message);
 void welcomeScreen ();
 void hideCursor();
 void showCursor();
-void programHeader();
+void getCursorPos(int *Xpos, int *Ypos);
+void moveCursor(int Xpos, int Ypos);
+void clearLines(int startLine, int endLine);
+void clearWord(int Ypos, int startX, int endX);
+void clearPrompts(char *header);
+void programHeader(char *header);
 
 int main () {
   welcomeScreen();
@@ -136,7 +141,47 @@ void showCursor() {
   info.bVisible = TRUE;
   SetConsoleCursorInfo(consoleHandle, &info);
 }
+void getCursorPos(int *Xpos, int *Ypos) {
+    /* Function to get the current position of the cursor */
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+    *Xpos = info.dwCursorPosition.X;
+    *Ypos = info.dwCursorPosition.Y;
+}
+void moveCursor(int x, int y) {
+  /* Function to move the cursor at a specified coordinate in the terminal */
+  // First three lines are for program header
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD pos = {x, y};
+	SetConsoleCursorPosition(hConsole, pos);
+}
+void clearLines(int startLine, int endLine) {
+    /* Function to clear lines in the terminal given a starting and ending y-coordinate */
+    hideCursor();
+	for (int i = startLine; i <= endLine; i++) {
+		moveCursor(0, i);
+		for (int j = 0; j < terminalWidth; j++) {
+			printf(" ");
+		}
+	}
+    showCursor();
+}
+void clearWord(int y, int startCol, int endCol) {
+    /* Function to clear a specific portion of a line in the terminal */
+    moveCursor(startCol, y);
+    for (int i = 0; i < endCol - startCol; i++) {
+		printf(" ");
+    }
+}
+void clearPrompts(char *header) {
+    /* Function to clear the prompts of the program. It will essentially clear everything below the program header. */
+    system("cls");
+    programHeader(header);
+}
 void programHeader(char *header) {
+  /* Move cursor at the top of the file */
+  moveCursor(0,0);
+  
   for (int i = 1; i <= terminalWidth; i++) {
     printf("-");
   }
