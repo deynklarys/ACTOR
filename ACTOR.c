@@ -13,6 +13,7 @@ void displayCenterText(char *message);
 void welcomeScreen ();
 void hideCursor();
 void showCursor();
+void programHeader();
 
 int main () {
   welcomeScreen();
@@ -30,6 +31,8 @@ int main () {
 
   do {
     system("cls");
+    
+    programHeader("Data Structures and Algorithms");
 
     for (int i = 0; i < userMenuSize; i++) {
       printf("%d) %s\n", i+1, userMenu[i]);
@@ -133,3 +136,40 @@ void showCursor() {
   info.bVisible = TRUE;
   SetConsoleCursorInfo(consoleHandle, &info);
 }
+void programHeader(char *header) {
+  for (int i = 1; i <= terminalWidth; i++) {
+    printf("-");
+  }
+  printf("\n");
+
+  displayCenterText(header);
+  printf("\n");
+
+  for (int i = 1; i <= terminalWidth; i++) {
+    printf("-");
+  }
+  printf("\n\n");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
