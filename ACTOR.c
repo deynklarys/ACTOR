@@ -235,7 +235,7 @@ void welcomeScreen () {
 
 void algorithms() {
   system("cls");
-  char *userMenu[] = {"Searching", "Sorting", "Exit", "Quit"};
+  char *userMenu[] = {"Searching", "Sorting", "Exit"};
   int userMenuSize = sizeof(userMenu)/sizeof(userMenu[0]);
 
   int chosenOption;
@@ -269,13 +269,6 @@ void algorithms() {
         case 3:
           system("cls");
           break;
-        // temporary
-        case 4: 
-          system("cls");
-          moveCursor(0, setHeight / 2 - 1);
-          displayCenterText("Quitting ACTOR...");
-          Sleep(1000);
-          break;
         default:
           break; 
       }
@@ -292,7 +285,7 @@ void algorithms() {
       printf("\n");
     }
 
-  } while (chosenOption != userMenuSize - 1);
+  } while (chosenOption != userMenuSize);
 }
 
 
