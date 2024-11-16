@@ -19,7 +19,6 @@ void clearLines(int startLine, int endLine);
 void clearWord(int Ypos, int startX, int endX);
 void clearPrompts(char *header);
 void programHeader(char *header);
-void exitScreen();
 
 // Screen handlers
 void welcomeScreen ();
