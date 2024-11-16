@@ -74,6 +74,7 @@ int main () {
         case 1: 
           break;
         case 2:
+          algorithms();
           break;
         case 3: 
           break;
@@ -232,7 +233,67 @@ void welcomeScreen () {
   hideCursor();
 }
 
+void algorithms() {
+  system("cls");
+  char *userMenu[] = {"Searching", "Sorting", "Exit", "Quit"};
+  int userMenuSize = sizeof(userMenu)/sizeof(userMenu[0]);
 
+  int chosenOption;
+  int cursorXpos, cursorYpos;
+
+  do {
+    programHeader("Algorithms");
+
+    printf("What do you want to learn about?\n");
+    for (int i = 0; i < userMenuSize; i++) {
+      printf("%d) %s\n", i+1, userMenu[i]);
+    }
+    printf("Choose a number: ");
+    getCursorPos(&cursorXpos, &cursorYpos);
+    
+    // Moves so that the output is below the input statement
+    moveCursor(0, cursorYpos + 2);
+    printf("Did you know?\n");
+    // Must make a function that prints within the set width
+    printf("Algorithms are like the special instructions that help you turn a bag of LEGO bricks into an amazing castle!\n");
+
+    // moves the cursor back to the input statement
+    moveCursor(cursorXpos, cursorYpos);
+    scanf("%d", &chosenOption);
+    if (chosenOption > 0 && chosenOption <= userMenuSize) {
+      switch (chosenOption) {
+        case 1: 
+          break;
+        case 2:
+          break;
+        case 3:
+          system("cls");
+          break;
+        // temporary
+        case 4: 
+          system("cls");
+          moveCursor(0, setHeight / 2 - 1);
+          displayCenterText("Quitting ACTOR...");
+          Sleep(1000);
+          break;
+        default:
+          break; 
+      }
+
+    } else { 
+      clearWord(cursorYpos, strlen("Choose a number: "), setWidth);
+
+      // Move from +2 to +5 to accommodate the trivia
+      moveCursor(0, cursorYpos + 5);
+
+      displayCenterText("Invalid Choice");
+      printf("\n");
+      displayCenterText("Please pick a number from the given options only");
+      printf("\n");
+    }
+
+  } while (chosenOption != userMenuSize - 1);
+}
 
 
 
