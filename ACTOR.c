@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
-#include "src/algorithms.h"
 
 #define ARRAY_MAX_LENGTH 1000
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
