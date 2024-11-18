@@ -205,7 +205,6 @@ int main () {
     system("cls");
 
     programHeader("Algorithms");
-    printf("\n");
     printMenu(algorithmsMenu, algoMenuSize);
 
     int cursorXpos, cursorYpos;
