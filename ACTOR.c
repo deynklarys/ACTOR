@@ -298,7 +298,7 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
 
 // Screen handlers function definitions
 void welcomeScreen () {
-  system("cls");
+  // system("cls");
   for (int i = 1; i <= setWidth; i++) {
     i == 1 || i == setWidth ? printf(" ") : printf("-");
   }
@@ -369,16 +369,17 @@ void sorting() {
   displayCenterText("Press Any Key To Exit");
   hideCursor();
   anyChar = _getch();
+  system("cls");
 }
 void algorithms() {
-  char *algorithmsMenu[] = {"Searching", "Sorting", "Exit", "Quit"};
+  system("cls");
+  char *algorithmsMenu[] = {"Searching", "Sorting", "Exit"};
   int algoMenuSize = sizeof(algorithmsMenu) / sizeof(algorithmsMenu[0]);
 
   int chosenOption;
   int cursorXpos, cursorYpos;
 
   do {
-    system("cls");
     programHeader("Algorithms");
 
     printf("What do you want to learn about?\n");  
@@ -497,7 +498,7 @@ void selectionSort(int array[],  int size) {
       }
     }
     if (min != i) {
-      swap(array[i], array[min]);
+      swap(&array[i], &array[min]);
     }
   }
 }
@@ -506,7 +507,7 @@ void bubbleSort (int array[], int size) {
   for (i = 0; i < size - 1; i++) {
     for (j = 0; j < size - i - 1; j++) {
       if (array[j] > array[j + 1]) {
-        swap(array[j], array[j + 1]);
+        swap(&array[j], &array[j + 1]);
       }
     }
   }
@@ -566,7 +567,7 @@ void shuffle (int array[], int size) {
   int i, randomNumber, temp;
   for (i = 0; i < size; i++) {
     randomNumber = rand() % size;
-    swap(array[i], array[randomNumber]);
+    swap(&array[i], &array[randomNumber]);
   }
 }
 void randomSort(int array[], int size) {
@@ -721,7 +722,7 @@ void heapSort(int array[], int size) {
     heapify(array, size, i);
 
   for (int i = size - 1; i > 0; i--) {
-    swap(array[0], array[i]);
+    swap(&array[0], &array[i]);
 
     heapify(array, i, 0);
   }
