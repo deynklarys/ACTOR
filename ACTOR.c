@@ -47,11 +47,22 @@ void about();
 
 
 int main () {
+  /*
+    If the terminal screen is not 80 by 24 size, it will recommend to adjust the window size for better experience
+    int terminalWidth = 0;
+    int terminalHeight = 0;
+
+    getTerminalSize();
+
+    if (terminalWidth != setWidth && terminalHeight != setHeight) {
+      print("The terminal size is not suitable for this program. It must be 80 characters  width and 24 lines height. Please resize the program and rerun the program. Thank you!");
+      return 0;
+    }
   
+  */
 
-
+ 
   welcomeScreen();
-  // getTerminalSize();
 
   anyChar = _getch(); // Use _getch() to read a single character without echoing
 
