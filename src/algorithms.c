@@ -137,7 +137,7 @@ void printMenu(char *arrString[], int size) {
   for (int i = 0; i < size; i++) {
     printf("%d) %s\n", i+1, arrString[i]);
   }
-  printf("Choose a number:");
+  printf("Choose a number: ");
 }
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth) {
   int startIndexOffset = 0;
@@ -178,6 +178,8 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
 
 
 void sorting() {
+  system("cls");
+  programHeader("Sorting Algorithms");
   int arrSize;
   int givenArray[ARRAY_MAX_LENGTH];
   printf("Enter array size: ");
@@ -187,11 +189,31 @@ void sorting() {
     printf("\tarray[%d]: ", i);
     scanf("%d", &givenArray[i]);
   }
-  
 
-  int sortType = 1;
-  
+  system("cls");
+
+  printf("Given array: ");
+  for (int i = 0; i < arrSize; i++) {
+    printf("%d ", givenArray[i]);
+  }
+  printf("\n");
+
+  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
+  int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
+
+  printf("What type of sorting algorithm do you want to choose?\n");
+  printMenu(sortMenu, sortMenuSize);
+  int sortType;
+  scanf("%d", &sortType);
+
+  system("cls");
   sort (givenArray, arrSize, sortType);
+
+  printf("\n\n");
+
+  displayCenterText("Press Any Key To Exit");
+  hideCursor();
+  anyChar = _getch();
 }
 
 
@@ -217,15 +239,16 @@ int main () {
           system("cls");
           programHeader("Searching Algorithms");
           printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Continue");
+          displayCenterText("Press Any Key To Exit");
           anyChar = _getch();
           break;
         case 2:
-          system("cls");
+          /* system("cls");
           programHeader("Sorting Algorithms");
           printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Continue");
-          anyChar = _getch();
+          displayCenterText("Press Any Key To Exit");
+          anyChar = _getch(); */
+          sorting();
           break;
         case 3:
           system("cls");
