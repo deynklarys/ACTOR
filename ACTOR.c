@@ -103,6 +103,7 @@ int main () {
           system("cls");
           moveCursor(0, setHeight / 2 - 1);
           displayCenterText("Quitting ACTOR...");
+          hideCursor();
           Sleep(1000);
           break;
         default:
