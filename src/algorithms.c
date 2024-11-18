@@ -93,6 +93,23 @@ void moveCursor(int x, int y) {
 	COORD pos = {x, y};
 	SetConsoleCursorPosition(hConsole, pos);
 }
+void programHeader(char *header) {
+  /* Move cursor at the top of the file */
+  moveCursor(0,0);
+  
+  for (int i = 1; i <= setWidth; i++) {
+    printf("-");
+  }
+  printf("\n");
+
+  displayCenterText(header);
+  printf("\n");
+
+  for (int i = 1; i <= setWidth; i++) {
+    printf("-");
+  }
+  printf("\n\n");
+}
 void clearLines(int startLine, int endLine) {
     /* Function to clear lines in the terminal given a starting and ending y-coordinate */
     hideCursor();
@@ -116,27 +133,11 @@ void clearPrompts(char *header) {
     system("cls");
     programHeader(header);
 }
-void programHeader(char *header) {
-  /* Move cursor at the top of the file */
-  moveCursor(0,0);
-  
-  for (int i = 1; i <= setWidth; i++) {
-    printf("-");
-  }
-  printf("\n");
-
-  displayCenterText(header);
-  printf("\n");
-
-  for (int i = 1; i <= setWidth; i++) {
-    printf("-");
-  }
-  printf("\n\n");
-}
 void printMenu(char *arrString[], int size) {
   for (int i = 0; i < size; i++) {
     printf("%d) %s\n", i+1, arrString[i]);
   }
+  printf("Choose a number:");
 }
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth) {
   int startIndexOffset = 0;
@@ -177,6 +178,74 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
 
 
 int main () {
+  system("cls");
+  char *algorithmsMenu[] = {"Searching", "Sorting", "Exit", "Quit"};
+  int algoMenuSize = sizeof(algorithmsMenu) / sizeof(algorithmsMenu[0]);
+  int chosenOption;
+
+  do {
+    system("cls");
+
+    programHeader("Algorithms");
+    printf("\n");
+    printMenu(algorithmsMenu, algoMenuSize);
+
+    int cursorXpos, cursorYpos;
+    getCursorPos(&cursorXpos, &cursorYpos);
+    scanf("%d", &chosenOption);
+
+    if (chosenOption > 0 && chosenOption <= algoMenuSize) {
+      switch (chosenOption) {
+        case 1:
+          system("cls");
+          programHeader("Searching Algorithms");
+          printf("\n\nFunction is not yet done...\n\n");
+          displayCenterText("Press Any Key To Continue");
+          anyChar = _getch();
+          break;
+        case 2:
+          system("cls");
+          programHeader("Sorting Algorithms");
+          printf("\n\nFunction is not yet done...\n\n");
+          displayCenterText("Press Any Key To Continue");
+          anyChar = _getch();
+          break;
+        case 3:
+          system("cls");
+          moveCursor(0, setHeight / 2 - 1);
+          displayCenterText("Exiting Algorithms...");
+          hideCursor();
+          Sleep(1000);
+          break;
+        case 4: 
+          system("cls");
+          moveCursor(0, setHeight / 2 - 1);
+          displayCenterText("Quitting Algorithms...");
+          hideCursor();
+          Sleep(1000);
+          return 0;
+          break;
+        default:
+          break; 
+      }
+
+    } else { 
+      clearWord(cursorYpos, strlen("Choose a number: "), setWidth);
+
+      moveCursor(0, cursorYpos + 2);
+
+      displayCenterText("Invalid Choice");
+      printf("\n");
+      displayCenterText("Please pick a number from the given options only");
+      printf("\n");
+    }
+
+    
+  } while (chosenOption != algoMenuSize ); 
+
+
+
+
 
   return 0;
 }
