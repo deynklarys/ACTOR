@@ -69,8 +69,8 @@ int main () {
   system("cls");
   showCursor();
 
-  char *userMenu[] = {"Data Structures", "Algorithms", "About", "Quit"};
-  int userMenuSize = sizeof(userMenu)/sizeof(userMenu[0]);
+  char *mainMenu[] = {"Data Structures", "Algorithms", "About", "Quit"};
+  int mainMenuSize = sizeof(mainMenu)/sizeof(mainMenu[0]);
 
   int chosenOption;
 
@@ -79,8 +79,8 @@ int main () {
     programHeader("Data Structures and Algorithms");
 
     printf("What do you want to learn about?\n");
-    for (int i = 0; i < userMenuSize; i++) {
-      printf("%d) %s\n", i+1, userMenu[i]);
+    for (int i = 0; i < mainMenuSize; i++) {
+      printf("%d) %s\n", i+1, mainMenu[i]);
     }
     printf("Choose a number: ");
     /* Get the current position of the cursor after the prompt. This coordinate will be used to bring back the cursor at this position when the user inputs an invalid option and the option that they typed is cleared. */
@@ -88,7 +88,7 @@ int main () {
     getCursorPos(&cursorXpos, &cursorYpos);
     scanf("%d", &chosenOption);
 
-    if (chosenOption > 0 && chosenOption <= userMenuSize) {
+    if (chosenOption > 0 && chosenOption <= mainMenuSize) {
       switch (chosenOption) {
         case 1:
           system("cls");
@@ -127,7 +127,7 @@ int main () {
       printf("\n");
     }
 
-  } while (chosenOption != userMenuSize);             
+  } while (chosenOption != mainMenuSize);             
                    
   return 0;
 }
@@ -228,6 +228,7 @@ void printMenu(char *arrString[], int size) {
   for (int i = 0; i < size; i++) {
     printf("%d) %s\n", i+1, arrString[i]);
   }
+  printf("Choose a number: ");
 }
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth) {
   int startIndexOffset = 0;
@@ -305,8 +306,8 @@ void welcomeScreen () {
 
 void algorithms() {
   system("cls");
-  char *userMenu[] = {"Searching", "Sorting", "Exit"};
-  int userMenuSize = sizeof(userMenu)/sizeof(userMenu[0]);
+  char *mainMenu[] = {"Searching", "Sorting", "Exit"};
+  int mainMenuSize = sizeof(mainMenu)/sizeof(mainMenu[0]);
 
   int chosenOption;
   int cursorXpos, cursorYpos;
@@ -316,8 +317,8 @@ void algorithms() {
     programHeader("Algorithms");
 
     printf("What do you want to learn about?\n");
-    for (int i = 0; i < userMenuSize; i++) {
-      printf("%d) %s\n", i+1, userMenu[i]);
+    for (int i = 0; i < mainMenuSize; i++) {
+      printf("%d) %s\n", i+1, mainMenu[i]);
     }
     printf("Choose a number: ");
     getCursorPos(&cursorXpos, &cursorYpos);
@@ -331,7 +332,7 @@ void algorithms() {
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
     scanf("%d", &chosenOption);
-    if (chosenOption > 0 && chosenOption <= userMenuSize) {
+    if (chosenOption > 0 && chosenOption <= mainMenuSize) {
       switch (chosenOption) {
         case 1:
           system("cls");
@@ -370,7 +371,7 @@ void algorithms() {
       printf("\n");
     }
 
-  } while (chosenOption != userMenuSize);
+  } while (chosenOption != mainMenuSize);
 }
 
 void about() {
