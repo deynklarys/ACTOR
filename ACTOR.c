@@ -94,7 +94,7 @@ int main () {
           system("cls");
           programHeader("Data Structures");
           printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Continue");
+          displayCenterText("Press Any Key To Exit");
           anyChar = _getch();
           break;
         case 2:
@@ -337,14 +337,14 @@ void algorithms() {
           system("cls");
           programHeader("Searching Algorithms");
           printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Continue");
+          displayCenterText("Press Any Key To Exit");
           anyChar = _getch();
           break;
         case 2:
           system("cls");
           programHeader("Searching Algorithms");
           printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Continue");
+          displayCenterText("Press Any Key To Exit");
           anyChar = _getch();
           break;
         case 3:
