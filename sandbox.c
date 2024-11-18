@@ -6,6 +6,9 @@
 int setWidth = 80;
 int setHeight = 24;
 
+#define SET_WIDTH 70 // Define the width for the paragraphs
+
+
 // Utility functions 
 void getTerminalSize();
 void displayCenterText(char *message);
@@ -21,11 +24,58 @@ void programHeader(char *header);
 
 // Screen handlers
 void welcomeScreen ();
-void algorithms(); 
+void algorithms();
 
 // Function to print paragraphs within setWidth that takes an array of strings
 // printWithinWidth(char* message[])
 int main () {
+  getTerminalSize();
+  char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.", "Pens and papers is one way of learning; practical implementation is understanding of it"};
+  int messageLength = sizeof(message)/sizeof(message[0]);
+
+  char paragraphSubstrings[100][500];
+  int paragraphSubstringsCount = 0;
+
+  int paragraphWidth = setWidth * 0.7; 
+  int phraseToCopy = paragraphWidth;
+
+  for (int i = 0; i < messageLength; i++) {
+    char *messageString = message[i];
+    int startIndexOffset = 0;
+    int numOfCharsLeftBeforeASpace = 0;
+    int j = 0, k = 0;
+
+    while(startIndexOffset < strlen(messageString)) {
+      while (startIndexOffset + phraseToCopy + j < strlen(messageString) && messageString[startIndexOffset + phraseToCopy + j] != ' ') {
+        numOfCharsLeftBeforeASpace++;
+        j++;
+      }
+      phraseToCopy += numOfCharsLeftBeforeASpace;
+
+      if (messageString[startIndexOffset + k ] == '\t' && startIndexOffset != 0)
+        phraseToCopy -= 8;
+      if (messageString[startIndexOffset] == ' ' && startIndexOffset != 0)
+        k++;
+
+      strncpy(paragraphSubstrings[paragraphSubstringsCount], messageString + startIndexOffset + k, phraseToCopy);
+
+      paragraphSubstrings[paragraphSubstringsCount][phraseToCopy + numOfCharsLeftBeforeASpace] = '\0';
+
+      startIndexOffset += phraseToCopy;
+      paragraphSubstringsCount++;
+
+      phraseToCopy = paragraphWidth;
+      j = 0, k = 0;
+      numOfCharsLeftBeforeASpace = 0;
+
+    }
+    printf("\n");
+  }
+
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    displayCenterText(paragraphSubstrings[i]);
+    printf("\n");
+  }
 
   return 0;
 }
@@ -213,3 +263,6 @@ void algorithms() {
 
   } while (chosenOption != userMenuSize);
 }
+
+
+

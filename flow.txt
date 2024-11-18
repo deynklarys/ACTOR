@@ -17,7 +17,7 @@ Screen 2
 	Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.
 
 	Pens and papers is one way of learning, making an application is another level of it.
-	Pens and papers is one way of learning; practical implementation is understanding
+	Pens and papers is one way of learning; practical implementation is understanding of it
 
 4) Quit
 
