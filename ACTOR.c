@@ -75,6 +75,7 @@ int main () {
   int chosenOption;
 
   do {
+    system("cls");
     programHeader("Data Structures and Algorithms");
 
     printf("What do you want to learn about?\n");
@@ -89,7 +90,12 @@ int main () {
 
     if (chosenOption > 0 && chosenOption <= userMenuSize) {
       switch (chosenOption) {
-        case 1: 
+        case 1:
+          system("cls");
+          programHeader("Data Structures");
+          printf("\n\nFunction is not yet done...\n\n");
+          displayCenterText("Press Any Key To Continue");
+          anyChar = _getch();
           break;
         case 2:
           algorithms();
@@ -306,6 +312,7 @@ void algorithms() {
   int cursorXpos, cursorYpos;
 
   do {
+    system("cls");
     programHeader("Algorithms");
 
     printf("What do you want to learn about?\n");
@@ -326,12 +333,26 @@ void algorithms() {
     scanf("%d", &chosenOption);
     if (chosenOption > 0 && chosenOption <= userMenuSize) {
       switch (chosenOption) {
-        case 1: 
+        case 1:
+          system("cls");
+          programHeader("Searching Algorithms");
+          printf("\n\nFunction is not yet done...\n\n");
+          displayCenterText("Press Any Key To Continue");
+          anyChar = _getch();
           break;
         case 2:
+          system("cls");
+          programHeader("Searching Algorithms");
+          printf("\n\nFunction is not yet done...\n\n");
+          displayCenterText("Press Any Key To Continue");
+          anyChar = _getch();
           break;
         case 3:
           system("cls");
+          moveCursor(0, setHeight / 2 - 1);
+          displayCenterText("Exiting Algorithms...");
+          hideCursor();
+          Sleep(1000);
           break;
         default:
           break; 
