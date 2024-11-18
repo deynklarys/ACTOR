@@ -177,6 +177,24 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
 }
 
 
+void sorting() {
+  int arrSize;
+  int givenArray[ARRAY_MAX_LENGTH];
+  printf("Enter array size: ");
+  scanf("%d", &arrSize);
+  printf("Enter your elements in the array:\n");
+  for (int i = 0; i < arrSize; i++) {
+    printf("\tarray[%d]: ", i);
+    scanf("%d", &givenArray[i]);
+  }
+  
+
+  int sortType = 1;
+  
+  sort (givenArray, arrSize, sortType);
+}
+
+
 int main () {
   system("cls");
   char *algorithmsMenu[] = {"Searching", "Sorting", "Exit", "Quit"};
