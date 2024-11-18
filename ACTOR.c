@@ -60,8 +60,6 @@ int main () {
     }
   
   */
-
- 
   welcomeScreen();
 
   anyChar = _getch(); // Use _getch() to read a single character without echoing
@@ -75,7 +73,6 @@ int main () {
   int chosenOption;
 
   do {
-    system("cls");
     programHeader("Data Structures and Algorithms");
 
     printf("What do you want to learn about?\n");
@@ -96,6 +93,7 @@ int main () {
           printf("\n\nFunction is not yet done...\n\n");
           displayCenterText("Press Any Key To Exit");
           anyChar = _getch();
+          system("cls");
           break;
         case 2:
           algorithms();
@@ -305,7 +303,6 @@ void welcomeScreen () {
 }
 
 void algorithms() {
-  system("cls");
   char *mainMenu[] = {"Searching", "Sorting", "Exit"};
   int mainMenuSize = sizeof(mainMenu)/sizeof(mainMenu[0]);
 
@@ -372,6 +369,8 @@ void algorithms() {
     }
 
   } while (chosenOption != mainMenuSize);
+
+  system("cls");
 }
 
 void about() {
