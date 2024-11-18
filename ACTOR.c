@@ -303,8 +303,8 @@ void welcomeScreen () {
 }
 
 void algorithms() {
-  char *mainMenu[] = {"Searching", "Sorting", "Exit"};
-  int mainMenuSize = sizeof(mainMenu)/sizeof(mainMenu[0]);
+  char *algorithmsMenu[] = {"Searching", "Sorting", "Exit", "Quit"};
+  int algoMenuSize = sizeof(algorithmsMenu) / sizeof(algorithmsMenu[0]);
 
   int chosenOption;
   int cursorXpos, cursorYpos;
@@ -313,11 +313,9 @@ void algorithms() {
     system("cls");
     programHeader("Algorithms");
 
-    printf("What do you want to learn about?\n");
-    for (int i = 0; i < mainMenuSize; i++) {
-      printf("%d) %s\n", i+1, mainMenu[i]);
-    }
-    printf("Choose a number: ");
+    printf("What do you want to learn about?\n");  
+    printMenu(algorithmsMenu, algoMenuSize);
+
     getCursorPos(&cursorXpos, &cursorYpos);
     
     // Moves so that the output is below the input statement
@@ -329,7 +327,7 @@ void algorithms() {
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
     scanf("%d", &chosenOption);
-    if (chosenOption > 0 && chosenOption <= mainMenuSize) {
+    if (chosenOption > 0 && chosenOption <= algoMenuSize) {
       switch (chosenOption) {
         case 1:
           system("cls");
@@ -340,7 +338,7 @@ void algorithms() {
           break;
         case 2:
           system("cls");
-          programHeader("Searching Algorithms");
+          programHeader("Sorting Algorithms");
           printf("\n\nFunction is not yet done...\n\n");
           displayCenterText("Press Any Key To Exit");
           anyChar = _getch();
@@ -368,7 +366,7 @@ void algorithms() {
       printf("\n");
     }
 
-  } while (chosenOption != mainMenuSize);
+  } while (chosenOption != algoMenuSize);
 
   system("cls");
 }
