@@ -1,6 +1,18 @@
+// Analyze. Code. Test. Optimize. Repeat
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <windows.h>
+#include <conio.h> // for _getch()
+
+#define ARRAY_MAX_LENGTH 1000
+#define SUBSTRINGS_MAX_SUBSTRINGS 100 
+#define SUBSTRINGS_MAX_LENGTH 500
+
+
+int setWidth = 80;
+int setHeight = 24;
+int anyChar;
 
 void printArray(int array[], int size);
 void swap(int *a, int *b);
@@ -28,6 +40,141 @@ void heapify(int array[], int size, int i);
 void heapSort(int array[], int size);
 
 void sort(int array[], int size, int sortType);
+
+// Utility function definitions
+void getTerminalSize() {
+    /* Function to get the terminal size. */
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	setWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	setHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;  
+
+  printf("setWidth: %d \nsetHeight: %d \n", setWidth, setHeight);
+}
+// Prints without the border. It can be later modified to include borderlines if I'm already certain that the application has borderlines throughout. 
+void displayCenterText(char *message) {
+  int length = strlen(message);
+  int startIndex = (setWidth - length) / 2;
+  for (int i = 0; i < startIndex - 1; i++) {
+    printf(" ");
+  }
+  printf("%s", message);
+  startIndex = (length % 2 == 0) ? (startIndex - 1) : startIndex;
+  for (int i = 0; i < startIndex; i++) {
+    printf(" ");
+  }
+}
+void hideCursor() {
+  HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+  CONSOLE_CURSOR_INFO info;
+  info.dwSize = 100;
+  info.bVisible = FALSE;
+  SetConsoleCursorInfo(consoleHandle, &info);
+}
+void showCursor() {
+  /* Function to show the cursor */
+  HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+  CONSOLE_CURSOR_INFO info;
+  info.dwSize = 100;
+  info.bVisible = TRUE;
+  SetConsoleCursorInfo(consoleHandle, &info);
+}
+void getCursorPos(int *Xpos, int *Ypos) {
+    /* Function to get the current position of the cursor */
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+    *Xpos = info.dwCursorPosition.X;
+    *Ypos = info.dwCursorPosition.Y;
+}
+void moveCursor(int x, int y) {
+  /* Function to move the cursor at a specified coordinate in the terminal */
+  // First three lines are for program header
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD pos = {x, y};
+	SetConsoleCursorPosition(hConsole, pos);
+}
+void clearLines(int startLine, int endLine) {
+    /* Function to clear lines in the terminal given a starting and ending y-coordinate */
+    hideCursor();
+	for (int i = startLine; i <= endLine; i++) {
+		moveCursor(0, i);
+		for (int j = 0; j < setWidth; j++) {
+			printf(" ");
+		}
+	}
+    showCursor();
+}
+void clearWord(int y, int startCol, int endCol) {
+    /* Function to clear a specific portion of a line in the terminal */
+    moveCursor(startCol, y);
+    for (int i = 0; i < endCol - startCol; i++) {
+		printf(" ");
+    }
+}
+void clearPrompts(char *header) {
+    /* Function to clear the prompts of the program. It will essentially clear everything below the program header. */
+    system("cls");
+    programHeader(header);
+}
+void programHeader(char *header) {
+  /* Move cursor at the top of the file */
+  moveCursor(0,0);
+  
+  for (int i = 1; i <= setWidth; i++) {
+    printf("-");
+  }
+  printf("\n");
+
+  displayCenterText(header);
+  printf("\n");
+
+  for (int i = 1; i <= setWidth; i++) {
+    printf("-");
+  }
+  printf("\n\n");
+}
+void printMenu(char *arrString[], int size) {
+  for (int i = 0; i < size; i++) {
+    printf("%d) %s\n", i+1, arrString[i]);
+  }
+}
+void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth) {
+  int startIndexOffset = 0;
+
+  int phraseToCopy = minCharWidth;
+
+  int numOfCharsLeftBeforeASpace = 0;
+  int j = 0, k = 0;
+
+  for (int i = 0; i < strlen(inputStr); i+= minCharWidth) {
+    while(startIndexOffset < strlen(inputStr)) {
+      while (startIndexOffset + phraseToCopy + j < strlen(inputStr) && inputStr[startIndexOffset + phraseToCopy + j] != ' ') {
+        numOfCharsLeftBeforeASpace++;
+        j++;
+      }
+      phraseToCopy += numOfCharsLeftBeforeASpace;
+
+      if (inputStr[startIndexOffset + k ] == '\t' && startIndexOffset != 0)
+        phraseToCopy -= 8;
+      if (inputStr[startIndexOffset] == ' ' && startIndexOffset != 0)
+        k++;
+
+      strncpy(paragraphSubstrings[*paragraphSubstringsCount], inputStr + startIndexOffset + k, phraseToCopy);
+
+      paragraphSubstrings[*paragraphSubstringsCount][phraseToCopy + numOfCharsLeftBeforeASpace] = '\0';
+
+      startIndexOffset += phraseToCopy;
+      
+      (*paragraphSubstringsCount)++;
+
+      phraseToCopy = minCharWidth;
+      j = 0, k = 0;
+      numOfCharsLeftBeforeASpace = 0;
+
+    }
+  }
+}
+
 
 int main () {
 
