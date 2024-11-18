@@ -11,6 +11,7 @@
 
 int setWidth = 80;
 int setHeight = 24;
+int anyChar;
 
 // Utility functions 
 void getTerminalSize();
@@ -46,10 +47,12 @@ void about();
 
 
 int main () {
+  
+
+
   welcomeScreen();
   // getTerminalSize();
 
-  int anyChar; 
   anyChar = _getch(); // Use _getch() to read a single character without echoing
 
   system("cls");
@@ -82,6 +85,8 @@ int main () {
           break;
         case 3: 
           about();
+          system("cls");
+          showCursor();
           break;
         case 4: 
           system("cls");
@@ -332,6 +337,7 @@ void algorithms() {
 }
 
 void about() {
+  system("cls");
   char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n", "Pens and papers is one way of learning; practical implementation is understanding of it\n"};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
@@ -352,6 +358,11 @@ void about() {
     displayCenterText(paragraphSubstrings[i]);
     printf("\n");
   }
+  
+  printf("\n\n\n");
+  displayCenterText("Press Any Key To Exit");
+  hideCursor();
+  anyChar = _getch();
 }
 
 
