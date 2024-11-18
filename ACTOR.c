@@ -5,6 +5,10 @@
 #include "src/algorithms.h"
 
 #define ARRAY_MAX_LENGTH 1000
+#define SUBSTRINGS_MAX_SUBSTRINGS 100 
+#define SUBSTRINGS_MAX_LENGTH 500
+
+
 int setWidth = 80;
 int setHeight = 24;
 
@@ -19,6 +23,7 @@ void clearLines(int startLine, int endLine);
 void clearWord(int Ypos, int startX, int endX);
 void clearPrompts(char *header);
 void programHeader(char *header);
+void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
 
 // Screen handlers
 void welcomeScreen ();
@@ -76,6 +81,7 @@ int main () {
           algorithms();
           break;
         case 3: 
+          about();
           break;
         case 4: 
           system("cls");
@@ -196,6 +202,44 @@ void programHeader(char *header) {
   printf("\n\n");
 }
 
+void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth) {
+  int startIndexOffset = 0;
+
+  int phraseToCopy = minCharWidth;
+
+  int numOfCharsLeftBeforeASpace = 0;
+  int j = 0, k = 0;
+
+  for (int i = 0; i < strlen(inputStr); i+= minCharWidth) {
+    while(startIndexOffset < strlen(inputStr)) {
+      while (startIndexOffset + phraseToCopy + j < strlen(inputStr) && inputStr[startIndexOffset + phraseToCopy + j] != ' ') {
+        numOfCharsLeftBeforeASpace++;
+        j++;
+      }
+      phraseToCopy += numOfCharsLeftBeforeASpace;
+
+      if (inputStr[startIndexOffset + k ] == '\t' && startIndexOffset != 0)
+        phraseToCopy -= 8;
+      if (inputStr[startIndexOffset] == ' ' && startIndexOffset != 0)
+        k++;
+
+      strncpy(paragraphSubstrings[*paragraphSubstringsCount], inputStr + startIndexOffset + k, phraseToCopy);
+
+      paragraphSubstrings[*paragraphSubstringsCount][phraseToCopy + numOfCharsLeftBeforeASpace] = '\0';
+
+      startIndexOffset += phraseToCopy;
+      
+      (*paragraphSubstringsCount)++;
+
+      phraseToCopy = minCharWidth;
+      j = 0, k = 0;
+      numOfCharsLeftBeforeASpace = 0;
+
+    }
+  }
+}
+
+
 // Screen handlers function definitions
 void welcomeScreen () {
   system("cls");
@@ -286,6 +330,62 @@ void algorithms() {
 
   } while (chosenOption != userMenuSize);
 }
+
+void about() {
+  char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n", "Pens and papers is one way of learning; practical implementation is understanding of it\n"};
+  int messageSize = sizeof(message)/sizeof(message[0]);
+
+  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+  int paragraphSubstringsCount = 0;
+
+  int lineWidth = setWidth * 0.7; 
+  int phraseToCopy = lineWidth;
+
+  for (int i = 0; i < messageSize; i++) {
+    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+  }
+
+  programHeader("About ACTOR");
+  printf("\n");
+
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    displayCenterText(paragraphSubstrings[i]);
+    printf("\n");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -26,7 +26,7 @@ void programHeader(char *header);
 void welcomeScreen ();
 void algorithms();
 
-void splitStrings (char *inputStr, char paragraphSubstrings[100][500], int *paragraphSubstringsCount, int minCharWidth) {
+void splitStrings (char *inputStr, char paragraphSubstrings[][500], int *paragraphSubstringsCount, int minCharWidth) {
   int startIndexOffset = 0;
 
   int phraseToCopy = minCharWidth;
