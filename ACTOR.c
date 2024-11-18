@@ -23,6 +23,7 @@ void clearLines(int startLine, int endLine);
 void clearWord(int Ypos, int startX, int endX);
 void clearPrompts(char *header);
 void programHeader(char *header);
+void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
 
 // Screen handlers
@@ -216,7 +217,11 @@ void programHeader(char *header) {
   }
   printf("\n\n");
 }
-
+void printMenu(char *arrString[], int size) {
+  for (int i = 0; i < size; i++) {
+    printf("%d) %s\n", i+1, arrString[i]);
+  }
+}
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth) {
   int startIndexOffset = 0;
 
