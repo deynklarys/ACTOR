@@ -296,7 +296,7 @@ void sorting() {
   int givenArray[ARRAY_MAX_LENGTH];
   int num;
   char ch;
-
+  printf("Initialize your array for me to work on.\n\n");
   printf("Enter elements (space-separated, press Enter to finish):\n");
 
   while (1) {
@@ -314,25 +314,63 @@ void sorting() {
       }
   }
 
-  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
+  getCursorPos(&cursorXpos, &cursorYpos);
+
+  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort", "Exit"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
-
-  printf("\nWhat type of sorting algorithm do you want to do?\n");
-  printMenu(sortMenu, sortMenuSize);
   int sortType;
-  scanf("%d", &sortType);
 
-  system("cls");
-  programHeader("Sorting Algorithms");
-  printf("Your Array:\n");
-  printArray(givenArray, arrSize);
-  sort (givenArray, arrSize, sortType);
+  do {
+    // moveCursor(0, cursorYpos);
 
-  printf("\n\n");
+    printf("\nWhat type of sorting algorithm do you want to do?\n");
+    printMenu(sortMenu, sortMenuSize);
+    scanf("%d", &sortType);
 
-  displayCenterText("Press Any Key To Exit");
-  hideCursor();
-  anyChar = _getch();
+    if (sortType > 0 && sortType < sortMenuSize) {
+      system("cls");
+      programHeader("Sorting Algorithms");
+      printf("Your Array:\n");
+      printArray(givenArray, arrSize);
+      sort (givenArray, arrSize, sortType);
+
+      char tryOthers;
+      do {
+        printf("Do you want to try other sorting algorithms? [Y/N] ");
+        getCursorPos(&cursorXpos, &cursorYpos);
+        /* The space before %c in the format string is used to skip any leading whitespace characters, including newlines, which ensures that scanf waits for a non-whitespace character. */
+        scanf(" %c", &tryOthers);
+        if (sortType == sortMenuSize) {
+          break;
+        }
+    
+        if (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y') {
+          clearWord(cursorYpos, strlen("Do you want to try other sorting algorithms? [Y/N] "), SET_WIDTH);
+          moveCursor(0, cursorYpos + 3);
+          displayCenterText("Invalid answer");
+          moveCursor(0, cursorYpos);
+        }
+      } while (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y');
+      
+      if (tryOthers == 'y' || tryOthers == 'Y') {
+        clearLines(cursorYpos + 3, cursorYpos + 3);
+        moveCursor(0, cursorYpos);
+        continue;
+      }
+      
+      // If the user chose 'n' or 'N', exit the loop
+      break;
+    }  else { 
+      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+
+      moveCursor(0, cursorYpos + 2);
+
+      displayCenterText("Invalid Choice");
+      printf("\n");
+      displayCenterText("Please pick a number from the given options only");
+      printf("\n");
+    }
+  } while (sortType != sortMenuSize);
 }
 void searching() {
   system("cls");
@@ -416,9 +454,11 @@ void algorithms() {
       switch (chosenOption) {
         case 1:
           searching();
+          system("cls");
           break;
         case 2:
           sorting();
+          system("cls");
           break;
         case 3:
           system("cls");
