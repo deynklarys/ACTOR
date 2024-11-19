@@ -27,11 +27,11 @@ void moveCursor(int Xpos, int Ypos);
 void clearLines(int startLine, int endLine);
 void clearWord(int Ypos, int startX, int endX);
 void clearPrompts(char *header);
+void promptExit();
 void programHeader(char *header);
 void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
 void printWithinWidth(char *message[], int messageSize, char *header);
-void promptExit();
 
 
 // Screen handlers
@@ -116,9 +116,8 @@ int main () {
         case 1:
           system("cls");
           programHeader("Data Structures");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();
+          printf("\n\nFunction is not yet done...");
+          promptExit();
           system("cls");
           break;
         case 2:
@@ -410,21 +409,21 @@ void algorithms() {
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
     scanf("%d", &chosenOption);
+
     if (chosenOption > 0 && chosenOption <= algoMenuSize) {
       switch (chosenOption) {
         case 1:
-          system("cls");
+          /*system("cls");
           programHeader("Searching Algorithms");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();
+          printf("\n\nFunction is not yet done...");
+          promptExit();*/
+          searching();
           break;
         case 2:
           /*system("cls");
           programHeader("Sorting Algorithms");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();*/
+          printf("\n\nFunction is not yet done...");
+          promptExit();*/
           sorting();
           break;
         case 3:
