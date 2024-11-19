@@ -216,13 +216,50 @@ void sorting() {
   anyChar = _getch();
 }
 
+int binarySearch(int array[], int key, int low, int high) {
+  if (high >= low) {
+    int mid = low + (high - low) / 2;
 
-void search(int array[], int size, int sortType) {
+    // If found at mid, then return it
+    if (key == array[mid])
+      return mid;
 
+    // Search the right half
+    if (key > array[mid])
+      return binarySearch(array, key, mid + 1, high);
+
+    // Search the left half
+    return binarySearch(array, key, low, mid - 1);
+  }
+  return -1;
+}
+int linearSearch(int array[], int n, int x) {
+  
+  // Going through array sequencially
+  for (int i = 0; i < n; i++)
+    if (array[i] == x)
+      return i;
+  return -1;
+}
+void search(int array[], int size, int key, int searchType) {
+  if (searchType == 1) {
+    int linearResult = linearSearch(array, size, key);
+    if (linearResult == -1)
+      printf("Element is not found in the array");
+    else
+      printf("Element is found at index %d", linearResult + 1);
+  } else if (searchType == 2) {
+    sort (array, size, 9);
+    int binaryResult = binarySearch(array, key, 0, size - 1);
+    if (binaryResult == -1)
+      printf("Element is not found in the array");
+    else
+      printf("Element is found at position %d", binaryResult + 1);
+  }
 }
 void searching() {
   system("cls");
-  programHeader("Sorting Algorithms");
+  programHeader("Searching Algorithms");
   int arrSize;
   int givenArray[ARRAY_MAX_LENGTH];
   printf("Enter array size: ");
@@ -241,7 +278,11 @@ void searching() {
   }
   printf("\n");
 
-  char *searchMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
+  printf("What element is to be find? ");
+  int key;
+  scanf("%d", &key);
+
+  char *searchMenu[] = {"Linear Search", "Binary Search"};
   int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]); 
 
   printf("What type of searching algorithm do you want to do?\n");
@@ -250,7 +291,7 @@ void searching() {
   scanf("%d", &searchType);
 
   system("cls");
-  search(givenArray, arrSize, searchType);
+  search(givenArray, arrSize, key, searchType);
 
   printf("\n\n");
 
@@ -279,11 +320,12 @@ int main () {
     if (chosenOption > 0 && chosenOption <= algoMenuSize) {
       switch (chosenOption) {
         case 1:
-          system("cls");
+          /*system("cls");
           programHeader("Searching Algorithms");
           printf("\n\nFunction is not yet done...\n\n");
           displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();
+          anyChar = _getch();*/
+          searching();
           break;
         case 2:
           /* system("cls");
