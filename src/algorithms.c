@@ -201,7 +201,7 @@ void sorting() {
   char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
 
-  printf("What type of sorting algorithm do you want to choose?\n");
+  printf("What type of sorting algorithm do you want to do?\n");
   printMenu(sortMenu, sortMenuSize);
   int sortType;
   scanf("%d", &sortType);
@@ -244,7 +244,7 @@ void searching() {
   char *searchMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
   int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]); 
 
-  printf("What type of searching algorithm do you want to choose?\n");
+  printf("What type of searching algorithm do you want to do?\n");
   printMenu(searchMenu, searchMenuSize);
   int searchType;
   scanf("%d", &searchType);
