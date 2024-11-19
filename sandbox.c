@@ -14,6 +14,8 @@
 int terminalWidth = 0;
 int terminalHeight = 0;
 int anyChar;
+int chosenOption;
+int cursorXpos, cursorYpos;
 
 // Utility functions 
 void getTerminalSize();
@@ -28,6 +30,8 @@ void clearPrompts(char *header);
 void programHeader(char *header);
 void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
+void printWithinWidth(char *message[], int messageSize, char *header);
+
 
 // Screen handlers
 void welcomeScreen ();
@@ -76,29 +80,6 @@ void heapSort(int array[], int size);
 
 void sort(int array[], int size, int sortType);
 
-void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
-
-void printWithinWidth(char *message[], int messageSize, char header) {
-  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
-  int paragraphSubstringsCount = 0;
-
-  int lineWidth = SET_WIDTH * 0.7; 
-  int phraseToCopy = lineWidth;
-
-  for (int i = 0; i < messageSize; i++) {
-    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
-  }
-
-  programHeader(header);
-  printf("\n");
-
-  for (int i = 0; i < paragraphSubstringsCount; i++) {
-    displayCenterText(paragraphSubstrings[i]);
-    printf("\n");
-  }
-}
-
-
 int main () {
   /*
     If the terminal screen is not 80 by 24 size, it will recommend to adjust the window size for better experience
@@ -123,7 +104,6 @@ int main () {
   char *mainMenu[] = {"Data Structures", "Algorithms", "About", "Quit"};
   int mainMenuSize = sizeof(mainMenu)/sizeof(mainMenu[0]);
 
-  int chosenOption;
 
   do {
     programHeader("Data Structures and Algorithms");
@@ -134,7 +114,6 @@ int main () {
     }
     printf("Choose a number: ");
     /* Get the current position of the cursor after the prompt. This coordinate will be used to bring back the cursor at this position when the user inputs an invalid option and the option that they typed is cleared. */
-    int cursorXpos, cursorYpos;
     getCursorPos(&cursorXpos, &cursorYpos);
     scanf("%d", &chosenOption);
 
@@ -317,6 +296,27 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
     }
   }
 }
+void printWithinWidth(char *message[], int messageSize, char *header) {
+  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+  int paragraphSubstringsCount = 0;
+
+  int lineWidth = SET_WIDTH * 0.7; 
+  int phraseToCopy = lineWidth;
+
+  for (int i = 0; i < messageSize; i++) {
+    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+  }
+
+  programHeader(header);
+  printf("\n");
+
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    displayCenterText(paragraphSubstrings[i]);
+    printf("\n");
+  }
+}
+
+
 
 
 // Screen handlers function definitions
@@ -398,9 +398,6 @@ void algorithms() {
   system("cls");
   char *algorithmsMenu[] = {"Searching", "Sorting", "Exit"};
   int algoMenuSize = sizeof(algorithmsMenu) / sizeof(algorithmsMenu[0]);
-
-  int chosenOption;
-  int cursorXpos, cursorYpos;
 
   do {
     programHeader("Algorithms");
