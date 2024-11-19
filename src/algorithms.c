@@ -313,18 +313,20 @@ void sorting() {
           break;
       }
   }
-
-  getCursorPos(&cursorXpos, &cursorYpos);
+  
+  int beforeQueryPos, afterQueryPos;
 
   char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort", "Exit"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
   int sortType;
 
   do {
-    // moveCursor(0, cursorYpos);
-
+    getCursorPos(&cursorXpos, &cursorYpos);
+    beforeQueryPos = cursorYpos;
     printf("\nWhat type of sorting algorithm do you want to do?\n");
     printMenu(sortMenu, sortMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
+    afterQueryPos = cursorYpos;
     scanf("%d", &sortType);
 
     if (sortType > 0 && sortType < sortMenuSize) {
@@ -363,12 +365,13 @@ void sorting() {
     }  else { 
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
 
-      moveCursor(0, cursorYpos + 2);
+      moveCursor(0, afterQueryPos + 2);
 
       displayCenterText("Invalid Choice");
       printf("\n");
       displayCenterText("Please pick a number from the given options only");
       printf("\n");
+      moveCursor(0, beforeQueryPos);
     }
   } while (sortType != sortMenuSize);
 }
@@ -408,7 +411,6 @@ void searching() {
   printf("What type of searching algorithm do you want to do?\n");
   printMenu(searchMenu, searchMenuSize);
 
-  int cursorXpos, cursorYpos;
   getCursorPos(&cursorXpos, &cursorYpos);
   int searchType;
 
@@ -444,7 +446,7 @@ void algorithms() {
     moveCursor(0, cursorYpos + 2);
     printf("Did you know?\n");
     // Must make a function that prints within the set width
-    printf("Algorithms are like the special instructions that help you turn a bag of LEGO bricks into an amazing castle!\n");
+    printf("Algorithms are like the special instructions that help you\nturn a bag of LEGO bricks into an amazing castle!\n");
 
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
@@ -475,7 +477,7 @@ void algorithms() {
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
 
       // Move from +2 to +5 to accommodate the trivia
-      moveCursor(0, cursorYpos + 5);
+      moveCursor(0, cursorYpos + 6);
 
       displayCenterText("Invalid Choice");
       printf("\n");
