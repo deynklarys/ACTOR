@@ -255,12 +255,14 @@ int linearSearch(int array[], int n, int x) {
 }
 void search(int array[], int size, int key, int searchType) {
   if (searchType == 1) {
+    programHeader("Linear Search");
     int linearResult = linearSearch(array, size, key);
     if (linearResult == -1)
       printf("Element is not found in the array");
     else
       printf("Element is found at index %d", linearResult + 1);
   } else if (searchType == 2) {
+    programHeader("Binary Search");
     sort (array, size, 9);
     int binaryResult = binarySearch(array, key, 0, size - 1);
     if (binaryResult == -1)
@@ -295,26 +297,26 @@ void searching() {
       }
   }
 
-  // Print the array to verify the result
-  printf("Your array elements:\n");
-  for (int i = 0; i < arrSize; i++) {
-      printf("%d ", givenArray[i]);
-  }
-  printf("\n");
 
-  printf("What element is to be find? ");
+  printf("\nWhat element is to be find? ");
   int key;
   scanf("%d", &key);
 
   char *searchMenu[] = {"Linear Search", "Binary Search"};
-  int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]); 
+  int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]);
 
   printf("What type of searching algorithm do you want to do?\n");
   printMenu(searchMenu, searchMenuSize);
+
+  // int cursorXpos, cursorYpos;
+  // getCursorPos(&cursorXpos, &cursorYpos);
   int searchType;
   scanf("%d", &searchType);
 
-  system("cls");
+  // Add note that Binary search will sort the array first and will return a position based from the sorted array.
+  // moveCursor(0, cursorYpos + 2);
+  // printf("");
+
   search(givenArray, arrSize, key, searchType);
 
   printf("\n\n");
@@ -662,8 +664,10 @@ void heapSort(int array[], int size) {
 }
 
 void sort(int array[], int size, int sortType) {
-  printf("Given Array:\n");
+  printf("Your Array:\n");
   printArray(array, size);
+
+  printf("Sorted array using ");
 
   switch (sortType) {
     case 1:
