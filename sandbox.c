@@ -371,7 +371,7 @@ void sorting() {
   int givenArray[ARRAY_MAX_LENGTH];
   int num;
   char ch;
-
+  printf("Initialize your array for me to work on.\n\n");
   printf("Enter elements (space-separated, press Enter to finish):\n");
 
   while (1) {
@@ -388,26 +388,67 @@ void sorting() {
           break;
       }
   }
+  
+  int beforeQueryPos, afterQueryPos;
 
-  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
+  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort", "Exit"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
-
-  printf("\nWhat type of sorting algorithm do you want to do?\n");
-  printMenu(sortMenu, sortMenuSize);
   int sortType;
-  scanf("%d", &sortType);
 
-  system("cls");
-  programHeader("Sorting Algorithms");
-  printf("Your Array:\n");
-  printArray(givenArray, arrSize);
-  sort (givenArray, arrSize, sortType);
+  do {
+    getCursorPos(&cursorXpos, &cursorYpos);
+    beforeQueryPos = cursorYpos;
+    printf("\nWhat type of sorting algorithm do you want to do?\n");
+    printMenu(sortMenu, sortMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
+    afterQueryPos = cursorYpos;
+    scanf("%d", &sortType);
 
-  printf("\n\n");
+    if (sortType > 0 && sortType < sortMenuSize) {
+      system("cls");
+      programHeader("Sorting Algorithms");
+      printf("Your Array:\n");
+      printArray(givenArray, arrSize);
+      sort (givenArray, arrSize, sortType);
 
-  displayCenterText("Press Any Key To Exit");
-  hideCursor();
-  anyChar = _getch();
+      char tryOthers;
+      do {
+        printf("Do you want to try other sorting algorithms? [Y/N] ");
+        getCursorPos(&cursorXpos, &cursorYpos);
+        /* The space before %c in the format string is used to skip any leading whitespace characters, including newlines, which ensures that scanf waits for a non-whitespace character. */
+        scanf(" %c", &tryOthers);
+        if (sortType == sortMenuSize) {
+          break;
+        }
+    
+        if (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y') {
+          clearWord(cursorYpos, strlen("Do you want to try other sorting algorithms? [Y/N] "), SET_WIDTH);
+          moveCursor(0, cursorYpos + 3);
+          displayCenterText("Invalid answer");
+          moveCursor(0, cursorYpos);
+        }
+      } while (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y');
+      
+      if (tryOthers == 'y' || tryOthers == 'Y') {
+        clearLines(cursorYpos + 3, cursorYpos + 3);
+        moveCursor(0, cursorYpos);
+        continue;
+      }
+      
+      // If the user chose 'n' or 'N', exit the loop
+      break;
+    }  else { 
+      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+
+      moveCursor(0, afterQueryPos + 2);
+
+      displayCenterText("Invalid Choice");
+      printf("\n");
+      displayCenterText("Please pick a number from the given options only");
+      printf("\n");
+      moveCursor(0, beforeQueryPos);
+    }
+  } while (sortType != sortMenuSize);
 }
 void searching() {
   system("cls");
@@ -417,7 +458,7 @@ void searching() {
   int num;
   char ch;
 
-  // Prompt the user to enter elements
+  printf("Initialize your array for me to work on.\n\n");
   printf("Enter elements (space-separated, press Enter to finish):\n");
 
   while (1) {
@@ -435,34 +476,70 @@ void searching() {
       }
   }
 
+  char *searchMenu[] = {"Linear Search", "Binary Search", "Exit"};
+  int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]);
+  int searchType;
+
   printf("\nWhat element is to be find? ");
   int key;
   scanf("%d", &key);
 
-  char *searchMenu[] = {"Linear Search", "Binary Search"};
-  int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]);
+  int beforeQueryPos;
 
-  printf("What type of searching algorithm do you want to do?\n");
-  printMenu(searchMenu, searchMenuSize);
+  do {
+    getCursorPos(&cursorXpos, &cursorYpos);
+    beforeQueryPos = cursorYpos;
+    printf("What type of searching algorithm do you want to do?\n");
+    printMenu(searchMenu, searchMenuSize);
 
-  int cursorXpos, cursorYpos;
-  getCursorPos(&cursorXpos, &cursorYpos);
-  int searchType;
+    getCursorPos(&cursorXpos, &cursorYpos);
+    int notePos = cursorYpos + 2;
+    moveCursor(0, notePos);
+    printf("Note: Binary search will sort the array first and will return a\nposition based from the sorted array.");
 
-  moveCursor(0, cursorYpos + 2);
-  printf("Note: Binary search will sort the array first and will return a\nposition based from the sorted array.");
-  
-  moveCursor(cursorXpos,cursorYpos);
-  scanf("%d", &searchType);
-  system("cls");
+    moveCursor(cursorXpos, cursorYpos);
+    scanf("%d", &searchType);
 
-  search(givenArray, arrSize, key, searchType);
+    if (searchType > 0 && searchType < searchMenuSize) {
+      search(givenArray, arrSize, key, searchType);
+      char tryOthers;
+      do {
+        printf("\n\nDo you want to try the other searching algorithms? [Y/N] ");
+        getCursorPos(&cursorXpos, &cursorYpos);
+        /* The space before %c in the format string is used to skip any leading whitespace characters, including newlines, which ensures that scanf waits for a non-whitespace character. */
+        scanf(" %c", &tryOthers);
+        if (searchType == searchMenuSize) {
+          break;
+        }
+    
+        if (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y') {
+          clearWord(cursorYpos, strlen("Do you want to try other sorting algorithms? [Y/N] "), SET_WIDTH);
+          moveCursor(0, cursorYpos + 3);
+          displayCenterText("Invalid answer");
+          moveCursor(0, cursorYpos);
+        }
+      } while (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y');
+      
+      if (tryOthers == 'y' || tryOthers == 'Y') {
 
-  printf("\n\n");
+        clearLines(cursorYpos, cursorYpos + 3);
+        moveCursor(0, cursorYpos);
+        continue;
+      }
+      
+      // If the user chose 'n' or 'N', exit the loop
+      break;
+    } else {
+      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+      moveCursor(0, cursorYpos + 6);
+      displayCenterText("Invalid Choice");
+      printf("\n");
+      displayCenterText("Please pick a number from the given options only");
+      printf("\n");
+      moveCursor(0, beforeQueryPos);
+    }
 
-  displayCenterText("Press Any Key To Exit");
-  hideCursor();
-  anyChar = _getch();
+  } while (searchType != searchMenuSize);
 }
 void algorithms() {
   system("cls");
@@ -481,7 +558,7 @@ void algorithms() {
     moveCursor(0, cursorYpos + 2);
     printf("Did you know?\n");
     // Must make a function that prints within the set width
-    printf("Algorithms are like the special instructions that help you turn a bag of LEGO bricks into an amazing castle!\n");
+    printf("Algorithms are like the special instructions that help you\nturn a bag of LEGO bricks into an amazing castle!\n");
 
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
@@ -490,18 +567,12 @@ void algorithms() {
     if (chosenOption > 0 && chosenOption <= algoMenuSize) {
       switch (chosenOption) {
         case 1:
-          /*system("cls");
-          programHeader("Searching Algorithms");
-          printf("\n\nFunction is not yet done...");
-          promptExit();*/
           searching();
+          system("cls");
           break;
         case 2:
-          /*system("cls");
-          programHeader("Sorting Algorithms");
-          printf("\n\nFunction is not yet done...");
-          promptExit();*/
           sorting();
+          system("cls");
           break;
         case 3:
           system("cls");
@@ -518,7 +589,7 @@ void algorithms() {
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
 
       // Move from +2 to +5 to accommodate the trivia
-      moveCursor(0, cursorYpos + 5);
+      moveCursor(0, cursorYpos + 6);
 
       displayCenterText("Invalid Choice");
       printf("\n");
@@ -867,6 +938,7 @@ int linearSearch(int array[], int n, int x) {
   return -1;
 }
 void search(int array[], int size, int key, int searchType) {
+  system("cls");
   if (searchType == 1) {
     programHeader("Linear Search");
     printf("Your Array:\n");
