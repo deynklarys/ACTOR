@@ -217,6 +217,49 @@ void sorting() {
 }
 
 
+void search(int array[], int size, int sortType) {
+
+}
+void searching() {
+  system("cls");
+  programHeader("Sorting Algorithms");
+  int arrSize;
+  int givenArray[ARRAY_MAX_LENGTH];
+  printf("Enter array size: ");
+  scanf("%d", &arrSize);
+  printf("Enter your elements in the array:\n");
+  for (int i = 0; i < arrSize; i++) {
+    printf("\tarray[%d]: ", i);
+    scanf("%d", &givenArray[i]);
+  }
+
+  system("cls");
+
+  printf("Given array: ");
+  for (int i = 0; i < arrSize; i++) {
+    printf("%d ", givenArray[i]);
+  }
+  printf("\n");
+
+  char *searchMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
+  int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]); 
+
+  printf("What type of searching algorithm do you want to choose?\n");
+  printMenu(searchMenu, searchMenuSize);
+  int searchType;
+  scanf("%d", &searchType);
+
+  system("cls");
+  search(givenArray, arrSize, searchType);
+
+  printf("\n\n");
+
+  displayCenterText("Press Any Key To Exit");
+  hideCursor();
+  anyChar = _getch();
+}
+
+
 int main () {
   system("cls");
   char *algorithmsMenu[] = {"Searching", "Sorting", "Exit", "Quit"};
