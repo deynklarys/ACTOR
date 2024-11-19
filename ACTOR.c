@@ -8,10 +8,11 @@
 #define SUBSTRINGS_MAX_LENGTH 500
 #define true 1
 #define false 0
+#define SET_WIDTH 80
+#define SET_HEIGHT 24
 
-
-int setWidth = 80;
-int setHeight = 24;
+int terminalWidth = 0;
+int terminalHeight = 0;
 int anyChar;
 
 // Utility functions 
@@ -84,7 +85,7 @@ int main () {
 
     getTerminalSize();
 
-    if (terminalWidth != setWidth && terminalHeight != setHeight) {
+    if (terminalWidth != SET_WIDTH && terminalHeight != SET_HEIGHT) {
       print("The terminal size is not suitable for this program. It must be 80 characters  width and 24 lines height. Please resize the program and rerun the program. Thank you!");
       return 0;
     }
@@ -135,7 +136,7 @@ int main () {
           break;
         case 4: 
           system("cls");
-          moveCursor(0, setHeight / 2 - 1);
+          moveCursor(0, SET_HEIGHT / 2 - 1);
           displayCenterText("Quitting ACTOR...");
           hideCursor();
           Sleep(1000);
@@ -145,7 +146,7 @@ int main () {
       }
 
     } else { 
-      clearWord(cursorYpos, strlen("Choose a number: "), setWidth);
+      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
 
       moveCursor(0, cursorYpos + 2);
 
@@ -165,15 +166,15 @@ void getTerminalSize() {
     /* Function to get the terminal size. */
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	setWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	setHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;  
+	terminalWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	terminalHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;  
 
-  printf("setWidth: %d \nsetHeight: %d \n", setWidth, setHeight);
+  printf("terminalWidth: %d \nterminalHeight: %d \n", terminalWidth, terminalHeight);
 }
 // Prints without the border. It can be later modified to include borderlines if I'm already certain that the application has borderlines throughout. 
 void displayCenterText(char *message) {
   int length = strlen(message);
-  int startIndex = (setWidth - length) / 2;
+  int startIndex = (SET_WIDTH - length) / 2;
   for (int i = 0; i < startIndex - 1; i++) {
     printf(" ");
   }
@@ -217,7 +218,7 @@ void clearLines(int startLine, int endLine) {
     hideCursor();
 	for (int i = startLine; i <= endLine; i++) {
 		moveCursor(0, i);
-		for (int j = 0; j < setWidth; j++) {
+		for (int j = 0; j < SET_WIDTH; j++) {
 			printf(" ");
 		}
 	}
@@ -239,7 +240,7 @@ void programHeader(char *header) {
   /* Move cursor at the top of the file */
   moveCursor(0,0);
   
-  for (int i = 1; i <= setWidth; i++) {
+  for (int i = 1; i <= SET_WIDTH; i++) {
     printf("-");
   }
   printf("\n");
@@ -247,7 +248,7 @@ void programHeader(char *header) {
   displayCenterText(header);
   printf("\n");
 
-  for (int i = 1; i <= setWidth; i++) {
+  for (int i = 1; i <= SET_WIDTH; i++) {
     printf("-");
   }
   printf("\n\n");
@@ -299,33 +300,33 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
 // Screen handlers function definitions
 void welcomeScreen () {
   // system("cls");
-  for (int i = 1; i <= setWidth; i++) {
-    i == 1 || i == setWidth ? printf(" ") : printf("-");
+  for (int i = 1; i <= SET_WIDTH; i++) {
+    i == 1 || i == SET_WIDTH ? printf(" ") : printf("-");
   }
   printf("\n");
 
-  for (int i = 2; i < setHeight; i++) {
-    if (i == setHeight / 3 || i == 4 * (setHeight / 6) || i == 4 * (setHeight / 6) + 1 || i == setHeight - 3) {
+  for (int i = 2; i < SET_HEIGHT; i++) {
+    if (i == SET_HEIGHT / 3 || i == 4 * (SET_HEIGHT / 6) || i == 4 * (SET_HEIGHT / 6) + 1 || i == SET_HEIGHT - 3) {
       printf("|");
-      if (i == setHeight / 3)
+      if (i == SET_HEIGHT / 3)
         displayCenterText("WELCOME TO DATA STRUCTURES AND ALGORITHMS");
-      if (i == 4 * (setHeight / 6))
+      if (i == 4 * (SET_HEIGHT / 6))
         displayCenterText("Deanne Clarice C. Bea");
-      if (i == 4 * (setHeight / 6) + 1)
+      if (i == 4 * (SET_HEIGHT / 6) + 1)
         displayCenterText("BS Computer Science 2A");
-      if (i == setHeight - 3)
+      if (i == SET_HEIGHT - 3)
         displayCenterText("Press Any Key To Continue");
       printf("|\n");
       continue;
     }
-    for (int j = 1 ; j <= setWidth; j++) {
-      j == 1 || j == setWidth ? printf("|") : printf(" ");
+    for (int j = 1 ; j <= SET_WIDTH; j++) {
+      j == 1 || j == SET_WIDTH ? printf("|") : printf(" ");
     }
     printf("\n");
   }
 
-  for (int i = 1; i <= setWidth; i++) {
-    i == 1 || i == setWidth ? printf(" ") : printf("-");
+  for (int i = 1; i <= SET_WIDTH; i++) {
+    i == 1 || i == SET_WIDTH ? printf(" ") : printf("-");
   }
     printf("\n");
 
@@ -415,7 +416,7 @@ void algorithms() {
           break;
         case 3:
           system("cls");
-          moveCursor(0, setHeight / 2 - 1);
+          moveCursor(0, SET_HEIGHT / 2 - 1);
           displayCenterText("Exiting Algorithms...");
           hideCursor();
           Sleep(1000);
@@ -425,7 +426,7 @@ void algorithms() {
       }
 
     } else { 
-      clearWord(cursorYpos, strlen("Choose a number: "), setWidth);
+      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
 
       // Move from +2 to +5 to accommodate the trivia
       moveCursor(0, cursorYpos + 5);
@@ -449,7 +450,7 @@ void about() {
   char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
   int paragraphSubstringsCount = 0;
 
-  int lineWidth = setWidth * 0.7; 
+  int lineWidth = SET_WIDTH * 0.7; 
   int phraseToCopy = lineWidth;
 
   for (int i = 0; i < messageSize; i++) {
