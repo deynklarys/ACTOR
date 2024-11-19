@@ -306,15 +306,16 @@ void searching() {
   printf("What type of searching algorithm do you want to do?\n");
   printMenu(searchMenu, searchMenuSize);
 
-  // int cursorXpos, cursorYpos;
-  // getCursorPos(&cursorXpos, &cursorYpos);
+  int cursorXpos, cursorYpos;
+  getCursorPos(&cursorXpos, &cursorYpos);
   int searchType;
+
+  moveCursor(0, cursorYpos + 2);
+  printf("Note: Binary search will sort the array first and will return a\nposition based from the sorted array.");
+  
+  moveCursor(cursorXpos,cursorYpos);
   scanf("%d", &searchType);
   system("cls");
-
-  // Add note that Binary search will sort the array first and will return a position based from the sorted array.
-  // moveCursor(0, cursorYpos + 2);
-  // printf("");
 
   search(givenArray, arrSize, key, searchType);
 
