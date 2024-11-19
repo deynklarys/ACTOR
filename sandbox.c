@@ -67,27 +67,35 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][500], int *paragra
 // Function to print paragraphs within setWidth that takes an array of strings
 // printWithinWidth(char* message[])
 int main () {
-  while (1) {
-    int arrSize;
+    int arrSize = 0;
     int givenArray[ARRAY_MAX_LENGTH];
-    char *arrayString[ARRAY_MAX_LENGTH];
-    programHeader("Array Initialization");
-    printf("Enter your elements in the array separated by a single space:\n\t");
-    scanf("%s", &arrayString);
-    int i = 0, j = 0;
-    while (arrayString[i] != '\n') {
-      if (arrayString[i] != ' ') {
-        givenArray[j++] = (int *) arrayString[i++];
-      } else {
-        i++;
-        continue;
-      }
+    int num;
+    char ch;
 
+    // Prompt the user to enter elements
+    printf("Enter elements (space-separated, press Enter to finish):\n");
+
+    while (1) {
+        // Read an integer
+        if (scanf("%d", &num) == 1) {
+            givenArray[arrSize++] = num;
+        } else {
+            break;
+        }
+
+        // Read the next character
+        ch = getchar();
+        if (ch == '\n') {
+            break;
+        }
     }
 
-    
-
-  }
+    // Print the array to verify the result
+    printf("Array elements:\n");
+    for (int i = 0; i < arrSize; i++) {
+        printf("%d ", givenArray[i]);
+    }
+    printf("\n");
 }
 
 
