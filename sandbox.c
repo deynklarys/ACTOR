@@ -405,6 +405,7 @@ void sorting() {
 
   promptExit();
   system("cls");
+<<<<<<< HEAD
   programHeader("Searching Algorithms");
   int arrSize = 0;
   int givenArray[ARRAY_MAX_LENGTH];
@@ -457,6 +458,8 @@ void sorting() {
   displayCenterText("Press Any Key To Exit");
   hideCursor();
   anyChar = _getch();
+=======
+>>>>>>> e92fd5d3f81c17ca7657bae3fd2ad8e7fa9ecfbd
 }
 void algorithms() {
   system("cls");
@@ -487,8 +490,12 @@ void algorithms() {
           /*system("cls");
           programHeader("Searching Algorithms");
           printf("\n\nFunction is not yet done...");
+<<<<<<< HEAD
           promptExit();*/
           searching();
+=======
+          promptExit();
+>>>>>>> e92fd5d3f81c17ca7657bae3fd2ad8e7fa9ecfbd
           break;
         case 2:
           /*system("cls");
