@@ -403,7 +403,13 @@ void sorting() {
   printArray(givenArray, arrSize);
   sort (givenArray, arrSize, sortType);
 
-  promptExit();
+  printf("\n\n");
+
+  displayCenterText("Press Any Key To Exit");
+  hideCursor();
+  anyChar = _getch();
+}
+void searching() {
   system("cls");
   programHeader("Searching Algorithms");
   int arrSize = 0;
