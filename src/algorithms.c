@@ -202,18 +202,10 @@ void sorting() {
       }
   }
 
-  // Print the array to verify the result
-  printf("Your array elements:\n");
-  for (int i = 0; i < arrSize; i++) {
-      printf("%d ", givenArray[i]);
-  }
-  printf("\n");
-
-
   char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
 
-  printf("What type of sorting algorithm do you want to do?\n");
+  printf("\nWhat type of sorting algorithm do you want to do?\n");
   printMenu(sortMenu, sortMenuSize);
   int sortType;
   scanf("%d", &sortType);
@@ -297,7 +289,6 @@ void searching() {
       }
   }
 
-
   printf("\nWhat element is to be find? ");
   int key;
   scanf("%d", &key);
@@ -312,6 +303,7 @@ void searching() {
   // getCursorPos(&cursorXpos, &cursorYpos);
   int searchType;
   scanf("%d", &searchType);
+  system("cls");
 
   // Add note that Binary search will sort the array first and will return a position based from the sorted array.
   // moveCursor(0, cursorYpos + 2);
