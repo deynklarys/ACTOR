@@ -211,6 +211,9 @@ void sorting() {
   scanf("%d", &sortType);
 
   system("cls");
+  programHeader("Sorting Algorithms");
+  printf("Your Array:\n");
+  printArray(givenArray, arrSize);
   sort (givenArray, arrSize, sortType);
 
   printf("\n\n");
@@ -248,6 +251,8 @@ int linearSearch(int array[], int n, int x) {
 void search(int array[], int size, int key, int searchType) {
   if (searchType == 1) {
     programHeader("Linear Search");
+    printf("Your Array:\n");
+    printArray(array, size);
     int linearResult = linearSearch(array, size, key);
     if (linearResult == -1)
       printf("Element is not found in the array");
@@ -255,6 +260,8 @@ void search(int array[], int size, int key, int searchType) {
       printf("Element is found at index %d", linearResult + 1);
   } else if (searchType == 2) {
     programHeader("Binary Search");
+    printf("Your Array:\n");
+    printArray(array, size);
     sort (array, size, 9);
     int binaryResult = binarySearch(array, key, 0, size - 1);
     if (binaryResult == -1)
@@ -656,9 +663,6 @@ void heapSort(int array[], int size) {
 }
 
 void sort(int array[], int size, int sortType) {
-  printf("Your Array:\n");
-  printArray(array, size);
-
   printf("Sorted array using ");
 
   switch (sortType) {
