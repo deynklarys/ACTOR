@@ -28,6 +28,8 @@ void clearPrompts(char *header);
 void programHeader(char *header);
 void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
+void printWithinWidth(char *message[], int messageSize, char *header);
+
 
 // Screen handlers
 void welcomeScreen ();
@@ -295,6 +297,25 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
     }
   }
 }
+void printWithinWidth(char *message[], int messageSize, char *header) {
+  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+  int paragraphSubstringsCount = 0;
+
+  int lineWidth = SET_WIDTH * 0.7; 
+  int phraseToCopy = lineWidth;
+
+  for (int i = 0; i < messageSize; i++) {
+    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+  }
+
+  programHeader(header);
+  printf("\n");
+
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    displayCenterText(paragraphSubstrings[i]);
+    printf("\n");
+  }
+}
 
 
 // Screen handlers function definitions
@@ -447,23 +468,7 @@ void about() {
   char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n", "Pens and papers is one way of learning; practical implementation is understanding of it\n"};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
-  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
-  int paragraphSubstringsCount = 0;
-
-  int lineWidth = SET_WIDTH * 0.7; 
-  int phraseToCopy = lineWidth;
-
-  for (int i = 0; i < messageSize; i++) {
-    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
-  }
-
-  programHeader("About ACTOR");
-  printf("\n");
-
-  for (int i = 0; i < paragraphSubstringsCount; i++) {
-    displayCenterText(paragraphSubstrings[i]);
-    printf("\n");
-  }
+  printWithinWidth(message, messageSize, "About ACTOR");
   
   printf("\n\n\n");
   displayCenterText("Press Any Key To Exit");
