@@ -53,31 +53,24 @@ void algorithms();
 void about();
 
 // Arrays Function Declarations
-void printArray(int array[], int size);
-void swap(int *a, int *b);
-
+  void printArray(int array[], int size);
+  void swap(int *a, int *b);
 void bubbleSort(int array[], int size);
 void selectionSort(int array[], int size);
 void insertionSort(int array[], int size);
-
-int isArraySorted(int array[], int size);
-void shuffle(int array[], int size);
+  int isArraySorted(int array[], int size);
+  void shuffle(int array[], int size);
 void randomSort(int array[], int size);
-
-void merge(int array[], int leftIndex, int mid, int rightIndex);
+  void merge(int array[], int leftIndex, int mid, int rightIndex);
 void mergeSort(int array[], int leftIndex, int rightIndex);
-
-int partitionLomuto(int array[], int first, int last);
-int partitionHoare(int array[], int first, int last);
+  int partitionLomuto(int array[], int first, int last);
+  int partitionHoare(int array[], int first, int last);
 void quickSortLomuto(int array[], int first, int last);
 void quickSortHoare(int array[], int first, int last);
-
-void countRadixSort(int array[], int size, int placeValue);
+  void countRadixSort(int array[], int size, int placeValue);
 void radixSort(int array[], int size);
-
-void heapify(int array[], int size, int i);
+  void heapify(int array[], int size, int i);
 void heapSort(int array[], int size);
-
 void sort(int array[], int size, int sortType);
 
 int main () {
@@ -558,7 +551,6 @@ void countSort(int array[], int size) {
   for (int i = 0; i < size; i++)
     array[i] = outputArray[i];
 }
-
 int isArraySorted (int array[], int size) {
   for (int i = 1; i < size; i++) {
     if (array[i] < array [i - 1]){
@@ -579,8 +571,6 @@ void randomSort(int array[], int size) {
     shuffle(array, size);
   }
 }
-
-// Merge sort has another algorithm that is probably more efficient, which uses only one temporary array and takes five parameters in the merge function. It as well requires a base case to stop the recursion. Other algorithm will be added in the future.
 void merge(int array[], int leftIndex, int mid, int rightIndex) {
   int i, j, k;
   int leftArrSize = mid - leftIndex + 1;
@@ -627,7 +617,6 @@ void mergeSort (int array[], int leftIndex, int rightIndex) {
     merge(array, leftIndex, mid, rightIndex);
   }
 }
-
 int partitionLomuto(int array[], int first, int last) {
     int pivot = array[last];
     int i = first - 1;
@@ -672,7 +661,6 @@ void quickSortHoare(int array[], int first, int last) {
     quickSortHoare(array, partitionIndex + 1, last);
   }
 }
-
 void countRadixSort (int array[], int size, int placeValue) {
   int *outputArray = (int *)malloc((size) * sizeof(int));
   for (int i = 0; i < size; i++)
@@ -703,7 +691,6 @@ void radixSort(int array[], int size) {
   for (int placeValue = 1; max / placeValue > 0; placeValue *= 10)
     countRadixSort(array, size, placeValue);
 }
-
 void heapify(int array[], int size, int i) {
   int largest = i; 
   int leftIndex = 2 * i + 1; 
@@ -731,7 +718,6 @@ void heapSort(int array[], int size) {
     heapify(array, i, 0);
   }
 }
-
 void sort(int array[], int size, int sortType) {
   printf("Given Array:\n");
   printArray(array, size);
