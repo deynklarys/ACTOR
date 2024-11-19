@@ -176,58 +176,39 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
   }
 }
 
-void initializeArray() {
-    int arrSize = 0;
-    int givenArray[ARRAY_MAX_LENGTH];
-    int num;
-    char ch;
-
-    // Prompt the user to enter elements
-    printf("Enter elements (space-separated, press Enter to finish):\n");
-
-    while (1) {
-        // Read an integer
-        if (scanf("%d", &num) == 1) {
-            givenArray[arrSize++] = num;
-        } else {
-            break;
-        }
-
-        // Read the next character
-        ch = getchar();
-        if (ch == '\n') {
-            break;
-        }
-    }
-
-    // Print the array to verify the result
-    printf("Array elements:\n");
-    for (int i = 0; i < arrSize; i++) {
-        printf("%d ", givenArray[i]);
-    }
-    printf("\n");
-}
-
 void sorting() {
   system("cls");
   programHeader("Sorting Algorithms");
-  int arrSize;
+
+  int arrSize = 0;
   int givenArray[ARRAY_MAX_LENGTH];
-  printf("Enter array size: ");
-  scanf("%d", &arrSize);
-  printf("Enter your elements in the array:\n");
-  for (int i = 0; i < arrSize; i++) {
-    printf("\tarray[%d]: ", i);
-    scanf("%d", &givenArray[i]);
+  int num;
+  char ch;
+
+  printf("Enter elements (space-separated, press Enter to finish):\n");
+
+  while (1) {
+      // Read an integer
+      if (scanf("%d", &num) == 1) {
+          givenArray[arrSize++] = num;
+      } else {
+          break;
+      }
+
+      // Read the next character
+      ch = getchar();
+      if (ch == '\n') {
+          break;
+      }
   }
 
-  system("cls");
-
-  printf("Given array: ");
+  // Print the array to verify the result
+  printf("Your array elements:\n");
   for (int i = 0; i < arrSize; i++) {
-    printf("%d ", givenArray[i]);
+      printf("%d ", givenArray[i]);
   }
   printf("\n");
+
 
   char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
@@ -291,21 +272,33 @@ void search(int array[], int size, int key, int searchType) {
 void searching() {
   system("cls");
   programHeader("Searching Algorithms");
-  int arrSize;
+  int arrSize = 0;
   int givenArray[ARRAY_MAX_LENGTH];
-  printf("Enter array size: ");
-  scanf("%d", &arrSize);
-  printf("Enter your elements in the array:\n");
-  for (int i = 0; i < arrSize; i++) {
-    printf("\tarray[%d]: ", i);
-    scanf("%d", &givenArray[i]);
+  int num;
+  char ch;
+
+  // Prompt the user to enter elements
+  printf("Enter elements (space-separated, press Enter to finish):\n");
+
+  while (1) {
+      // Read an integer
+      if (scanf("%d", &num) == 1) {
+          givenArray[arrSize++] = num;
+      } else {
+          break;
+      }
+
+      // Read the next character
+      ch = getchar();
+      if (ch == '\n') {
+          break;
+      }
   }
 
-  system("cls");
-
-  printf("Given array: ");
+  // Print the array to verify the result
+  printf("Your array elements:\n");
   for (int i = 0; i < arrSize; i++) {
-    printf("%d ", givenArray[i]);
+      printf("%d ", givenArray[i]);
   }
   printf("\n");
 
