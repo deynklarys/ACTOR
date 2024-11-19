@@ -346,19 +346,9 @@ int main () {
     if (chosenOption > 0 && chosenOption <= algoMenuSize) {
       switch (chosenOption) {
         case 1:
-          /*system("cls");
-          programHeader("Searching Algorithms");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();*/
           searching();
           break;
         case 2:
-          /* system("cls");
-          programHeader("Sorting Algorithms");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch(); */
           sorting();
           break;
         case 3:
