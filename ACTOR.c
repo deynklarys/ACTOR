@@ -27,6 +27,7 @@ void moveCursor(int Xpos, int Ypos);
 void clearLines(int startLine, int endLine);
 void clearWord(int Ypos, int startX, int endX);
 void clearPrompts(char *header);
+void promptExit();
 void programHeader(char *header);
 void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
@@ -229,6 +230,16 @@ void clearPrompts(char *header) {
     /* Function to clear the prompts of the program. It will essentially clear everything below the program header. */
     system("cls");
     programHeader(header);
+}
+void promptExit(){
+  do {
+  getCursorPos(&cursorXpos, &cursorYpos);
+  moveCursor(0, cursorYpos + 3);
+  displayCenterText("Press Enter To Exit");
+  hideCursor();
+  anyChar = _getch();
+  /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
+  } while (anyChar != '\r');
 }
 void programHeader(char *header) {
   /* Move cursor at the top of the file */

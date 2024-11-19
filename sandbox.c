@@ -13,7 +13,7 @@
 
 int terminalWidth = 0;
 int terminalHeight = 0;
-int anyChar;
+char anyChar;
 int chosenOption;
 int cursorXpos, cursorYpos;
 
@@ -31,6 +31,7 @@ void programHeader(char *header);
 void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
 void printWithinWidth(char *message[], int messageSize, char *header);
+void promptExit();
 
 
 // Screen handlers
@@ -461,10 +462,7 @@ void about() {
 
   printWithinWidth(message, messageSize, "About ACTOR");
   
-  printf("\n\n\n");
-  displayCenterText("Press Any Key To Exit");
-  hideCursor();
-  anyChar = _getch();
+  promptExit();
 }
 
 
