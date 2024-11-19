@@ -74,6 +74,11 @@ void radixSort(int array[], int size);
 void heapSort(int array[], int size);
 void sort(int array[], int size, int sortType);
 
+// Search functions
+int binarySearch(int array[], int key, int low, int high);
+int linearSearch(int array[], int n, int x);
+void search(int array[], int size, int key, int searchType);
+
 int main () {
   /*
     If the terminal screen is not 80 by 24 size, it will recommend to adjust the window size for better experience
@@ -230,6 +235,16 @@ void clearPrompts(char *header) {
     system("cls");
     programHeader(header);
 }
+void promptExit(){
+  do {
+  getCursorPos(&cursorXpos, &cursorYpos);
+  moveCursor(0, cursorYpos + 3);
+  displayCenterText("Press Enter To Exit");
+  hideCursor();
+  anyChar = _getch();
+  /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
+  } while (anyChar != '\r');
+}
 void programHeader(char *header) {
   /* Move cursor at the top of the file */
   moveCursor(0,0);
@@ -351,41 +366,97 @@ void welcomeScreen () {
 void sorting() {
   system("cls");
   programHeader("Sorting Algorithms");
-  int arrSize;
+
+  int arrSize = 0;
   int givenArray[ARRAY_MAX_LENGTH];
-  printf("Enter array size: ");
-  scanf("%d", &arrSize);
-  printf("Enter your elements in the array:\n");
-  for (int i = 0; i < arrSize; i++) {
-    printf("\tarray[%d]: ", i);
-    scanf("%d", &givenArray[i]);
-  }
+  int num;
+  char ch;
 
-  system("cls");
+  printf("Enter elements (space-separated, press Enter to finish):\n");
 
-  printf("Given array: ");
-  for (int i = 0; i < arrSize; i++) {
-    printf("%d ", givenArray[i]);
+  while (1) {
+      // Read an integer
+      if (scanf("%d", &num) == 1) {
+          givenArray[arrSize++] = num;
+      } else {
+          break;
+      }
+
+      // Read the next character
+      ch = getchar();
+      if (ch == '\n') {
+          break;
+      }
   }
-  printf("\n");
 
   char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
 
-  printf("What type of sorting algorithm do you want to choose?\n");
+  printf("\nWhat type of sorting algorithm do you want to do?\n");
   printMenu(sortMenu, sortMenuSize);
   int sortType;
   scanf("%d", &sortType);
 
   system("cls");
+  programHeader("Sorting Algorithms");
+  printf("Your Array:\n");
+  printArray(givenArray, arrSize);
   sort (givenArray, arrSize, sortType);
+
+  promptExit();
+  system("cls");
+  programHeader("Searching Algorithms");
+  int arrSize = 0;
+  int givenArray[ARRAY_MAX_LENGTH];
+  int num;
+  char ch;
+
+  // Prompt the user to enter elements
+  printf("Enter elements (space-separated, press Enter to finish):\n");
+
+  while (1) {
+      // Read an integer
+      if (scanf("%d", &num) == 1) {
+          givenArray[arrSize++] = num;
+      } else {
+          break;
+      }
+
+      // Read the next character
+      ch = getchar();
+      if (ch == '\n') {
+          break;
+      }
+  }
+
+  printf("\nWhat element is to be find? ");
+  int key;
+  scanf("%d", &key);
+
+  char *searchMenu[] = {"Linear Search", "Binary Search"};
+  int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]);
+
+  printf("What type of searching algorithm do you want to do?\n");
+  printMenu(searchMenu, searchMenuSize);
+
+  int cursorXpos, cursorYpos;
+  getCursorPos(&cursorXpos, &cursorYpos);
+  int searchType;
+
+  moveCursor(0, cursorYpos + 2);
+  printf("Note: Binary search will sort the array first and will return a\nposition based from the sorted array.");
+  
+  moveCursor(cursorXpos,cursorYpos);
+  scanf("%d", &searchType);
+  system("cls");
+
+  search(givenArray, arrSize, key, searchType);
 
   printf("\n\n");
 
   displayCenterText("Press Any Key To Exit");
   hideCursor();
   anyChar = _getch();
-  system("cls");
 }
 void algorithms() {
   system("cls");
@@ -716,8 +787,7 @@ void heapSort(int array[], int size) {
   }
 }
 void sort(int array[], int size, int sortType) {
-  printf("Given Array:\n");
-  printArray(array, size);
+  printf("Sorted array using ");
 
   switch (sortType) {
     case 1:
@@ -764,7 +834,54 @@ void sort(int array[], int size, int sortType) {
   printArray(array, size);
 }
 
+// Search functions
+int binarySearch(int array[], int key, int low, int high) {
+  if (high >= low) {
+    int mid = low + (high - low) / 2;
 
+    // If found at mid, then return it
+    if (key == array[mid])
+      return mid;
+
+    // Search the right half
+    if (key > array[mid])
+      return binarySearch(array, key, mid + 1, high);
+
+    // Search the left half
+    return binarySearch(array, key, low, mid - 1);
+  }
+  return -1;
+}
+int linearSearch(int array[], int n, int x) {
+  
+  // Going through array sequencially
+  for (int i = 0; i < n; i++)
+    if (array[i] == x)
+      return i;
+  return -1;
+}
+void search(int array[], int size, int key, int searchType) {
+  if (searchType == 1) {
+    programHeader("Linear Search");
+    printf("Your Array:\n");
+    printArray(array, size);
+    int linearResult = linearSearch(array, size, key);
+    if (linearResult == -1)
+      printf("Element is not found in the array");
+    else
+      printf("Element is found at index %d", linearResult + 1);
+  } else if (searchType == 2) {
+    programHeader("Binary Search");
+    printf("Your Array:\n");
+    printArray(array, size);
+    sort (array, size, 9);
+    int binaryResult = binarySearch(array, key, 0, size - 1);
+    if (binaryResult == -1)
+      printf("Element is not found in the array");
+    else
+      printf("Element is found at position %d", binaryResult + 1);
+  }
+}
 
 
 
