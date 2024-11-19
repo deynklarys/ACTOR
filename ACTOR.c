@@ -13,7 +13,7 @@
 
 int terminalWidth = 0;
 int terminalHeight = 0;
-int anyChar;
+char anyChar;
 int chosenOption;
 int cursorXpos, cursorYpos;
 
@@ -116,9 +116,8 @@ int main () {
         case 1:
           system("cls");
           programHeader("Data Structures");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();
+          printf("\n\nFunction is not yet done...");
+          promptExit();
           system("cls");
           break;
         case 2:
@@ -391,11 +390,7 @@ void sorting() {
   system("cls");
   sort (givenArray, arrSize, sortType);
 
-  printf("\n\n");
-
-  displayCenterText("Press Any Key To Exit");
-  hideCursor();
-  anyChar = _getch();
+  promptExit();
   system("cls");
 }
 void algorithms() {
@@ -425,16 +420,14 @@ void algorithms() {
         case 1:
           system("cls");
           programHeader("Searching Algorithms");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();
+          printf("\n\nFunction is not yet done...");
+          promptExit();
           break;
         case 2:
           /*system("cls");
           programHeader("Sorting Algorithms");
-          printf("\n\nFunction is not yet done...\n\n");
-          displayCenterText("Press Any Key To Exit");
-          anyChar = _getch();*/
+          printf("\n\nFunction is not yet done...");
+          promptExit();*/
           sorting();
           break;
         case 3:
@@ -472,10 +465,7 @@ void about() {
 
   printWithinWidth(message, messageSize, "About ACTOR");
   
-  printf("\n\n\n");
-  displayCenterText("Press Any Key To Exit");
-  hideCursor();
-  anyChar = _getch();
+  promptExit();
 }
 
 
