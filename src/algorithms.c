@@ -176,6 +176,29 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
   }
 }
 
+void initializeArray() {
+  while (1) {
+    int arrSize;
+    int givenArray[ARRAY_MAX_LENGTH];
+    char *arrayString[ARRAY_MAX_LENGTH];
+    programHeader("Array Initialization");
+    printf("Enter your elements in the array separated by a single space:\n\t");
+    scanf("%s", &arrayString);
+    int i = 0, j = 0;
+    while (arrayString[i] != '\n') {
+      if (arrayString[i] != ' ') {
+        givenArray[j++] = (int *) arrayString[i++];
+      } else {
+        i++;
+        continue;
+      }
+
+    }
+
+    
+
+  }
+}
 
 void sorting() {
   system("cls");

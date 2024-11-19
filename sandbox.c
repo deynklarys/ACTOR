@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
-#include "src/algorithms.h"
+#define ARRAY_MAX_LENGTH 1000
 
 int setWidth = 80;
 int setHeight = 24;
@@ -67,28 +67,27 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][500], int *paragra
 // Function to print paragraphs within setWidth that takes an array of strings
 // printWithinWidth(char* message[])
 int main () {
-  char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n", "Pens and papers is one way of learning; practical implementation is understanding of it\n"};
-  int messageSize = sizeof(message)/sizeof(message[0]);
+  while (1) {
+    int arrSize;
+    int givenArray[ARRAY_MAX_LENGTH];
+    char *arrayString[ARRAY_MAX_LENGTH];
+    programHeader("Array Initialization");
+    printf("Enter your elements in the array separated by a single space:\n\t");
+    scanf("%s", &arrayString);
+    int i = 0, j = 0;
+    while (arrayString[i] != '\n') {
+      if (arrayString[i] != ' ') {
+        givenArray[j++] = (int *) arrayString[i++];
+      } else {
+        i++;
+        continue;
+      }
 
-  char paragraphSubstrings[100][500];
-  int paragraphSubstringsCount = 0;
+    }
 
-  int lineWidth = setWidth * 0.7; 
-  int phraseToCopy = lineWidth;
+    
 
-  for (int i = 0; i < messageSize; i++) {
-    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
   }
-
-  programHeader("About ACTOR");
-  printf("\n");
-
-  for (int i = 0; i < paragraphSubstringsCount; i++) {
-    displayCenterText(paragraphSubstrings[i]);
-    printf("\n");
-  }
-
-  return 0;
 }
 
 
