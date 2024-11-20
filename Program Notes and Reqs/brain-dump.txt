@@ -1,0 +1,39 @@
+Requirements: 
+- Screen size: 80 x 24
+		- means kahit lakihan yung screen, the display is still 80 x 24 in the center
+- integer, character and string inputs
+
+ISSUES !!!
+ACTOR
+		DON'T USE _GETCH()
+
+sandbox
+	array initialization show cursor
+	add an example array
+
+
+Feedbacks:
+- use of "value" instead of "element"
+- display the key input
+- if want to find the same key, or use a different key
+- lagay ng path sa mga menu screens [breadcrumbs]
+
+Screen 1
+Welcome to Data Structures and Algorithm [ASCII art]
+
+Deanne Clarice C. Bea
+
+BSCS 2A
+
+Press any key to continue
+
+Screen 2
+1) Data Structures
+2) Algorithms
+3) About [optional]
+	Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.
+
+	Pens and papers is one way of learning, making an application is another level of it.
+	Pens and papers is one way of learning; practical implementation is understanding of it
+
+4) Quit
