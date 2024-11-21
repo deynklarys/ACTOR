@@ -79,9 +79,45 @@ int binarySearch(int array[], int key, int low, int high);
 int linearSearch(int array[], int n, int x);
 void search(int array[], int size, int key, int searchType);
 
+void checkTerminalsize () {
+  system("cls");
+  getTerminalSize();
+
+  for (int i = 1; i <= SET_WIDTH; i++) {
+    i == 1 || i == SET_WIDTH ? printf(" ") : printf("-");
+  }
+  printf("\n");
+
+  for (int i = 2; i < SET_HEIGHT; i++) {
+    if (i >= SET_HEIGHT / 2 & i <= SET_HEIGHT / 2 + 3) {
+      printf("|");
+      if (i == SET_HEIGHT / 2)
+        displayCenterText("Please resize your terminal to at least");
+      if (i == SET_HEIGHT / 2 + 1)
+        displayCenterText("80 columns width and 24 rows height.");
+      if (i == SET_HEIGHT / 2 + 2)
+        displayCenterText("Follow the border of dashes as guide.");
+      if (i == SET_HEIGHT / 2 + 3)
+        displayCenterText("Restart the program.");
+      printf("|\n");
+      continue;
+    }
+    for (int j = 1 ; j <= SET_WIDTH; j++) {
+      j == 1 || j == SET_WIDTH ? printf("|") : printf(" ");
+    }
+    printf("\n");
+  }
+
+  for (int i = 1; i <= SET_WIDTH; i++) {
+    i == 1 || i == SET_WIDTH ? printf(" ") : printf("-");
+  }
+    printf("\n");
+
+  hideCursor();
+}
+
 int main () {
-       
-                   
+                  
   return 0;
 }
 
@@ -93,7 +129,7 @@ void getTerminalSize() {
 	terminalWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
 	terminalHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;  
 
-  printf("terminalWidth: %d \nterminalHeight: %d \n", terminalWidth, terminalHeight);
+  // printf("terminalWidth: %d \nterminalHeight: %d \n", terminalWidth, terminalHeight);
 }
 // Prints without the border. It can be later modified to include borderlines if I'm already certain that the application has borderlines throughout. 
 void displayCenterText(char *message) {
