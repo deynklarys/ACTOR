@@ -3,12 +3,12 @@
 #include <conio.h> // for _getch()
 #include "utility.h"
 
-void traverse(int arr[], int size);
-int search(int arr[], int size, int key);
-void insert(int arr[], int *n, int key, int position);
-void delete(int arr[], int *n, int position);
-void mergeArrays(int arr1[], int size1, int arr2[], int size2, int mergedArray[]);
-void merge() {
+void traverseArray (int arr[], int size);
+int searchArray (int arr[], int size, int key);
+void insertArray (int arr[], int *n, int key, int position);
+void deleteArray (int arr[], int *n, int position);
+void mergeArray(int arr1[], int size1, int arr2[], int size2, int mergedArray[]);
+void mergedArr() {
   int arr1[] = {1, 2, 3, 4, 5};
   int arr2[] = {6, 7, 8, 9, 10};
   int size1 = sizeof(arr1) / sizeof(arr1[0]);
@@ -30,14 +30,14 @@ int main () {
   return 0;
 }
 
-void traverse (int arr[], int size) {
+void traverseArray (int arr[], int size) {
   for (int i = 0; i < size; i++) {
     printf("%d ", arr[i]);
   }
   printf("\n");
 }
 
-int search (int arr[], int size, int key) {
+int searchArray (int arr[], int size, int key) {
   for (int i = 0; i < size; i++) {
     if (arr[i] == key) {
       return i;
@@ -46,7 +46,7 @@ int search (int arr[], int size, int key) {
   return -1;
 }
 
-void insert (int arr[], int *n, int key, int position) {
+void insertArray (int arr[], int *n, int key, int position) {
   for (int i = *n - 1; i >= position; i--) {
     arr[i + 1] = arr[i];
   }
@@ -54,14 +54,14 @@ void insert (int arr[], int *n, int key, int position) {
   (*n)++;
 }
 
-void delete (int arr[], int *n, int position) {
+void deleteArray (int arr[], int *n, int position) {
   for (int i = position; i < *n - 1; i++) {
     arr[i] = arr[i + 1];
   }
   (*n)--;
 }
 
-void mergeArr(int arr1[], int size1, int arr2[], int size2, int mergedArray[]) {
+void mergeArray(int arr1[], int size1, int arr2[], int size2, int mergedArray[]) {
     int i, j;
 
     // Copy elements from the first array
