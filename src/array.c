@@ -25,10 +25,6 @@ void delete();
   void deleteFromMiddle();
 void merge();
 void sort();
-void clearInputBuffer() {
-  int c;
-  while ((c = getchar()) != '\n' && c != EOF);
-}
 
 int main () {
   char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};

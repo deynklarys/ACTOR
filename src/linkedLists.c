@@ -25,10 +25,6 @@ void delete();
   void deleteFromMiddle();
 void mergeLists();
 void sortList();
-void clearInputBuffer() {
-  int c;
-  while ((c = getchar()) != '\n' && c != EOF);
-}
 
 int main () {
   char *linkedListMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};

@@ -14,10 +14,51 @@ void deleteStr (char *string[], int position, int length); // deletes the substr
 char *insertStr (char *string[], char *stringToInsert[], int position); // inserts stringToInsert into string at position
 int compareStr (char *string1[], char *string2[]); // returns 0 if string1 and string2 are equal, -1 if string1 < string2, 1 if string1 > string2
 
-
-
-
 int main () {
+  char *stringsMenu[] = {"Find a letter", "Replace a letter", "Insert a letter", "Delete a letter", "Exit"};
+  int stringsMenuSize = sizeof(stringsMenu) / sizeof(stringsMenu[0]);
+  int chosenOption;
+
+
+  do {
+    programHeader("Linked List");
+    printMenu(stringsMenu, stringsMenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Arrays");
+        traverseList();
+        break;
+      case 2:
+        functionNotDone("Linked Lists");
+        searchList();
+        break;
+      case 3:
+        functionNotDone("Stacks");
+        insert();
+        break;
+      case 4:
+        functionNotDone("Queues");
+        delete();
+        break;
+      case 5:
+        promptExit();
+        break;
+      default:
+        printf("Invalid choice. Please choose a valid option.\n");
+    }
+
+    // if (chosenOption != 7) {
+    //   printf("Press any key to continue...\n");
+    //   getch(); // Wait for user input before continuing
+    // }
+
+  } while (chosenOption != stringsMenuSize);
 
   return 0;
 }
