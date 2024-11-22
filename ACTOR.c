@@ -107,10 +107,12 @@ int main () {
           system("cls");
           break;
         case 2:
+          system("cls");
           algorithms();
           system("cls");
           break;
-        case 3: 
+        case 3:
+          system("cls");
           about();
           system("cls");
           showCursor();
@@ -205,7 +207,6 @@ void dataStructures () {
 }
 
 void sorting() {
-  system("cls");
   programHeader("Sorting Algorithms");
 
   int arrSize = 0;
@@ -292,7 +293,6 @@ void sorting() {
   } while (sortType != sortMenuSize);
 }
 void searching() {
-  system("cls");
   programHeader("Searching Algorithms");
   int arrSize = 0;
   int givenArray[ARRAY_MAX_LENGTH];
@@ -383,7 +383,6 @@ void searching() {
   } while (searchType != searchMenuSize);
 }
 void algorithms() {
-  system("cls");
   char *algorithmsMenu[] = {"Searching", "Sorting", "Exit"};
   int algoMenuSize = sizeof(algorithmsMenu) / sizeof(algorithmsMenu[0]);
 
@@ -411,10 +410,12 @@ void algorithms() {
 
       switch (chosenOption) {
         case 1:
+          system("cls");
           searching();
           system("cls");
           break;
         case 2:
+          system("cls");
           sorting();
           system("cls");
           break;
@@ -437,7 +438,6 @@ void algorithms() {
 }
 
 void about() {
-  system("cls");
   char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n", "Pens and papers is one way of learning; practical implementation is understanding of it\n"};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
