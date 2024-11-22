@@ -14,7 +14,7 @@
 int terminalWidth = 0;
 int terminalHeight = 0;
 char anyChar;
-int cursorXpos, cursorYpos;
+int exitXpos, exitYpos;
 
 // Utility function definitions
 void getTerminalSize() {
@@ -93,8 +93,8 @@ void clearPrompts(char *header) {
 }
 void promptExit(){
   do {
-  getCursorPos(&cursorXpos, &cursorYpos);
-  moveCursor(0, cursorYpos + 3);
+  getCursorPos(&exitXpos, &exitYpos);
+  moveCursor(0, exitYpos + 3);
   displayCenterText("Press Enter To Exit");
   hideCursor();
   anyChar = _getch();
