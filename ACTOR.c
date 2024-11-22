@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
+#include "utility.h"
 
 #define ARRAY_MAX_LENGTH 1000
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
@@ -11,9 +12,6 @@
 #define SET_WIDTH 80
 #define SET_HEIGHT 24
 
-int terminalWidth = 0;
-int terminalHeight = 0;
-char anyChar;
 int chosenOption;
 int cursorXpos, cursorYpos;
 
@@ -78,7 +76,7 @@ int main () {
   */
   welcomeScreen();
 
-  anyChar = _getch(); // Use _getch() to read a single character without echoing
+  getch(); // Use _getch() to read a single character without echoing
 
   system("cls");
   showCursor();
@@ -91,15 +89,17 @@ int main () {
     programHeader("Data Structures and Algorithms");
 
     printf("What do you want to learn about?\n");
-    for (int i = 0; i < mainMenuSize; i++) {
-      printf("%d) %s\n", i+1, mainMenu[i]);
-    }
-    printf("Choose a number: ");
+    printMenu(mainMenu, mainMenuSize);
     /* Get the current position of the cursor after the prompt. This coordinate will be used to bring back the cursor at this position when the user inputs an invalid option and the option that they typed is cleared. */
     getCursorPos(&cursorXpos, &cursorYpos);
-    scanf("%d", &chosenOption);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("\n");
+      displayCenterText("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+      continue;
+    }
 
-    if (chosenOption > 0 && chosenOption <= mainMenuSize) {
       switch (chosenOption) {
         case 1:
           system("cls");
@@ -110,6 +110,7 @@ int main () {
           break;
         case 2:
           algorithms();
+          system("cls");
           break;
         case 3: 
           about();
@@ -124,19 +125,12 @@ int main () {
           Sleep(1000);
           break;
         default:
+          clearInputBuffer(); // Clear invalid input
+          printf("\n");
+          displayCenterText("Invalid input. Please enter a number.\n");
+          clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
           break; 
       }
-
-    } else { 
-      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
-
-      moveCursor(0, cursorYpos + 2);
-
-      displayCenterText("Invalid Choice");
-      printf("\n");
-      displayCenterText("Please pick a number from the given options only");
-      printf("\n");
-    }
 
   } while (chosenOption != mainMenuSize);             
                    
@@ -378,9 +372,12 @@ void algorithms() {
 
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
-    scanf("%d", &chosenOption);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
 
-    if (chosenOption > 0 && chosenOption <= algoMenuSize) {
       switch (chosenOption) {
         case 1:
           searching();
@@ -398,24 +395,12 @@ void algorithms() {
           Sleep(1000);
           break;
         default:
+          moveCursor(0, cursorYpos + 6);
+          printf("Invalid choice. Please choose a valid option.\n");
           break; 
       }
 
-    } else { 
-      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
-
-      // Move from +2 to +5 to accommodate the trivia
-      moveCursor(0, cursorYpos + 6);
-
-      displayCenterText("Invalid Choice");
-      printf("\n");
-      displayCenterText("Please pick a number from the given options only");
-      printf("\n");
-    }
-
   } while (chosenOption != algoMenuSize);
-
-  system("cls");
 }
 
 void about() {
