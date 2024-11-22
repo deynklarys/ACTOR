@@ -54,12 +54,6 @@ int main () {
       default:
         printf("Invalid choice. Please choose a valid option.\n");
     }
-
-    // if (chosenOption != stacksMenuSize) {
-    //   printf("Press any key to continue...\n");
-    //   getch(); // Wait for user input before continuing
-    // }
-
   } while (chosenOption != stacksMenuSize);
 
   return 0;

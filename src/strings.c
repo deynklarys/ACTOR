@@ -52,12 +52,6 @@ int main () {
       default:
         printf("Invalid choice. Please choose a valid option.\n");
     }
-
-    // if (chosenOption != 7) {
-    //   printf("Press any key to continue...\n");
-    //   getch(); // Wait for user input before continuing
-    // }
-
   } while (chosenOption != stringsMenuSize);
 
   return 0;

@@ -173,6 +173,296 @@ void welcomeScreen () {
   hideCursor();
 }
 
+void trees () {
+
+}
+void graphs () {
+
+}
+void nonlinearDS () {
+
+}
+void arrays () {
+  char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};
+  int arraysMenuSize = sizeof(arraysMenu) / sizeof(arraysMenu[0]);
+  int chosenOption;
+
+  do {
+    programHeader("Arrays");
+    printMenu(arraysMenu, arraysMenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Traverse");
+        traverse();
+        break;
+      case 2:
+        functionNotDone("Search");
+        // search();
+        break;
+      case 3:
+        functionNotDone("Insert");
+        insert();
+        break;
+      case 4:
+        functionNotDone("Delete");
+        delete();
+        break;
+      case 5:
+        functionNotDone("Sort");
+        // sort();
+        break;
+      case 6:
+        functionNotDone("Merge two arrays");
+        // merge();
+        break;
+      case 7:
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        printf("\n");
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break;
+    }
+  } while (chosenOption != arraysMenuSize);
+}
+void linkedLists () {
+  char *linkedListMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
+  int linkedListMenuSize = sizeof(linkedListMenu) / sizeof(linkedListMenu[0]);
+  int chosenOption;
+
+  do {
+    programHeader("Linked List");
+    printMenu(linkedListMenu, linkedListMenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Traverse");
+        traverseList();
+        break;
+      case 2:
+        functionNotDone("Search");
+        searchList();
+        break;
+      case 3:
+        functionNotDone("Insert");
+        insert();
+        break;
+      case 4:
+        functionNotDone("Delete");
+        delete();
+        break;
+      case 5:
+        functionNotDone("Sort");
+        sortList();
+        break;
+      case 6:
+        functionNotDone("Merge Two Lists");
+        mergeLists();
+        break;
+      case 7:
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        printf("\n");
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break;
+    }
+  } while (chosenOption != linkedListMenuSize);
+
+}
+void stacks () {
+  char *stacksMenu[] = {"Add an item", "Remove an item","Look for an item", "Check if the stack is full", "Check if the stack is empty", "Exit"};
+  int stacksMenuSize = sizeof(stacksMenu) / sizeof(stacksMenu[0]);
+  int chosenOption;
+
+  do {
+    programHeader("Linked List");
+    printMenu(stacksMenu, stacksMenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Add an item");
+        push();
+        break;
+      case 2:
+        functionNotDone("Remove an item");
+        pop();
+        break;
+      case 3:
+        functionNotDone("Look for an item");
+        peek();
+        break;
+      case 4:
+        functionNotDone("Check if the stack is full");
+        isFull();
+        break;
+      case 5:
+        functionNotDone("Check if the stack is empty");
+        isEmpty();
+        break;
+      case 6:
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        printf("\n");
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break; 
+    }
+  } while (chosenOption != stacksMenuSize);
+}
+void queues () {
+  char *queuesMenu[] = {"Add an item", "Remove an item","Look for an item", "Check if the queue is full", "Check if the queue is empty", "Exit"};
+  int queuesMenuSize = sizeof(queuesMenu) / sizeof(queuesMenu[0]);
+  int chosenOption;
+
+  do {
+    programHeader("Linked List");
+    printMenu(queuesMenu, queuesMenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Add an item");
+        push();
+        break;
+      case 2:
+        functionNotDone("Remove an item");
+        pop();
+        break;
+      case 3:
+        functionNotDone("Look for an item");
+        peek();
+        break;
+      case 4:
+        functionNotDone("Check if the queue is full");
+        isFull();
+        break;
+      case 5:
+        functionNotDone("Check if the queue is empty");
+        isEmpty();
+        break;
+      case 6:
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        printf("\n");
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break; 
+    }
+  } while (chosenOption != queuesMenuSize);
+}
+
+void strings () {
+  char *stringsMenu[] = {"Find a letter", "Replace a letter", "Insert a letter", "Delete a letter", "Exit"};
+  int stringsMenuSize = sizeof(stringsMenu) / sizeof(stringsMenu[0]);
+  int chosenOption;
+
+  do {
+    programHeader("Linked List");
+    printMenu(stringsMenu, stringsMenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Arrays");
+        traverseList();
+        break;
+      case 2:
+        functionNotDone("Linked Lists");
+        searchList();
+        break;
+      case 3:
+        functionNotDone("Stacks");
+        insert();
+        break;
+      case 4:
+        functionNotDone("Queues");
+        delete();
+        break;
+      case 5:
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        printf("\n");
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break; 
+    }
+  } while (chosenOption != stringsMenuSize);
+}
+void linearDS () {
+    char *linearDS_Menu[] = {"Arrays", "Linked Lists", "Stacks", "Queues", "Exit"};
+  int linearDS_MenuSize = sizeof(linearDS_Menu) / sizeof(linearDS_Menu[0]);
+  int chosenOption;
+
+
+  do {
+    programHeader("Linked List");
+    printMenu(linearDS_Menu, linearDS_MenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Arrays");
+        traverseList();
+        break;
+      case 2:
+        functionNotDone("Linked Lists");
+        searchList();
+        break;
+      case 3:
+        functionNotDone("Stacks");
+        insert();
+        break;
+      case 4:
+        functionNotDone("Queues");
+        delete();
+        break;
+      case 5:
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        printf("\n");
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break;
+    }
+  } while (chosenOption != linearDS_MenuSize);
+}
 void dataStructures () {
   char *nonlinearDS_Menu[] = {"Linear Data Structures", "Nonlinear Data Structures", "Exit"};
   int nonlinearDS_MenuSize = sizeof(nonlinearDS_Menu) / sizeof(nonlinearDS_Menu[0]);
@@ -738,10 +1028,12 @@ void sort(int array[], int size, int sortType) {
       heapSort(array, size);
       break;
     default:
-      printf("Invalid choice\n");
+      clearInputBuffer(); // Clear invalid input
+      printf("\n");
+      displayCenterText("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
       break;
   }
-
   printArray(array, size);
 }
 
