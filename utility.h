@@ -5,19 +5,8 @@
 #include <windows.h>
 #include <conio.h> // for _getch()
 
-#define ARRAY_MAX_LENGTH 50
-#define SUBSTRINGS_MAX_SUBSTRINGS 100 
 #define SUBSTRINGS_MAX_LENGTH 500
-#define true 1
-#define false 0
-#define SET_WIDTH 80
-#define SET_HEIGHT 24
 
-int terminalWidth = 0;
-int terminalHeight = 0;
-char anyChar;
-int chosenOption;
-int cursorXpos, cursorYpos;
 
 // Utility functions 
 void getTerminalSize();

@@ -3,7 +3,7 @@
 #include <conio.h> // for _getch()
 #include "utility.h"
 
-#define ARRAY_MAX_LENGTH 1000
+#define ARRAY_MAX_LENGTH 50
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
 #define SUBSTRINGS_MAX_LENGTH 500
 #define true 1
@@ -14,7 +14,6 @@
 int terminalWidth = 0;
 int terminalHeight = 0;
 char anyChar;
-int chosenOption;
 int cursorXpos, cursorYpos;
 
 // Utility function definitions
