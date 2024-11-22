@@ -87,18 +87,18 @@ void clearWord(int y, int startCol, int endCol) {
     }
 }
 void clearPrompts(char *header) {
-    /* Function to clear the prompts of the program. It will essentially clear everything below the program header. */
-    system("cls");
-    programHeader(header);
+  /* Function to clear the prompts of the program. It will essentially clear everything below the program header. */
+  system("cls");
+  programHeader(header);
 }
 void promptExit(){
+    getCursorPos(&exitXpos, &exitYpos);
   do {
-  getCursorPos(&exitXpos, &exitYpos);
-  moveCursor(0, exitYpos + 3);
-  displayCenterText("Press Enter To Exit");
-  hideCursor();
-  anyChar = _getch();
-  /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
+    moveCursor(0, exitYpos + 3);
+    displayCenterText("Press Enter To Exit");
+    hideCursor();
+    anyChar = _getch();
+    /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
   } while (anyChar != '\r');
 }
 void programHeader(char *header) {
