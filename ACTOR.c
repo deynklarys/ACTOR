@@ -199,7 +199,7 @@ void arrays () {
     switch (chosenOption) {
       case 1:
         functionNotDone("Traverse");
-        traverse();
+        // traverse();
         break;
       case 2:
         functionNotDone("Search");
@@ -207,11 +207,11 @@ void arrays () {
         break;
       case 3:
         functionNotDone("Insert");
-        insert();
+        // insert();
         break;
       case 4:
         functionNotDone("Delete");
-        delete();
+        // delete();
         break;
       case 5:
         functionNotDone("Sort");
@@ -249,27 +249,27 @@ void linkedLists () {
     switch (chosenOption) {
       case 1:
         functionNotDone("Traverse");
-        traverseList();
+        // traverseList();
         break;
       case 2:
         functionNotDone("Search");
-        searchList();
+        // searchList();
         break;
       case 3:
         functionNotDone("Insert");
-        insert();
+        // insert();
         break;
       case 4:
         functionNotDone("Delete");
-        delete();
+        // delete();
         break;
       case 5:
         functionNotDone("Sort");
-        sortList();
+        // sortList();
         break;
       case 6:
         functionNotDone("Merge Two Lists");
-        mergeLists();
+        // mergeLists();
         break;
       case 7:
         promptExit();
@@ -300,23 +300,23 @@ void stacks () {
     switch (chosenOption) {
       case 1:
         functionNotDone("Add an item");
-        push();
+        // push();
         break;
       case 2:
         functionNotDone("Remove an item");
-        pop();
+        // pop();
         break;
       case 3:
         functionNotDone("Look for an item");
-        peek();
+        // peek();
         break;
       case 4:
         functionNotDone("Check if the stack is full");
-        isFull();
+        // isFull();
         break;
       case 5:
         functionNotDone("Check if the stack is empty");
-        isEmpty();
+        // isEmpty();
         break;
       case 6:
         promptExit();
@@ -346,23 +346,23 @@ void queues () {
     switch (chosenOption) {
       case 1:
         functionNotDone("Add an item");
-        push();
+        // push();
         break;
       case 2:
         functionNotDone("Remove an item");
-        pop();
+        // pop();
         break;
       case 3:
         functionNotDone("Look for an item");
-        peek();
+        // peek();
         break;
       case 4:
         functionNotDone("Check if the queue is full");
-        isFull();
+        // isFull();
         break;
       case 5:
         functionNotDone("Check if the queue is empty");
-        isEmpty();
+        // isEmpty();
         break;
       case 6:
         promptExit();
@@ -393,19 +393,19 @@ void strings () {
     switch (chosenOption) {
       case 1:
         functionNotDone("Arrays");
-        traverseList();
+        // traverseList();
         break;
       case 2:
         functionNotDone("Linked Lists");
-        searchList();
+        // searchList();
         break;
       case 3:
         functionNotDone("Stacks");
-        insert();
+        // insert();
         break;
       case 4:
         functionNotDone("Queues");
-        delete();
+        // delete();
         break;
       case 5:
         promptExit();
@@ -437,19 +437,19 @@ void linearDS () {
     switch (chosenOption) {
       case 1:
         functionNotDone("Arrays");
-        traverseList();
+        // traverseList();
         break;
       case 2:
         functionNotDone("Linked Lists");
-        searchList();
+        // searchList();
         break;
       case 3:
         functionNotDone("Stacks");
-        insert();
+        // insert();
         break;
       case 4:
         functionNotDone("Queues");
-        delete();
+        // delete();
         break;
       case 5:
         promptExit();
