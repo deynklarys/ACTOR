@@ -103,9 +103,7 @@ int main () {
       switch (chosenOption) {
         case 1:
           system("cls");
-          programHeader("Data Structures");
-          printf("\n\nFunction is not yet done...");
-          promptExit();
+          dataStructures();
           system("cls");
           break;
         case 2:
@@ -171,6 +169,39 @@ void welcomeScreen () {
     printf("\n");
 
   hideCursor();
+}
+
+void dataStructures () {
+  char *nonlinearDS_Menu[] = {"Linear Data Structures", "Nonlinear Data Structures", "Exit"};
+  int nonlinearDS_MenuSize = sizeof(nonlinearDS_Menu) / sizeof(nonlinearDS_Menu[0]);
+
+  do {
+    programHeader("Data Structures");
+    printMenu(nonlinearDS_Menu, nonlinearDS_MenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+
+    switch (chosenOption) {
+      case 1:
+        functionNotDone("Linear Data Structures");
+        break;
+      case 2:
+        functionNotDone("Nonlinear Data Structures");
+        break;
+      case 3:
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break; 
+    }
+
+  } while (chosenOption != nonlinearDS_MenuSize);
 }
 
 void sorting() {

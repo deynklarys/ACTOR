@@ -11,12 +11,12 @@
 #define SET_WIDTH 80
 #define SET_HEIGHT 24
 
-int main () {
-  char *nonlinearDS_Menu[] = {"Linear Data Structures", "Nonlinear Data Structures", "Exit"};
-  int nonlinearDS_MenuSize = sizeof(nonlinearDS_Menu) / sizeof(nonlinearDS_Menu[0]);
   int chosenOption;
   int cursorXpos, cursorYpos;
 
+int main () {
+  char *nonlinearDS_Menu[] = {"Linear Data Structures", "Nonlinear Data Structures", "Exit"};
+  int nonlinearDS_MenuSize = sizeof(nonlinearDS_Menu) / sizeof(nonlinearDS_Menu[0]);
 
   do {
     programHeader("Data Structures");
@@ -45,11 +45,6 @@ int main () {
         clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
         break; 
     }
-
-    // if (chosenOption != 7) {
-    //   printf("Press any key to continue...\n");
-    //   getch(); // Wait for user input before continuing
-    // }
 
   } while (chosenOption != nonlinearDS_MenuSize);
 
