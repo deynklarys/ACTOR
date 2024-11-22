@@ -17,6 +17,9 @@ Feedbacks:
 - display the key input
 - if want to find the same key, or use a different key
 - lagay ng path sa mga menu screens [breadcrumbs]
+- YES / NO instead or y/n
+- "What element do you want to find?"
+
 
 Screen 1
 Welcome to Data Structures and Algorithm [ASCII art]
