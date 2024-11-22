@@ -23,5 +23,7 @@ void programHeader(char *header);
 void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
 void printWithinWidth(char *message[], int messageSize, char *header);
+void functionNotDone(char *header);
+void clearInputBuffer(); 
 
 #endif // UTILITY_H
