@@ -3,11 +3,19 @@
 #include <conio.h> // for _getch()
 #include "utility.h"
 
+#define ARRAY_MAX_LENGTH 1000
+#define SUBSTRINGS_MAX_SUBSTRINGS 100 
+#define SUBSTRINGS_MAX_LENGTH 500
+#define true 1
+#define false 0
+#define SET_WIDTH 80
+#define SET_HEIGHT 24
 
 int main () {
   char *nonlinearDS_Menu[] = {"Linear Data Structures", "Nonlinear Data Structures", "Exit"};
   int nonlinearDS_MenuSize = sizeof(nonlinearDS_Menu) / sizeof(nonlinearDS_Menu[0]);
   int chosenOption;
+  int cursorXpos, cursorYpos;
 
 
   do {
@@ -32,7 +40,10 @@ int main () {
         promptExit();
         break;
       default:
-        printf("Invalid choice. Please choose a valid option.\n");
+        clearInputBuffer(); // Clear invalid input
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break; 
     }
 
     // if (chosenOption != 7) {

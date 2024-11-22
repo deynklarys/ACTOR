@@ -396,7 +396,9 @@ void algorithms() {
           break;
         default:
           moveCursor(0, cursorYpos + 6);
-          printf("Invalid choice. Please choose a valid option.\n");
+          clearInputBuffer(); // Clear invalid input
+          displayCenterText("Invalid input. Please enter a number.\n");
+          clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
           break; 
       }
 
