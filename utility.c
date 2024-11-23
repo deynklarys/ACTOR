@@ -99,6 +99,7 @@ void promptExit(){
     hideCursor();
     anyChar = _getch();
     /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
+    showCursor();
   } while (anyChar != '\r');
 }
 void programHeader(char *header) {
