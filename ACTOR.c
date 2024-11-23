@@ -499,7 +499,7 @@ void dataStructures () {
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
-    
+
     switch (chosenOption) {
       case 1:
         system("cls");
@@ -572,7 +572,7 @@ void sorting() {
       programHeader("Sorting Algorithms");
       printf("Your Array:\n");
       printArray(givenArray, arrSize);
-      sort (givenArray, arrSize, sortType);
+      sort(givenArray, arrSize, sortType);
 
       char tryOthers;
       do {
@@ -599,16 +599,13 @@ void sorting() {
       }
       
       // If the user chose 'n' or 'N', exit the loop
+      promptExit();
       break;
     }  else { 
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
 
       moveCursor(0, afterQueryPos + 2);
-
-      displayCenterText("Invalid Choice");
-      printf("\n");
-      displayCenterText("Please pick a number from the given options only");
-      printf("\n");
+      displayCenterText("Invalid input. Please enter a number.\n");
       moveCursor(0, beforeQueryPos);
     }
   } while (sortType != sortMenuSize);
@@ -662,6 +659,11 @@ void searching() {
     moveCursor(cursorXpos, cursorYpos);
     scanf("%d", &searchType);
 
+    if (searchType == searchMenuSize) {
+      promptExit();
+      break;
+    }
+
     if (searchType > 0 && searchType < searchMenuSize) {
       search(givenArray, arrSize, key, searchType);
       char tryOthers;
@@ -670,9 +672,6 @@ void searching() {
         getCursorPos(&cursorXpos, &cursorYpos);
         /* The space before %c in the format string is used to skip any leading whitespace characters, including newlines, which ensures that scanf waits for a non-whitespace character. */
         scanf(" %c", &tryOthers);
-        if (searchType == searchMenuSize) {
-          break;
-        }
     
         if (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y') {
           clearWord(cursorYpos, strlen("Do you want to try other sorting algorithms? [Y/N] "), SET_WIDTH);
@@ -690,14 +689,13 @@ void searching() {
       }
       
       // If the user chose 'n' or 'N', exit the loop
+      promptExit();
       break;
-    } else {
+    }  else { 
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+
       moveCursor(0, cursorYpos + 6);
-      displayCenterText("Invalid Choice");
-      printf("\n");
-      displayCenterText("Please pick a number from the given options only");
-      printf("\n");
+      displayCenterText("Invalid input. Please enter a number.\n");
       moveCursor(0, beforeQueryPos);
     }
 
