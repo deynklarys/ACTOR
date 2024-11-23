@@ -179,7 +179,7 @@ void trees () {
 void graphs () {
 
 }
-void nonlinearDS () {
+void nonLinearDS () {
 
 }
 void arrays () {
@@ -190,6 +190,7 @@ void arrays () {
   do {
     programHeader("Arrays");
     printMenu(arraysMenu, arraysMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
@@ -222,6 +223,8 @@ void arrays () {
         // merge();
         break;
       case 7:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
@@ -241,11 +244,13 @@ void linkedLists () {
   do {
     programHeader("Linked List");
     printMenu(linkedListMenu, linkedListMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
+
     switch (chosenOption) {
       case 1:
         functionNotDone("Traverse");
@@ -272,6 +277,8 @@ void linkedLists () {
         // mergeLists();
         break;
       case 7:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
@@ -292,6 +299,7 @@ void stacks () {
   do {
     programHeader("Linked List");
     printMenu(stacksMenu, stacksMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
@@ -319,6 +327,8 @@ void stacks () {
         // isEmpty();
         break;
       case 6:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
@@ -338,6 +348,7 @@ void queues () {
   do {
     programHeader("Linked List");
     printMenu(queuesMenu, queuesMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
@@ -365,6 +376,8 @@ void queues () {
         // isEmpty();
         break;
       case 6:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
@@ -385,6 +398,7 @@ void strings () {
   do {
     programHeader("Linked List");
     printMenu(stringsMenu, stringsMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
@@ -408,6 +422,8 @@ void strings () {
         // delete();
         break;
       case 5:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
@@ -420,14 +436,15 @@ void strings () {
   } while (chosenOption != stringsMenuSize);
 }
 void linearDS () {
-    char *linearDS_Menu[] = {"Arrays", "Linked Lists", "Stacks", "Queues", "Exit"};
+  char *linearDS_Menu[] = {"Arrays", "Linked Lists", "Stacks", "Queues", "Exit"};
   int linearDS_MenuSize = sizeof(linearDS_Menu) / sizeof(linearDS_Menu[0]);
   int chosenOption;
 
 
   do {
-    programHeader("Linked List");
+    programHeader("Linear Data Structures");
     printMenu(linearDS_Menu, linearDS_MenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
@@ -436,22 +453,28 @@ void linearDS () {
 
     switch (chosenOption) {
       case 1:
-        functionNotDone("Arrays");
-        // traverseList();
+        system("cls");
+        arrays();
+        system("cls");
         break;
       case 2:
-        functionNotDone("Linked Lists");
-        // searchList();
+        system("cls");
+        linkedLists();
+        system("cls");
         break;
       case 3:
-        functionNotDone("Stacks");
-        // insert();
+        system("cls");
+        stacks();
+        system("cls");
         break;
       case 4:
-        functionNotDone("Queues");
-        // delete();
+        system("cls");
+        queues();
+        system("cls");
         break;
       case 5:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
@@ -470,24 +493,32 @@ void dataStructures () {
   do {
     programHeader("Data Structures");
     printMenu(nonlinearDS_Menu, nonlinearDS_MenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
-
+    
     switch (chosenOption) {
       case 1:
-        functionNotDone("Linear Data Structures");
+        system("cls");
+        linearDS();
+        system("cls");
         break;
       case 2:
-        functionNotDone("Nonlinear Data Structures");
+        system("cls");
+        nonLinearDS();
+        system("cls");
         break;
       case 3:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
         clearInputBuffer(); // Clear invalid input
+        printf("\n");
         displayCenterText("Invalid input. Please enter a number.\n");
         clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
         break; 
