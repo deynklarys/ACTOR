@@ -567,6 +567,12 @@ void sorting() {
     afterQueryPos = cursorYpos;
     scanf("%d", &sortType);
 
+    if (sortType == sortMenuSize) {
+      moveCursor(0, cursorYpos - 1);
+      promptExit();
+      break;
+    }
+
     if (sortType > 0 && sortType < sortMenuSize) {
       system("cls");
       programHeader("Sorting Algorithms");
@@ -580,9 +586,6 @@ void sorting() {
         getCursorPos(&cursorXpos, &cursorYpos);
         /* The space before %c in the format string is used to skip any leading whitespace characters, including newlines, which ensures that scanf waits for a non-whitespace character. */
         scanf(" %c", &tryOthers);
-        if (sortType == sortMenuSize) {
-          break;
-        }
     
         if (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y') {
           clearWord(cursorYpos, strlen("Do you want to try other sorting algorithms? [Y/N] "), SET_WIDTH);
@@ -660,6 +663,7 @@ void searching() {
     scanf("%d", &searchType);
 
     if (searchType == searchMenuSize) {
+      moveCursor(0, cursorYpos + 3);
       promptExit();
       break;
     }
@@ -725,6 +729,12 @@ void algorithms() {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
       continue;
+    }
+
+    if (chosenOption == algoMenuSize) {
+      moveCursor(0, cursorYpos + 3);
+      promptExit();
+      break;
     }
 
       switch (chosenOption) {
