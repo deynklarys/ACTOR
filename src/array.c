@@ -13,18 +13,18 @@ merge
 sort
 */
 
-void traverse();
-void search();
-void insert();
+void traverseArray();
+void searchArray();
+void insertArray();
   void insertAtBeginning();
   void insertAtEnd();
   void insertAtMiddle();
-void delete();
+void deleteArray();
   void deleteFromBeginning();
   void deleteFromEnd();
   void deleteFromMiddle();
-void merge();
-void sort();
+void mergeArray();
+void sortArray();
 
 int main () {
   char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};
@@ -44,27 +44,27 @@ int main () {
     switch (chosenOption) {
       case 1:
         functionNotDone("Traverse");
-        traverse();
+        traverseArray();
         break;
       case 2:
         functionNotDone("Search");
-        search();
+        searchArray();
         break;
       case 3:
         functionNotDone("Insert");
-        insert();
+        insertArray();
         break;
       case 4:
         functionNotDone("Delete");
-        delete();
+        deleteArray();
         break;
       case 5:
         functionNotDone("Sort");
-        sort();
+        sortArray();
         break;
       case 6:
-        functionNotDone("Merge two arrays");
-        merge();
+        functionNotDone("Merge twArrayo arrays");
+        mergeArray();
         break;
       case 7:
         promptExit();
@@ -77,15 +77,15 @@ int main () {
   return 0;
 }
 
-void traverse() {
+void traverseArray() {
     // Implementation of traverse
 }
 
-void search() {
+void searchArray() {
     // Implementation of search
 }
 
-void insert() {
+void insertArray() {
   char *insertMenu[] = {"Insert at the beginning", "Insert at the middle", "Insert at the end", "Exit"};
   int insertMenuSize = sizeof(insertMenu) / sizeof(insertMenu[0]);
   int chosenOption;
@@ -137,7 +137,7 @@ void insertAtMiddle() {
     // Implementation of insertAtMiddle
 }
 
-void delete() {
+void deleteArray() {
   char *deleteMenu[] = {"Delete at the beginning", "Delete at the middle", "Delete at the end", "Exit"};
   int deleteMenuSize = sizeof(deleteMenu) / sizeof(deleteMenu[0]);
   int chosenOption;
@@ -188,10 +188,10 @@ void deleteFromMiddle() {
     // Implementation of deleteFromMiddle
 }
 
-void merge() {
+void mergeArray() {
     // Implementation of merge
 }
 
-void sort() {
+void sortArray() {
     // Implementation of sort
 }
