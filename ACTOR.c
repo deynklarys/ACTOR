@@ -626,15 +626,15 @@ void searching() {
   while (1) {
       // Read an integer
       if (scanf("%d", &num) == 1) {
-          givenArray[arrSize++] = num;
+        givenArray[arrSize++] = num;
       } else {
-          break;
+        break;
       }
 
       // Read the next character
       ch = getchar();
       if (ch == '\n') {
-          break;
+        break;
       }
   }
 
