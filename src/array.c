@@ -105,7 +105,7 @@ int main () {
       break;
     case CHARACTER:
       do {
-        scanf("%c", &array.data.charArray[array.size++]);
+        scanf(" %c", &array.data.charArray[array.size++]);
       } while (getchar() != '\n' && array.size < ARRAY_MAX_LENGTH);
       break;
     case STRING:
@@ -181,7 +181,7 @@ void traverseArray( Array *array) {
         printf("%d d", array->data.intArray[i]);
         break;
       case CHARACTER:
-        printf("%c c", array->data.charArray[i]);
+        printf("%c ", array->data.charArray[i]);
         break;
       case STRING:
         printf("%s s", array->data.strArray[i]);
