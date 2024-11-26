@@ -77,18 +77,16 @@ int chooseDataType () {
   return -1; // Invalid choice
 }
 
-int main () {
-  programHeader("Arrays");
+int initializeArray (Array *array) {
 
   printf("Arrays are a collection of elements of the same types of data.\nExamples:\n\t1, 2, 3, 4, 5 is an array of numbers\n\ta, b, c, d, e is an array of letters\n\tapple, banana, mango, orange is an array of words\n");
-  printf ("Each number, character, or word in an array is called an element.\n");
+  printf ("Each number, letter, or word in an array is called an element.\n");
 
-  Array array;
-  array.dataType = chooseDataType();
-  if (array.dataType == -1) {
-    return 0; // Exit if the user chose to exit
+  array->dataType = chooseDataType();
+  if (array->dataType == -1) {
+    return 0; 
   }
-  array.size = 0;
+  array->size = 0;
 
   printf("Initialize your array to work on.\n\n");
   printf("Enter elements (space-separated, press Enter to finish):\n");
@@ -97,31 +95,33 @@ int main () {
   char ch;
   char str[50];
 
-  switch (array.dataType) {
+  switch (array->dataType) {
     case INTEGER: 
       do {
-        scanf("%d", &array.data.intArray[array.size++]);
-      } while (getchar() != '\n' && array.size < ARRAY_MAX_LENGTH);
+        scanf("%d", &array->data.intArray[array->size++]);
+      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
       break;
     case CHARACTER:
       do {
-        scanf(" %c", &array.data.charArray[array.size++]);
-      } while (getchar() != '\n' && array.size < ARRAY_MAX_LENGTH);
+        scanf(" %c", &array->data.charArray[array->size++]);
+      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
       break;
     case STRING:
-      while (1) {
-        if (scanf("%s", str) == 1) {
-          strcpy(array.data.strArray[array.size++], str); // Use strcpy instead of strdup
-        } else {
-          break;
-        }
-        if (getchar() == '\n') {
-          break;
-        }
-      }
+      do {
+        scanf("%s", &array->data.strArray[array->size++]);
+      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
       break;
   }
+}
 
+int main () {
+  programHeader("Arrays");
+
+  Array array;
+
+  if (!initializeArray(&array)) {
+    return 0;
+  }
 
   char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};
   int arraysMenuSize = sizeof(arraysMenu) / sizeof(arraysMenu[0]);
