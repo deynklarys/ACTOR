@@ -42,81 +42,85 @@ void mergeArray();
 void sortArray();
 
 int chooseDataType () {
-    int chosenOption;
-    printf("\nChoose a data type for your array:\n");
-    char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
-    int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
+  int chosenOption;
+  printf("\nChoose a data type for your array:\n");
+  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
+  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
 
-    do {
-        printMenu(dataTypeMenu, dataTypeMenuSize);
-        scanf("%d", &chosenOption);
+  do {
+    printMenu(dataTypeMenu, dataTypeMenuSize);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
 
-        if (chosenOption > 0 && chosenOption <= dataTypeMenuSize) {
-            switch(chosenOption) {
-                case 1:
-                    printf("You chose Integer\n");
-                    return INTEGER;
-                case 2:
-                    printf("You chose Character\n");
-                    return CHARACTER;
-                case 3:
-                    printf("You chose String\n");
-                    return STRING;
-                case 4:
-                    printf("Exiting...\n");
-                    return -1;
-            }
-        } else {
-            printf("Invalid choice\n");
-        }
-    } while(chosenOption != 4);
-    return -1; // Invalid choice
+    if (chosenOption > 0 && chosenOption <= dataTypeMenuSize) {
+      switch(chosenOption) {
+        case 1:
+          printf("You chose Integer\n");
+          return INTEGER;
+        case 2:
+          printf("You chose Character\n");
+          return CHARACTER;
+        case 3:
+          printf("You chose String\n");
+          return STRING;
+        case 4:
+          printf("Exiting...\n");
+          return -1;
+      }
+    } else {
+      printf("Invalid choice. Please choose a valid option.\n");
+    }
+  } while(chosenOption != 4);
+  return -1; // Invalid choice
 }
 
 int main () {
-    programHeader("Arrays");
+  programHeader("Arrays");
 
-    printf("Arrays are a collection of elements of the same types of data.\nExamples:\n\t1, 2, 3, 4, 5 is an array of numbers\n\ta, b, c, d, e is an array of letters\n\tapple, banana, mango, orange is an array of words\n");
-    printf ("Each number, character, or word in an array is called an element.\n");
+  printf("Arrays are a collection of elements of the same types of data.\nExamples:\n\t1, 2, 3, 4, 5 is an array of numbers\n\ta, b, c, d, e is an array of letters\n\tapple, banana, mango, orange is an array of words\n");
+  printf ("Each number, character, or word in an array is called an element.\n");
 
-    Array array;
-    array.dataType = chooseDataType();
-    if (array.dataType == -1) {
-      return 0; // Exit if the user chose to exit
-    }
-    array.size = 0;
+  Array array;
+  array.dataType = chooseDataType();
+  if (array.dataType == -1) {
+    return 0; // Exit if the user chose to exit
+  }
+  array.size = 0;
 
-    printf("Initialize your array to work on.\n\n");
-    printf("Enter elements (space-separated, press Enter to finish):\n");
+  printf("Initialize your array to work on.\n\n");
+  printf("Enter elements (space-separated, press Enter to finish):\n");
 
-    int num;
-    char ch;
-    char str[50];
+  int num;
+  char ch;
+  char str[50];
 
-    switch (array.dataType) {
-        case INTEGER: 
-          do {
-            scanf("%d", &array.data.intArray[array.size++]);
-          } while (getchar() != '\n' && array.size < ARRAY_MAX_LENGTH);
+  switch (array.dataType) {
+    case INTEGER: 
+      do {
+        scanf("%d", &array.data.intArray[array.size++]);
+      } while (getchar() != '\n' && array.size < ARRAY_MAX_LENGTH);
+      break;
+    case CHARACTER:
+      do {
+        scanf("%c", &array.data.charArray[array.size++]);
+      } while (getchar() != '\n' && array.size < ARRAY_MAX_LENGTH);
+      break;
+    case STRING:
+      while (1) {
+        if (scanf("%s", str) == 1) {
+          strcpy(array.data.strArray[array.size++], str); // Use strcpy instead of strdup
+        } else {
           break;
-        case CHARACTER:
-          do {
-            scanf("%c", &array.data.charArray[array.size++]);
-          } while (getchar() != '\n' && array.size < ARRAY_MAX_LENGTH);
+        }
+        if (getchar() == '\n') {
           break;
-        case STRING:
-            while (1) {
-                if (scanf("%s", str) == 1) {
-                    strcpy(array.data.strArray[array.size++], str); // Use strcpy instead of strdup
-                } else {
-                    break;
-                }
-                if (getchar() == '\n') {
-                    break;
-                }
-            }
-            break;
-    }
+        }
+      }
+      break;
+  }
 
 
   char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};
@@ -170,28 +174,28 @@ int main () {
 }
 
 void traverseArray( Array *array) {
-    printf("Array elements: ");
-    for (int i = 0; i < array->size; i++) {
-        switch (array->dataType) {
-            case INTEGER:
-                printf("%d d", array->data.intArray[i]);
-                break;
-            case CHARACTER:
-                printf("%c c", array->data.charArray[i]);
-                break;
-            case STRING:
-                printf("%s s", array->data.strArray[i]);
-                break;
-            default:
-                printf("Unknown data type.\n");
-                return;
-        }
+  printf("Array elements: ");
+  for (int i = 0; i < array->size; i++) {
+    switch (array->dataType) {
+      case INTEGER:
+        printf("%d d", array->data.intArray[i]);
+        break;
+      case CHARACTER:
+        printf("%c c", array->data.charArray[i]);
+        break;
+      case STRING:
+        printf("%s s", array->data.strArray[i]);
+        break;
+      default:
+        printf("Unknown data type.\n");
+        return;
     }
-    printf("\n");
+  }
+  printf("\n");
 }
 
 void searchArray() {
-    // Implementation of search
+  // Implementation of search
 }
 
 void insertArray() {
