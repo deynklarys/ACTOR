@@ -770,7 +770,7 @@ void about() {
   char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n", "Pens and papers is one way of learning; practical implementation is understanding of it\n"};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
-  printWithinWidth(message, messageSize, "About ACTOR");
+  printWithinWidthCentered(message, messageSize, "About ACTOR");
   
   promptExit();
 }

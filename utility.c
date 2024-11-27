@@ -161,7 +161,7 @@ void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LEN
     }
   }
 }
-void printWithinWidth(char *message[], int messageSize, char *header) {
+void printWithinWidthCentered(char *message[], int messageSize, char *header) {
   char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
   int paragraphSubstringsCount = 0;
 
@@ -178,6 +178,24 @@ void printWithinWidth(char *message[], int messageSize, char *header) {
   for (int i = 0; i < paragraphSubstringsCount; i++) {
     displayCenterText(paragraphSubstrings[i]);
     printf("\n");
+  }
+}
+void printWithinWidth(char *message[], int messageSize, char *header) {
+
+  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+  int paragraphSubstringsCount = 0;
+
+  int lineWidth = SET_WIDTH * 0.7; 
+  int phraseToCopy = lineWidth;
+
+  for (int i = 0; i < messageSize; i++) {
+    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+  }
+
+  programHeader(header);
+
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    printf("%s", paragraphSubstrings[i]);
   }
 }
 void functionNotDone(char *header) {

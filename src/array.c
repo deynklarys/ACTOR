@@ -78,9 +78,10 @@ int chooseDataType () {
 }
 
 int initializeArray (Array *array) {
+  char *message[] = {"Arrays are a collection of elements of the same types of  data.\n", "Examples:\n", "\t1, 2, 3, 4, 5 is an array of numbers\n", "\ta, b, c, d, e is an array of letters\n", "\tapple, banana, mango, orange is an array of words\n","Each number, letter, or word in an array is called an element.\n"};
+  int messageSize = sizeof(message)/sizeof(message[0]);
 
-  printf("Arrays are a collection of elements of the same types of data.\nExamples:\n\t1, 2, 3, 4, 5 is an array of numbers\n\ta, b, c, d, e is an array of letters\n\tapple, banana, mango, orange is an array of words\n");
-  printf ("Each number, letter, or word in an array is called an element.\n");
+  printWithinWidth(message, messageSize, "Arrays");
 
   array->dataType = chooseDataType();
   if (array->dataType == -1) {
