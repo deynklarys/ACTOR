@@ -108,7 +108,7 @@ int initializeArray (Array *array) {
       break;
     case STRING:
       do {
-        scanf("%s", &array->data.strArray[array->size++]);
+        scanf(" %s", &array->data.strArray[array->size++]);
       } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
       break;
   }
@@ -158,7 +158,7 @@ int main () {
         sortArray();
         break;
       case 6:
-        functionNotDone("Merge twArrayo arrays");
+        functionNotDone("Merge two arrays");
         mergeArray();
         break;
       case 7:
@@ -178,7 +178,7 @@ void traverseArray( Array *array) {
   for (int i = 0; i < array->size; i++) {
     switch (array->dataType) {
       case INTEGER:
-        printf("%d d", array->data.intArray[i]);
+        printf("%d ", array->data.intArray[i]);
         break;
       case CHARACTER:
         printf("%c ", array->data.charArray[i]);
