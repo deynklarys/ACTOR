@@ -143,55 +143,60 @@ int main () {
 
   Array array;
 
-  if (!initializeArray(&array)) {
-    return 0;
+  while (1) {
+
+    if (!initializeArray(&array)) {
+      return 0;
+    }
+
+    char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};
+    int arraysMenuSize = sizeof(arraysMenu) / sizeof(arraysMenu[0]);
+    int chosenOption;
+
+    system("cls");
+      do {
+      programHeader("Array Operations");
+      printMenu(arraysMenu, arraysMenuSize);
+      if (scanf("%d", &chosenOption) != 1) {
+        clearInputBuffer(); // Clear invalid input
+        printf("Invalid input. Please enter a number.\n");
+        continue;
+      }
+
+      switch (chosenOption) {
+        case 1:
+          traverseArray(&array);
+          break;
+        case 2:
+          functionNotDone("Search");
+          searchArray();
+          break;
+        case 3:
+          functionNotDone("Insert");
+          insertArray();
+          break;
+        case 4:
+          functionNotDone("Delete");
+          deleteArray();
+          break;
+        case 5:
+          functionNotDone("Sort");
+          sortArray();
+          break;
+        case 6:
+          functionNotDone("Merge two arrays");
+          mergeArray();
+          break;
+        case 7:
+          promptExit();
+          break;
+        default:
+          printf("Invalid choice. Please choose a valid option.\n");
+      }
+    } while (chosenOption != arraysMenuSize);
+    
+    system("cls");
   }
-
-  char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};
-  int arraysMenuSize = sizeof(arraysMenu) / sizeof(arraysMenu[0]);
-  int chosenOption;
-
-  system("cls");
-    do {
-    programHeader("Array Operations");
-    printMenu(arraysMenu, arraysMenuSize);
-    if (scanf("%d", &chosenOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      continue;
-    }
-
-    switch (chosenOption) {
-      case 1:
-        traverseArray(&array);
-        break;
-      case 2:
-        functionNotDone("Search");
-        searchArray();
-        break;
-      case 3:
-        functionNotDone("Insert");
-        insertArray();
-        break;
-      case 4:
-        functionNotDone("Delete");
-        deleteArray();
-        break;
-      case 5:
-        functionNotDone("Sort");
-        sortArray();
-        break;
-      case 6:
-        functionNotDone("Merge two arrays");
-        mergeArray();
-        break;
-      case 7:
-        promptExit();
-        break;
-      default:
-        printf("Invalid choice. Please choose a valid option.\n");
-    }
-  } while (chosenOption != arraysMenuSize);
 
   system("cls");
   return 0;
