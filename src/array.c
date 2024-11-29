@@ -17,6 +17,7 @@ sort
 #define CHARACTER 2
 #define STRING 3
 #define ARRAY_MAX_LENGTH 50
+#define STRING_MAX_LENGTH 50
 
 typedef struct {
     int dataType;
@@ -99,17 +100,39 @@ int initializeArray (Array *array) {
   switch (array->dataType) {
     case INTEGER: 
       do {
-        scanf("%d", &array->data.intArray[array->size++]);
+        if (scanf("%d", &num) == 1) {
+          array->data.intArray[array->size++] = num;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
       } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
       break;
     case CHARACTER:
       do {
-        scanf(" %c", &array->data.charArray[array->size++]);
+        if (scanf(" %c", &ch) == 1) {
+          array->data.charArray[array->size++] = ch;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
       } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
       break;
     case STRING:
       do {
-        scanf(" %s", &array->data.strArray[array->size++]);
+        if (scanf("%s", str) == 1) {
+          array->data.strArray[array->size] = malloc(strlen(str) + 1); // Allocate memory for the string
+          if (array->data.strArray[array->size] != NULL) {
+            strcpy(array->data.strArray[array->size], str); // Copy the string
+            array->size++;
+          } else {
+            printf("Memory allocation failed.\n");
+            break;
+          }
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
       } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
       break;
   }
@@ -185,7 +208,7 @@ void traverseArray( Array *array) {
         printf("%c ", array->data.charArray[i]);
         break;
       case STRING:
-        printf("%s s", array->data.strArray[i]);
+        printf("%s ", array->data.strArray[i]);
         break;
       default:
         printf("Unknown data type.\n");
