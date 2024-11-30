@@ -343,6 +343,8 @@ void insertArray(Array *array, Key *key) {
   }
   printf("\n\n");
 
+  // do while loop to check if the user wants to insert another element
+
   switch (array->dataType){
     int position;
     case INTEGER:
