@@ -35,6 +35,11 @@ typedef struct {
     char charKey;
     char strKey[ARRAY_MAX_LENGTH];
   } findKey;
+  union {
+    int intKey;
+    char charKey;
+    char strKey[ARRAY_MAX_LENGTH];
+  } insertKey;
 } Key;
 
 void traverseArray();
@@ -176,8 +181,10 @@ int main () {
           system("cls");
           break;
         case 3:
-          functionNotDone("Insert");
-          insertArray();
+          system("cls");
+          insertArray(&array, &key);
+          promptExit();
+          system("cls");
           break;
         case 4:
           functionNotDone("Delete");
@@ -207,7 +214,7 @@ int main () {
 }
 
 void traverseArray(Array *array) {
-  printf("Your array elements: ");
+  printf("Your array elements:  ");
   for (int i = 0; i < array->size; i++) {
     switch (array->dataType) {
       case INTEGER:
@@ -289,8 +296,79 @@ void searchArray(Array *array, Key *key) {
   }
 }
 
-void insertArray() {
-  // Implementation of insert
+void insertArrayKey(Array *array, Key *key, int position) {
+  if (position < 0 || position > array->size || array->size >= ARRAY_MAX_LENGTH) {
+    printf("Invalid position or array is full.\n");
+    return;
+  }
+
+  switch (array->dataType) {
+    case INTEGER:
+      for (int i = array->size; i > position; i--) {
+        array->data.intArray[i] = array->data.intArray[i - 1];
+      }
+      array->data.intArray[position] = key->insertKey.intKey;
+      array->size++;
+      break;
+    case CHARACTER:
+      for (int i = array->size; i > position; i--) {
+        array->data.charArray[i] = array->data.charArray[i - 1];
+      }
+      array->data.charArray[position] = key->insertKey.charKey;
+      array->size++;
+      break;
+    case STRING:
+      for (int i = array->size; i > position; i--) {
+        array->data.strArray[i] = array->data.strArray[i - 1];
+      }
+      array->data.strArray[position] = malloc(strlen(key->insertKey.strKey) + 1);
+      if (array->data.strArray[position] != NULL) {
+        strcpy(array->data.strArray[position], key->insertKey.strKey);
+        array->size++;
+      } else {
+        printf("Memory allocation failed.\n");
+      }
+      break;
+    default:
+      printf("Unknown data type.\n");
+      return;
+  }
+}
+void insertArray(Array *array, Key *key) {
+  programHeader("Insert in an Array");
+  traverseArray(array);
+  printf("Position of elements: ");
+  for (int i = 0; i < array->size + 1; i++) {
+    printf("%d ", i + 1);
+  }
+  printf("\n\n");
+
+  switch (array->dataType){
+    int position;
+    case INTEGER:
+      printf("Enter the number to insert: ");
+      scanf("%d", &key->insertKey.intKey);
+      printf("Enter the position of the element to insert from 1 to %d? ", array->size + 1);
+      scanf("%d", &position);
+      insertArrayKey(array, key, position - 1);
+      break;
+    case CHARACTER:
+      printf("Enter the character to insert: ");
+      scanf(" %c", &key->insertKey.charKey);
+      printf("Enter the position of the element to insert from 1 to %d? ", array->size + 1);
+      scanf("%d", &position);
+      insertArrayKey(array, key, position - 1);
+      break;
+    case STRING:
+      printf("Enter the string to insert: ");
+      scanf("%s", key->insertKey.strKey);
+      printf("Enter the position of the element to insert from 1 to %d? ", array->size + 1);
+      scanf("%d", &position);
+      insertArrayKey(array, key, position - 1);
+      break;
+  }
+  traverseArray(array);
+
 }
 
 
