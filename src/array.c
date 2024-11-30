@@ -20,14 +20,22 @@ sort
 #define STRING_MAX_LENGTH 50
 
 typedef struct {
-    int dataType;
-    union {
-        int intArray[ARRAY_MAX_LENGTH];
-        char charArray[ARRAY_MAX_LENGTH];
-        char *strArray[ARRAY_MAX_LENGTH];
-    } data;
-    int size;
+  int dataType;
+  union {
+    int intArray[ARRAY_MAX_LENGTH];
+    char charArray[ARRAY_MAX_LENGTH];
+    char *strArray[ARRAY_MAX_LENGTH];
+  } data;
+  int size;
 } Array;
+
+typedef struct {
+  union {
+    int intKey;
+    char charKey;
+    char strKey[ARRAY_MAX_LENGTH];
+  } findKey;
+} Key;
 
 void traverseArray();
 void searchArray();
@@ -73,7 +81,7 @@ int chooseDataType () {
 }
 
 int initializeArray (Array *array) {
-  char *message[] = {"Arrays are a collection of elements of the same types of  data.\n", "Examples:\n", "\t1, 2, 3, 4, 5 is an array of numbers\n", "\ta, b, c, d, e is an array of letters\n", "\tapple, banana, mango, orange is an array of words\n","Each number, letter, or word in an array is called an element.\n"};
+  char *message[] = {"Arrays are a collection of elements of the same types of  data.\n", "Examples:\n", "\t1, 2, 3, 4, 5 is an array of numbers or integers\n", "\ta, b, c, d, e is an array of letters or characters\n", "\tapple, banana, mango, orange is an array of words or strings\n","Each number, letter, or word in an array is called an element.\n"};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
   printWithinWidth(message, messageSize, "Arrays");
@@ -136,6 +144,7 @@ int main () {
   programHeader("Arrays");
 
   Array array;
+  Key key;
 
   while (1) {
 
@@ -162,8 +171,9 @@ int main () {
           traverseArray(&array);
           break;
         case 2:
-          functionNotDone("Search");
-          searchArray();
+          searchArray(&array, &key);
+          promptExit();
+          system("cls");
           break;
         case 3:
           functionNotDone("Insert");
@@ -196,8 +206,8 @@ int main () {
   return 0;
 }
 
-void traverseArray( Array *array) {
-  printf("Array elements: ");
+void traverseArray(Array *array) {
+  printf("Your array elements: ");
   for (int i = 0; i < array->size; i++) {
     switch (array->dataType) {
       case INTEGER:
@@ -217,8 +227,66 @@ void traverseArray( Array *array) {
   printf("\n");
 }
 
-void searchArray() {
-  // Implementation of search
+int linearSearch(Array array, Key *key) {
+  switch (array.dataType) {
+    case INTEGER:
+      for (int i = 0; i < array.size; i++) {
+        if (array.data.intArray[i] == key->findKey.intKey) {
+          return i;
+        }
+      }
+      return -1;
+    case CHARACTER:
+      for (int i = 0; i < array.size; i++) {
+        if (array.data.charArray[i] == key->findKey.charKey) {
+          return i;
+        }
+      }
+      return -1;
+    case STRING:
+      for (int i = 0; i < array.size; i++) {
+        if (strcmp(array.data.strArray[i], key->findKey.strKey) == 0) {
+          return i;
+        }
+      }
+      return -1;
+    default:
+      printf("Unknown data type.\n");
+      return -1;
+  }
+}
+void searchArray(Array *array, Key *key) {
+  programHeader("Search in an Array");
+  traverseArray(array);
+  printf("\n\n");
+
+  int result;
+  switch (array->dataType) {
+    case INTEGER:
+      printf("Enter the number to search: ");
+      scanf("%d", &key->findKey.intKey);
+      result = linearSearch(*array, key);
+      break;
+    case CHARACTER:
+      printf("Enter the character to search: ");
+      scanf(" %c", &key->findKey.charKey);
+      result = linearSearch(*array, key);
+      break;
+    case STRING:
+      printf("Enter the string to search: ");
+      scanf("%s", key->findKey.strKey);
+      result = linearSearch(*array, key);
+      break;
+    default:
+      printf("Unknown data type.\n");
+      return;
+  }
+
+  if (result == -1) {
+    printf("Element not found.\n");
+  } else {
+    printf("Element found at position %d.\n", result + 1);
+  }
 }
 
 void insertArray() {
