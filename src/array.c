@@ -267,6 +267,8 @@ void searchArray(Array *array, Key *key) {
   traverseArray(array);
   printf("\n\n");
 
+  // do while loop to check if the user wants to search another element
+
   int result;
   switch (array->dataType) {
     case INTEGER:
