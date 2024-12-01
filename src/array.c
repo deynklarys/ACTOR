@@ -33,13 +33,8 @@ typedef struct {
   union {
     int intKey;
     char charKey;
-    char strKey[ARRAY_MAX_LENGTH];
-  } findKey;
-  union {
-    int intKey;
-    char charKey;
-    char strKey[ARRAY_MAX_LENGTH];
-  } insertKey;
+    char strKey[STRING_MAX_LENGTH];
+  } dataKey;
 } Key;
 
 void traverseArray();
@@ -238,21 +233,21 @@ int linearSearch(Array array, Key *key) {
   switch (array.dataType) {
     case INTEGER:
       for (int i = 0; i < array.size; i++) {
-        if (array.data.intArray[i] == key->findKey.intKey) {
+        if (array.data.intArray[i] == key->dataKey.intKey) {
           return i;
         }
       }
       return -1;
     case CHARACTER:
       for (int i = 0; i < array.size; i++) {
-        if (array.data.charArray[i] == key->findKey.charKey) {
+        if (array.data.charArray[i] == key->dataKey.charKey) {
           return i;
         }
       }
       return -1;
     case STRING:
       for (int i = 0; i < array.size; i++) {
-        if (strcmp(array.data.strArray[i], key->findKey.strKey) == 0) {
+        if (strcmp(array.data.strArray[i], key->dataKey.strKey) == 0) {
           return i;
         }
       }
@@ -273,17 +268,17 @@ void searchArray(Array *array, Key *key) {
   switch (array->dataType) {
     case INTEGER:
       printf("Enter the number to search: ");
-      scanf("%d", &key->findKey.intKey);
+      scanf("%d", &key->dataKey.intKey);
       result = linearSearch(*array, key);
       break;
     case CHARACTER:
       printf("Enter the character to search: ");
-      scanf(" %c", &key->findKey.charKey);
+      scanf(" %c", &key->dataKey.charKey);
       result = linearSearch(*array, key);
       break;
     case STRING:
       printf("Enter the string to search: ");
-      scanf("%s", key->findKey.strKey);
+      scanf("%s", key->dataKey.strKey);
       result = linearSearch(*array, key);
       break;
     default:
@@ -309,23 +304,23 @@ void insertArrayKey(Array *array, Key *key, int position) {
       for (int i = array->size; i > position; i--) {
         array->data.intArray[i] = array->data.intArray[i - 1];
       }
-      array->data.intArray[position] = key->insertKey.intKey;
+      array->data.intArray[position] = key->dataKey.intKey;
       array->size++;
       break;
     case CHARACTER:
       for (int i = array->size; i > position; i--) {
         array->data.charArray[i] = array->data.charArray[i - 1];
       }
-      array->data.charArray[position] = key->insertKey.charKey;
+      array->data.charArray[position] = key->dataKey.charKey;
       array->size++;
       break;
     case STRING:
       for (int i = array->size; i > position; i--) {
         array->data.strArray[i] = array->data.strArray[i - 1];
       }
-      array->data.strArray[position] = malloc(strlen(key->insertKey.strKey) + 1);
+      array->data.strArray[position] = malloc(strlen(key->dataKey.strKey) + 1);
       if (array->data.strArray[position] != NULL) {
-        strcpy(array->data.strArray[position], key->insertKey.strKey);
+        strcpy(array->data.strArray[position], key->dataKey.strKey);
         array->size++;
       } else {
         printf("Memory allocation failed.\n");
@@ -351,21 +346,21 @@ void insertArray(Array *array, Key *key) {
     int position;
     case INTEGER:
       printf("Enter the number to insert: ");
-      scanf("%d", &key->insertKey.intKey);
+      scanf("%d", &key->dataKey.intKey);
       printf("Enter the position of the element to insert from 1 to %d? ", array->size + 1);
       scanf("%d", &position);
       insertArrayKey(array, key, position - 1);
       break;
     case CHARACTER:
       printf("Enter the character to insert: ");
-      scanf(" %c", &key->insertKey.charKey);
+      scanf(" %c", &key->dataKey.charKey);
       printf("Enter the position of the element to insert from 1 to %d? ", array->size + 1);
       scanf("%d", &position);
       insertArrayKey(array, key, position - 1);
       break;
     case STRING:
       printf("Enter the string to insert: ");
-      scanf("%s", key->insertKey.strKey);
+      scanf("%s", key->dataKey.strKey);
       printf("Enter the position of the element to insert from 1 to %d? ", array->size + 1);
       scanf("%d", &position);
       insertArrayKey(array, key, position - 1);
