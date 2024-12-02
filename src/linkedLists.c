@@ -46,10 +46,10 @@ typedef struct {
   Node *head;
   size_t dataSize;
   void (*printFunc)(void *);
+  int listDataType;
+  int listSize;
 } List;
 
-int listDataType;
-int listSize;
 
 int chooseDataTypeLists () {
   int chosenOption;
@@ -107,12 +107,6 @@ int introduceLists (List *list) {
   int messageSize = sizeof(message)/sizeof(message[0]);
 
   printWithinWidth(message, messageSize, "Lists");
-
-  listDataType = chooseDataTypeLists();
-  if (listDataType == -1) {
-    return 0; 
-  }
-
 }
 
 
@@ -126,6 +120,8 @@ int main () {
       system("cls");
       return 0;
     }
+
+    
 
     char *listMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
     int listMenuSize = sizeof(listMenu) / sizeof(listMenu[0]);
