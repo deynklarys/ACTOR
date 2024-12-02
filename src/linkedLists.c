@@ -44,8 +44,8 @@ typedef struct {
 
 void traverseList(List *list);
 void searchList();
-void insertList();
-  void insertAtBeginning();
+void insertList(List *list);
+  void insertAtBeginning(List *list, void *data);
   void insertAtEnd();
   void insertAtMiddle();
 void deleteList();
@@ -216,7 +216,7 @@ int main () {
 
       switch (chosenOption) {
         case 1:
-          traverseList(list);
+          traverseList(&list);
           break;
         case 2:
           functionNotDone("Search");
@@ -224,7 +224,7 @@ int main () {
           break;
         case 3:
           system("cls");
-          insertList();
+          insertList(&list);
           system("cls");
           break;
         case 4:
@@ -273,7 +273,7 @@ void searchList() {
     // Implementation of searchList
 }
 
-void insertList() {
+void insertList(List *list) {
   char *insertMenu[] = {"Insert at the beginning", "Insert at the middle", "Insert at the end", "Exit"};
   int insertMenuSize = sizeof(insertMenu) / sizeof(insertMenu[0]);
   int chosenOption;
@@ -301,8 +301,12 @@ void insertList() {
     
     switch (chosenOption) {
       case 1:
-        functionNotDone("Insert at the beginning");
-        insertAtBeginning();
+        system("cls");
+        programHeader("Insert at the beginning");
+        insertAtBeginning(list, data);
+        traverseList(list);
+        promptExit();
+        system("cls");
         break;
       case 2:
         functionNotDone("Insert at the middle");
