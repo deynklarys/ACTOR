@@ -194,11 +194,9 @@ int main () {
           searchList();
           break;
         case 3:
-          functionNotDone("Insert");
           insertList();
           break;
         case 4:
-          functionNotDone("Delete");
           deleteList();
           break;
         case 5:
@@ -249,14 +247,21 @@ void insertList() {
 
 
   do {
-    programHeader("Linked List");
+    programHeader("Insert in a Linked List");
     printMenu(insertMenu, insertMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
       continue;
     }
 
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 2);
+    
     switch (chosenOption) {
       case 1:
         functionNotDone("Insert at the beginning");
@@ -271,15 +276,13 @@ void insertList() {
         insertAtEnd();
         break;
       default:
+        moveCursor(0, cursorYpos + 1);
         printf("Invalid choice. Please choose a valid option.\n");
     }
-
-    // if (chosenOption != 7) {
-    //   printf("Press any key to continue...\n");
-    //   getch(); // Wait for user input before continuing
-    // }
-
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (chosenOption != insertMenuSize);
+
+  system("cls");
 }
 
 void insertAtBeginning() {
@@ -301,13 +304,20 @@ void deleteList() {
 
 
   do {
-    programHeader("Linked List");
+    programHeader("Delete From a Linked List");
     printMenu(deleteMenu, deleteMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
       continue;
     }
+
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 2);
 
     switch (chosenOption) {
       case 1:
@@ -322,16 +332,15 @@ void deleteList() {
         functionNotDone("Delete at the end");
         deleteFromEnd();
         break;
-      default:
-        printf("Invalid choice. Please choose a valid option.\n");
-    }
+        default:
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
+      }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+  } while (chosenOption != deleteMenuSize);
 
-    // if (chosenOption != 7) {
-    //   printf("Press any key to continue...\n");
-    //   getch(); // Wait for user input before continuing
-    // }
-
-  } while (chosenOption != deleteMenuSize);}
+    system("cls");
+}
 
 void deleteFromBeginning() {
     // Implementation of deleteFromBeginning
