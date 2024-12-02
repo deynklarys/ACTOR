@@ -21,6 +21,14 @@ Feedbacks:
 - "What element do you want to find?"
 
 
+array.c
+- fucking strings should have not been included
+- sort the original array or not
+- display the array sa operation screen
+
+
+
+
 Screen 1
 Welcome to Data Structures and Algorithm [ASCII art]
 
