@@ -18,8 +18,9 @@ sort
 #define STRING 3
 #define ARRAY_MAX_LENGTH 50
 #define STRING_MAX_LENGTH 50
-#define INSERT 3
-#define DELETE 4
+#define INS 3
+#define DEL 4
+int cursorXpos, cursorYpos;
 
 typedef struct {
   int dataType;
@@ -144,7 +145,7 @@ int initializeArray (Array *array) {
 
 void printArrayPositions (Array *array, int operation) {
   switch (operation) {
-    case INSERT:
+    case INS:
       switch (array->dataType) {
         case INTEGER:
         case CHARACTER:
@@ -157,14 +158,13 @@ void printArrayPositions (Array *array, int operation) {
           printf("Position of elements: ");
           for (int i = 0; i < array->size + 1; i++) {
             int strLength = strlen(array->data.strArray[i]);
+            if (i == array->size + 1) {
+              strLength = 5;
+            }
             int mid = strLength / 2;
             mid = strLength % 2 == 0 ? mid : mid + 1;
             for (int j = 1; j <= strLength; j++) {
-              if (j == mid) {
-                printf("%d", i + 1);
-              } else {
-                printf(".");
-              }
+              j == mid ? printf("%d", i + 1) : printf(".");
             }
             printf(" ");
           }
@@ -174,7 +174,7 @@ void printArrayPositions (Array *array, int operation) {
           return;
       }
       break;
-    case DELETE:
+    case DEL:
       switch (array->dataType) {
         case INTEGER:
         case CHARACTER:
@@ -403,7 +403,7 @@ void insertArrayKey(Array *array, Key *key, int position) {
 void insertArray(Array *array, Key *key) {
   programHeader("Insert in an Array");
   traverseArray(array);
-  printArrayPositions(array, INSERT);
+  printArrayPositions(array, INS);
 
   // do while loop to check if the user wants to insert another element
 
