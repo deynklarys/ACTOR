@@ -151,6 +151,33 @@ ListResult initializeLists () {
 
 }
 
+void *scanData(char promptMessage[], int dataType) {
+  void *data = NULL;
+  printf("%s", promptMessage);
+  switch (dataType) {
+    case INTEGER: 
+      int *intData = (int *)malloc(sizeof(int));
+      scanf("%d", intData);
+      data = intData;
+      break;
+    case CHARACTER: 
+      char *charData = (char *)malloc(sizeof(char));
+      scanf(" %c", charData);
+      data = charData;
+      break;
+    case STRING: 
+      char buffer[100];
+      scanf("%s", buffer);
+      char *strData = (char *)malloc(strlen(buffer) + 1);
+      strcpy(strData, buffer);
+      data = strData;
+      break;
+    default:
+      printf("Invalid data type.\n");
+      break;
+  }
+  return data;
+}
 
 int main () {
   programHeader("Linked Lists");
@@ -265,6 +292,11 @@ void insertList() {
 
     clearLines(cursorYpos + 1, cursorYpos + 1);
     moveCursor(0, cursorYpos + 2);
+
+    void *data;
+    if (chosenOption != insertMenuSize) {
+      data = scanData("Enter data to insert: ", list->listDataType);
+    }
     
     switch (chosenOption) {
       case 1:
