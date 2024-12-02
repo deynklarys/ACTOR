@@ -24,6 +24,24 @@ sortList
 #define DEL 4
 int cursorXpos, cursorYpos;
 
+typedef struct Node {
+  void *data;
+  struct Node *next;
+} Node;
+Node *listHead = NULL;
+
+typedef struct {
+  Node *head;
+  size_t dataSize;
+  void (*printFunc)(void *);
+  int listDataType;
+  int listSize;
+} List;
+typedef struct {
+    List list;
+    int chosenDataType;
+} ListResult;
+
 void traverseList(List *list);
 void searchList();
 void insertList();
@@ -37,19 +55,21 @@ void deleteList();
 void mergeLists();
 void sortList();
 
-typedef struct Node {
-  void *data;
-  struct Node *next;
-} Node;
+void printInt(void *data) {
+  printf("%d -> ", *(int *)data);
+}
 
-typedef struct {
-  Node *head;
-  size_t dataSize;
-  void (*printFunc)(void *);
-  int listDataType;
-  int listSize;
-} List;
+void printChar(void *data) {
+  printf("%c -> ", *(char *)data);
+}
 
+void printFloat(void *data) {
+  printf("%.2f -> ", *(float *)data);
+}
+
+void printString(void *data) {
+  printf("%s -> ", (char *)data);
+}
 
 int chooseDataTypeLists () {
   int chosenOption;
