@@ -94,13 +94,13 @@ int chooseDataTypeLists () {
     clearLines(cursorYpos + 1, cursorYpos + 1);
     moveCursor(0, cursorYpos + 2);
     switch (chosenOption) {
-      case 1:
+      case INTEGER:
         printf("You chose Integer\n");
         return INTEGER;
-      case 2:
+      case CHARACTER:
         printf("You chose Character\n");
         return CHARACTER;
-      case 3:
+      case STRING:
         printf("You chose String\n");
         return STRING;
       case 4:
