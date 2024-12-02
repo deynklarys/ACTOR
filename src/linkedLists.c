@@ -178,14 +178,14 @@ int main () {
       return 0;
     }
 
-    char *linkedListMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
-    int linkedListMenuSize = sizeof(linkedListMenu) / sizeof(linkedListMenu[0]);
+    char *listMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
+    int listMenuSize = sizeof(listMenu) / sizeof(listMenu[0]);
     int chosenOption;
 
     system("cls");
     do {
       programHeader("Linked List Operations");
-      printMenu(linkedListMenu, linkedListMenuSize);
+      printMenu(listMenu, listMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
@@ -202,7 +202,7 @@ int main () {
       switch (chosenOption) {
         case 1:
           functionNotDone("Traverse");
-          traverseList();
+          traverseList(&list);
           break;
         case 2:
           functionNotDone("Search");
@@ -232,7 +232,7 @@ int main () {
           printf("Invalid choice. Please choose a valid option.\n");
       }
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    } while (chosenOption != linkedListMenuSize);
+    } while (chosenOption != listMenuSize);
 
     system("cls");
   }
