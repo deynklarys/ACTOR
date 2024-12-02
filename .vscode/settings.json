@@ -5,6 +5,11 @@
     "stdlib.h": "c",
     "algorithms.h": "c",
     "windows.h": "c",
-    "utility.h": "c"
+    "utility.h": "c",
+    "initializer_list": "c",
+    "type_traits": "c",
+    "vector": "c",
+    "xstring": "c",
+    "xutility": "c"
   },
 }

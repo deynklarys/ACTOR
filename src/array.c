@@ -263,8 +263,10 @@ int main () {
           sortArray();
           break;
         case 6:
-          functionNotDone("Merge two arrays");
-          mergeArray();
+          system("cls");
+          mergeArray(&array);
+          promptExit();
+          system("cls");
           break;
         case 7:
           promptExit();
@@ -483,8 +485,103 @@ void deleteArray(Array *array) {
   traverseArray(array);
 }
 
-void mergeArray() {
-  // Implementation of merge
+void mergeTwoArrays(Array *array1, Array *array2) {
+  if (array1->dataType != array2->dataType) {
+    printf("Arrays have different data types and cannot be merged.\n");
+    return;
+  }
+
+  if (array1->size + array2->size > ARRAY_MAX_LENGTH) {
+    printf("Merged array exceeds maximum length.\n");
+    return;
+  }
+
+  switch (array1->dataType) {
+    case INTEGER:
+      for (int i = 0; i < array2->size; i++) {
+        array1->data.intArray[array1->size++] = array2->data.intArray[i];
+      }
+      break;
+    case CHARACTER:
+      for (int i = 0; i < array2->size; i++) {
+        array1->data.charArray[array1->size++] = array2->data.charArray[i];
+      }
+      break;
+    case STRING:
+      for (int i = 0; i < array2->size; i++) {
+        array1->data.strArray[array1->size] = malloc(strlen(array2->data.strArray[i]) + 1);
+        if (array1->data.strArray[array1->size] != NULL) {
+          strcpy(array1->data.strArray[array1->size], array2->data.strArray[i]);
+          array1->size++;
+        } else {
+          printf("Memory allocation failed.\n");
+          return;
+        }
+      }
+      break;
+    default:
+      printf("Unknown data type.\n");
+      return;
+  }
+
+  printf("\nArrays merged successfully\n");
+  traverseArray(array1);
+}
+void mergeArray(Array *array1) {
+  programHeader("Merge Two Arrays");
+  traverseArray(array1);
+
+  Array array2;
+  array2.dataType = array1->dataType;
+  array2.size = 0;
+
+  printf("Initialize your second array to work on.\n\n");
+  printf("Enter elements (space-separated, press Enter to finish):\n");
+
+  int num;
+  char ch;
+  char str[50];
+
+  switch (array2.dataType) {
+    case INTEGER: 
+      do {
+        if (scanf("%d", &num) == 1) {
+          array2.data.intArray[array2.size++] = num;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && array2.size < ARRAY_MAX_LENGTH);
+      break;
+    case CHARACTER:
+      do {
+        if (scanf(" %c", &ch) == 1) {
+          array2.data.charArray[array2.size++] = ch;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && array2.size < ARRAY_MAX_LENGTH);
+      break;
+    case STRING:
+      do {
+        if (scanf("%s", str) == 1) {
+          array2.data.strArray[array2.size] = malloc(strlen(str) + 1); // Allocate memory for the string
+          if (array2.data.strArray[array2.size] != NULL) {
+            strcpy(array2.data.strArray[array2.size], str); // Copy the string
+            array2.size++;
+          } else {
+            printf("Memory allocation failed.\n");
+            break;
+          }
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && array2.size < ARRAY_MAX_LENGTH);
+      break;
+  }  
+  mergeTwoArrays(array1, &array2);
 }
 
 void sortArray() {
