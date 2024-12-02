@@ -45,13 +45,8 @@ typedef struct {
   int size;
 } List;
 
-typedef struct {
-  union {
-    int intKey;
-    char charKey;
-    char strKey[STRING_MAX_LENGTH];
-  } dataKey;
-} Key;
+int listDataType;
+int listSize;
 
 int chooseDataTypeLists () {
   int chosenOption;
@@ -100,7 +95,6 @@ int chooseDataTypeLists () {
 }
 
 int initializeList (List *list) {
-
   char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
     "\t1, 2, 3, 4, 5 is a list of numbers or integers",
     "\ta, b, c, d, e is a list of characters",
@@ -111,8 +105,8 @@ int initializeList (List *list) {
 
   printWithinWidth(message, messageSize, "Lists");
 
-  list->dataType = chooseDataTypeLists();
-  if (list->dataType == -1) {
+  listDataType = chooseDataTypeLists();
+  if (listDataType == -1) {
     return 0; 
   }
   list->size = 0;
@@ -170,8 +164,7 @@ int main () {
   programHeader("Linked Lists");
 
   List list;
-  Key key;
-
+  
   while (1) {
     if (!initializeList(&list)) {
       system("cls");
