@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <windows.h>
 #include <conio.h> // for getch()
 #include "../utility.h"
@@ -22,7 +24,7 @@ sortList
 #define DEL 4
 int cursorXpos, cursorYpos;
 
-void traverseList();
+void traverseList(List *list);
 void searchList();
 void insertList();
   void insertAtBeginning();
@@ -35,14 +37,15 @@ void deleteList();
 void mergeLists();
 void sortList();
 
+typedef struct Node {
+  void *data;
+  struct Node *next;
+} Node;
+
 typedef struct {
-  int dataType;
-  union {
-    int intList[LIST_MAX_LENGTH];
-    char charList[LIST_MAX_LENGTH];
-    char *strList[LIST_MAX_LENGTH];
-  } data;
-  int size;
+  Node *head;
+  size_t dataSize;
+  void (*printFunc)(void *);
 } List;
 
 int listDataType;
@@ -234,7 +237,7 @@ int main () {
   return 0;
 }
 
-void traverseList() {
+void traverseList(List *list) {
     // Implementation of traverseList
 }
 void searchListKey() {
