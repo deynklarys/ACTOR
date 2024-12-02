@@ -35,54 +35,209 @@ void delete();
 void mergeLists();
 void sortList();
 
-int main () {
-  char *linkedListMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
-  int linkedListMenuSize = sizeof(linkedListMenu) / sizeof(linkedListMenu[0]);
+typedef struct {
+  int dataType;
+  union {
+    int intList[LIST_MAX_LENGTH];
+    char charList[LIST_MAX_LENGTH];
+    char *strList[LIST_MAX_LENGTH];
+  } data;
+  int size;
+} List;
+
+typedef struct {
+  union {
+    int intKey;
+    char charKey;
+    char strKey[STRING_MAX_LENGTH];
+  } dataKey;
+} Key;
+
+int chooseDataTypeLists () {
   int chosenOption;
+  printf("\nChoose a data type for your list:\n");
+  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
+  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
 
-
+  int menuCursorXpos, menuCursorYpos;
+  getCursorPos(&menuCursorXpos, &menuCursorYpos);
   do {
-    programHeader("Linked List");
-    printMenu(linkedListMenu, linkedListMenuSize);
+    printMenu(dataTypeMenu, dataTypeMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(menuCursorXpos, menuCursorYpos);
       continue;
     }
-
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 2);
     switch (chosenOption) {
       case 1:
-        functionNotDone("Traverse");
-        traverseList();
-        break;
+        printf("You chose Integer\n");
+        return INTEGER;
       case 2:
-        functionNotDone("Search");
-        searchList();
-        break;
+        printf("You chose Character\n");
+        return CHARACTER;
       case 3:
-        functionNotDone("Insert");
-        insert();
-        break;
+        printf("You chose String\n");
+        return STRING;
       case 4:
-        functionNotDone("Delete");
-        delete();
-        break;
-      case 5:
-        functionNotDone("Sort");
-        sortList();
-        break;
-      case 6:
-        functionNotDone("Merge Two Lists");
-        mergeLists();
-        break;
-      case 7:
-        promptExit();
-        break;
+        printf("Exiting...\n");
+        return -1;
       default:
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
         printf("Invalid choice. Please choose a valid option.\n");
+        break;
     }
-  } while (chosenOption != linkedListMenuSize);
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    moveCursor(menuCursorXpos, menuCursorYpos);
+  } while (chosenOption != dataTypeMenuSize);
+}
 
+int initializeList (List *list) {
+
+  char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
+    "\t1, 2, 3, 4, 5 is a list of numbers or integers",
+    "\ta, b, c, d, e is a list of characters",
+    "\t\"apple\", \"banana\", \"cherry\" is a list of strings",
+    "If you have encountered arrays, you would realize that arrays and lists are basically the same. The difference is how they are stored in the memory.",
+    "Each element in a list is called a node."};
+  int messageSize = sizeof(message)/sizeof(message[0]);
+
+  printWithinWidth(message, messageSize, "Lists");
+
+  list->dataType = chooseDataTypeLists();
+  if (list->dataType == -1) {
+    return 0; 
+  }
+  list->size = 0;
+
+  printf("Initialize your list to work on.\n\n");
+  printf("Enter elements (space-separated, press Enter to finish):\n");
+
+  int num;
+  char ch;
+  char str[STRING_MAX_LENGTH];
+
+  switch (list->dataType) {
+    case INTEGER: 
+      do {
+        if (scanf("%d", &num) == 1) {
+          list->data.intList[list->size++] = num;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && list->size < LIST_MAX_LENGTH);
+      break;
+    case CHARACTER:
+      do {
+        if (scanf(" %c", &ch) == 1) {
+          list->data.charList[list->size++] = ch;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && list->size < LIST_MAX_LENGTH);
+      break;
+    case STRING:
+      do {
+        if (scanf("%s", str) == 1) {
+          list->data.strList[list->size] = malloc(strlen(str) + 1); // Allocate memory for the string
+          if (list->data.strList[list->size] != NULL) {
+            strcpy(list->data.strList[list->size], str); // Copy the string
+            list->size++;
+          } else {
+            printf("Memory allocation failed.\n");
+            break;
+          }
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && list->size < LIST_MAX_LENGTH);
+      break;
+  }
+}
+
+
+int main () {
+  programHeader("Linked Lists");
+
+  List list;
+  Key key;
+
+  while (1) {
+    if (!initializeList(&list)) {
+      system("cls");
+      return 0;
+    }
+
+    char *linkedListMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
+    int linkedListMenuSize = sizeof(linkedListMenu) / sizeof(linkedListMenu[0]);
+    int chosenOption;
+
+    system("cls");
+    do {
+      programHeader("Linked List Operations");
+      printMenu(linkedListMenu, linkedListMenuSize);
+      getCursorPos(&cursorXpos, &cursorYpos);
+      if (scanf("%d", &chosenOption) != 1) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer(); // Clear invalid input
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
+      }
+
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 2);
+
+      switch (chosenOption) {
+        case 1:
+          functionNotDone("Traverse");
+          traverseList();
+          break;
+        case 2:
+          functionNotDone("Search");
+          searchList();
+          break;
+        case 3:
+          functionNotDone("Insert");
+          insert();
+          break;
+        case 4:
+          functionNotDone("Delete");
+          delete();
+          break;
+        case 5:
+          functionNotDone("Sort");
+          sortList();
+          break;
+        case 6:
+          functionNotDone("Merge Two Lists");
+          mergeLists();
+          break;
+        case 7:
+          promptExit();
+          break;
+        default:
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
+      }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    } while (chosenOption != linkedListMenuSize);
+
+    system("cls");
+  }
+
+  system("cls");
   return 0;
 }
 
