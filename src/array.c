@@ -147,65 +147,85 @@ int initializeArray (Array *array) {
   }
 }
 
-void printArrayPositions (Array *array, int operation) {
+void printArrayPositions(Array *array, int operation) {
+  printf("Position of elements: ");
   switch (operation) {
     case INS:
       switch (array->dataType) {
         case INTEGER:
+          for (int i = 0; i < array->size + 1; i++) {
+            char intStr[10];
+            int intLength = 0;
+            if (i == array->size) {
+              intLength = 3;
+            } else {
+              sprintf(intStr, "%d", array->data.intArray[i] + 1);
+              intLength = strlen(intStr);
+            }
+            int mid = intLength / 2;
+            mid = intLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= intLength; j++) {
+              j == mid ? printf("%d", i + 1) : printf(" ");
+            }
+            printf(" ");
+          }
+          break;
         case CHARACTER:
-          printf("Position of elements: ");
           for (int i = 0; i < array->size + 1; i++) {
             printf("%d ", i + 1);
           }
           break;
         case STRING:
-          printf("Position of elements: ");
           for (int i = 0; i < array->size + 1; i++) {
             int strLength = strlen(array->data.strArray[i]);
-            if (i == array->size + 1) {
+            if (i == array->size) {
               strLength = 5;
             }
             int mid = strLength / 2;
             mid = strLength % 2 == 0 ? mid : mid + 1;
             for (int j = 1; j <= strLength; j++) {
-              j == mid ? printf("%d", i + 1) : printf(".");
+              j == mid ? printf("%d", i + 1) : printf(" ");
             }
             printf(" ");
           }
           break;
         default:
           printf("Unknown data type.\n");
-          return;
       }
       break;
     case DEL:
       switch (array->dataType) {
         case INTEGER:
+          for (int i = 0; i < array->size; i++) {
+            char intStr[10];
+            sprintf(intStr, "%d", array->data.intArray[i] + 1);
+            int intLength = strlen(intStr);
+            int mid = intLength / 2;
+            mid = intLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= intLength; j++) {
+              j == mid ? printf("%d", i + 1) : printf(" ");
+            }
+            printf(" ");
+          }
+          break;
         case CHARACTER:
-          printf("Position of elements: ");
           for (int i = 0; i < array->size; i++) {
             printf("%d ", i + 1);
           }
           break;
         case STRING:
-          printf("Position of elements: ");
           for (int i = 0; i < array->size; i++) {
             int strLength = strlen(array->data.strArray[i]);
             int mid = strLength / 2;
             mid = strLength % 2 == 0 ? mid : mid + 1;
             for (int j = 1; j <= strLength; j++) {
-              if (j == mid) {
-                printf("%d", i + 1);
-              } else {
-                printf(".");
-              }
+              j == mid ? printf("%d", i + 1) : printf(" ");
             }
             printf(" ");
           }
           break;
         default:
           printf("Unknown data type.\n");
-          return;
       }
       break;
   }
@@ -634,7 +654,7 @@ void bubbleSortArray (Array *array) {
 
 }
 void sortArray(Array *array) {
-  char *message[] = {"Numbers will be sorted in ascending order. Letters and words will be sorted in alphabetical order.Bubble sorting algorithm will be used in this operation. To learn more about other sorting algorithms, go to Algorithms > Sorting." };
+  char *message[] = {"Numbers will be sorted in ascending order. Letters and words will be sorted in alphabetical order. Bubble sorting algorithm will be used in this operation. To learn more about other sorting algorithms, go to Algorithms > Sorting." };
   int messageSize = sizeof(message)/sizeof(message[0]);
   printWithinWidth(message, messageSize, "Sort an Array");
 
