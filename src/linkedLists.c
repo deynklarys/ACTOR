@@ -113,15 +113,16 @@ int introduceLists (List *list) {
 int main () {
   programHeader("Linked Lists");
 
-  List list;
+  List *list;
   
   while (1) {
-    if (!introduceLists(&list)) {
-      system("cls");
-      return 0;
-    }
+    introduceLists(&list);
 
-    
+    list->listDataType = chooseDataTypeLists();
+    if (list->listDataType == -1) {
+      system("cls");
+      return 0; 
+    }  
 
     char *listMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
     int listMenuSize = sizeof(listMenu) / sizeof(listMenu[0]);
