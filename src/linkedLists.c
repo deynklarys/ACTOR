@@ -194,10 +194,16 @@ int main () {
           searchList();
           break;
         case 3:
+          system("cls");
           insertList();
+          promptExit();
+          system("cls");
           break;
         case 4:
+          system("cls");
           deleteList();
+          promptExit();
+          system("cls");
           break;
         case 5:
           functionNotDone("Sort");
