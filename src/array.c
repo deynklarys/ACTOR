@@ -53,34 +53,43 @@ int chooseDataType () {
   char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
   int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
 
+  int menuCursorXpos, menuCursorYpos;
+  getCursorPos(&menuCursorXpos, &menuCursorYpos);
   do {
     printMenu(dataTypeMenu, dataTypeMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(menuCursorXpos, menuCursorYpos);
       continue;
     }
-
-    if (chosenOption > 0 && chosenOption <= dataTypeMenuSize) {
-      switch(chosenOption) {
-        case 1:
-          printf("You chose Integer\n");
-          return INTEGER;
-        case 2:
-          printf("You chose Character\n");
-          return CHARACTER;
-        case 3:
-          printf("You chose String\n");
-          return STRING;
-        case 4:
-          printf("Exiting...\n");
-          return -1;
-      }
-    } else {
-      printf("Invalid choice. Please choose a valid option.\n");
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 2);
+    switch(chosenOption) {
+      case 1:
+        printf("You chose Integer\n");
+        return INTEGER;
+      case 2:
+        printf("You chose Character\n");
+        return CHARACTER;
+      case 3:
+        printf("You chose String\n");
+        return STRING;
+      case 4:
+        printf("Exiting...\n");
+        return -1;
+      default:
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        printf("Invalid choice. Please choose a valid option.\n");
     }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    moveCursor(menuCursorXpos, menuCursorYpos);
   } while(chosenOption != 4);
-  return -1; // Invalid choice
 }
 
 int initializeArray (Array *array) {
@@ -255,11 +264,17 @@ int main () {
       printMenu(arraysMenu, arraysMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
         clearInputBuffer(); // Clear invalid input
         printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
         continue;
       }
 
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 2);
+      
       switch (chosenOption) {
         case 1:
           traverseArray(&array);
