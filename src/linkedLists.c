@@ -167,8 +167,7 @@ int main () {
 
       switch (chosenOption) {
         case 1:
-          functionNotDone("Traverse");
-          traverseList(&list);
+          traverseList(list);
           break;
         case 2:
           functionNotDone("Search");
@@ -208,7 +207,13 @@ int main () {
 }
 
 void traverseList(List *list) {
-    // Implementation of traverseList
+  Node *current = listHead;
+  printf("\nHEAD -> ");
+  while (current != NULL) {
+    list->printFunc(current->data);
+    current = current->next;
+  }
+  printf("NULL\n");
 }
 void searchListKey() {
     // Implementation of searchListKey
