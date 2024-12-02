@@ -226,9 +226,10 @@ int main () {
     int chosenOption;
 
     system("cls");
-      do {
+    do {
       programHeader("Array Operations");
       printMenu(arraysMenu, arraysMenuSize);
+      getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
         clearInputBuffer(); // Clear invalid input
         printf("Invalid input. Please enter a number.\n");
@@ -240,6 +241,7 @@ int main () {
           traverseArray(&array);
           break;
         case 2:
+          system("cls");
           searchArray(&array, &key);
           promptExit();
           system("cls");
@@ -251,8 +253,10 @@ int main () {
           system("cls");
           break;
         case 4:
-          functionNotDone("Delete");
-          deleteArray();
+          system("cls");
+          deleteArray(&array);
+          promptExit();
+          system("cls");
           break;
         case 5:
           functionNotDone("Sort");
@@ -268,6 +272,7 @@ int main () {
         default:
           printf("Invalid choice. Please choose a valid option.\n");
       }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
     } while (chosenOption != arraysMenuSize);
     
     system("cls");
