@@ -47,7 +47,7 @@ void deleteArray();
 void mergeArray();
 void sortArray();
 
-int chooseDataType () {
+int chooseDataTypeArrays () {
   int chosenOption;
   printf("\nChoose a data type for your array:\n");
   char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
@@ -86,6 +86,7 @@ int chooseDataType () {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
         printf("Invalid choice. Please choose a valid option.\n");
+        break;
     }
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
     moveCursor(menuCursorXpos, menuCursorYpos);
@@ -102,7 +103,7 @@ int initializeArray (Array *array) {
 
   printWithinWidth(message, messageSize, "Arrays");
 
-  array->dataType = chooseDataType();
+  array->dataType = chooseDataTypeArrays();
   if (array->dataType == -1) {
     return 0; 
   }
