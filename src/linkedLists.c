@@ -159,7 +159,7 @@ int main () {
   
   while (1) {
     ListResult listResult = initializeLists();
-    if (listResult.list.listDataType == -1) {
+    if (listResult.chosenDataType == -1) {
       system("cls");
       return 0;
     }
