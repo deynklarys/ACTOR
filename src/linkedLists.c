@@ -117,7 +117,7 @@ int chooseDataTypeLists () {
   } while (chosenOption != dataTypeMenuSize);
 }
 
-int introduceLists (List *list) {
+ListResult initializeLists () {
   char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
     "\t1, 2, 3, 4, 5 is a list of numbers or integers",
     "\ta, b, c, d, e is a list of characters",
@@ -127,6 +127,28 @@ int introduceLists (List *list) {
   int messageSize = sizeof(message)/sizeof(message[0]);
 
   printWithinWidth(message, messageSize, "Lists");
+
+  ListResult result;
+  result.chosenDataType = chooseDataTypeLists();
+  if (result.chosenDataType == -1) {
+    return result; 
+  }  
+  switch (result.chosenDataType) {
+    case INTEGER:
+      result.list = (List){NULL, sizeof(int), printInt, INTEGER, 0};
+      break;
+    case CHARACTER:
+      result.list = (List){NULL, sizeof(char), printChar, CHARACTER, 0};
+      break;
+    case STRING:
+      result.list = (List){NULL, sizeof(char *), printString, STRING, 0};
+      break;
+    default:
+      result.list = (List){NULL, 0, NULL, -1, 0};
+      break;
+  }
+  return result;
+
 }
 
 
@@ -136,13 +158,11 @@ int main () {
   List *list;
   
   while (1) {
-    introduceLists(&list);
-
-    list->listDataType = chooseDataTypeLists();
-    if (list->listDataType == -1) {
+    ListResult listResult = initializeLists();
+    if (listResult.list.listDataType == -1) {
       system("cls");
-      return 0; 
-    }  
+      return 0;
+    }
 
     char *listMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
     int listMenuSize = sizeof(listMenu) / sizeof(listMenu[0]);
