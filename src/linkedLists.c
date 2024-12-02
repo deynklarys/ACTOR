@@ -182,10 +182,12 @@ void *scanData(char promptMessage[], int dataType) {
 int main () {
   programHeader("Linked Lists");
 
-  List *list;
+  List list;
   
   while (1) {
     ListResult listResult = initializeLists();
+    list = listResult.list;
+    list.listDataType = listResult.chosenDataType;
     if (listResult.chosenDataType == -1) {
       system("cls");
       return 0;
@@ -256,7 +258,7 @@ int main () {
 }
 
 void traverseList(List *list) {
-  Node *current = listHead;
+  Node *current = list->head;
   printf("\nHEAD -> ");
   while (current != NULL) {
     list->printFunc(current->data);
@@ -275,7 +277,6 @@ void insertList() {
   char *insertMenu[] = {"Insert at the beginning", "Insert at the middle", "Insert at the end", "Exit"};
   int insertMenuSize = sizeof(insertMenu) / sizeof(insertMenu[0]);
   int chosenOption;
-
 
   do {
     programHeader("Insert in a Linked List");
