@@ -24,11 +24,11 @@ int cursorXpos, cursorYpos;
 
 void traverseList();
 void searchList();
-void insert();
+void insertList();
   void insertAtBeginning();
   void insertAtEnd();
   void insertAtMiddle();
-void delete();
+void deleteList();
   void deleteFromBeginning();
   void deleteFromEnd();
   void deleteFromMiddle();
@@ -210,11 +210,11 @@ int main () {
           break;
         case 3:
           functionNotDone("Insert");
-          insert();
+          insertList();
           break;
         case 4:
           functionNotDone("Delete");
-          delete();
+          deleteList();
           break;
         case 5:
           functionNotDone("Sort");
@@ -244,12 +244,14 @@ int main () {
 void traverseList() {
     // Implementation of traverseList
 }
-
+void searchListKey() {
+    // Implementation of searchListKey
+}
 void searchList() {
     // Implementation of searchList
 }
 
-void insert() {
+void insertList() {
   char *insertMenu[] = {"Insert at the beginning", "Insert at the middle", "Insert at the end", "Exit"};
   int insertMenuSize = sizeof(insertMenu) / sizeof(insertMenu[0]);
   int chosenOption;
@@ -301,7 +303,7 @@ void insertAtMiddle() {
     // Implementation of insertAtMiddle
 }
 
-void delete() {
+void deleteList() {
   char *deleteMenu[] = {"Delete at the beginning", "Delete at the middle", "Delete at the end", "Exit"};
   int deleteMenuSize = sizeof(deleteMenu) / sizeof(deleteMenu[0]);
   int chosenOption;
@@ -352,10 +354,16 @@ void deleteFromMiddle() {
     // Implementation of deleteFromMiddle
 }
 
+void mergeTwoLists() {
+    // Implementation of mergeTwoLists
+}
 void mergeLists() {
     // Implementation of mergeLists
 }
 
+void sortTheList() {
+    // Implementation of sortTheList
+}
 void sortList() {
     // Implementation of sortList
 }
