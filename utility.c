@@ -125,55 +125,44 @@ void printMenu(char *arrString[], int size) {
   }
   printf("Choose a number: ");
 }
-void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth) {
-  int startIndexOffset = 0;
+void splitStrings(char *message, char substrings[][SUBSTRINGS_MAX_LENGTH], int *count, int lineWidth) {
+    int messageLength = strlen(message);
+    int start = 0;
 
-  int phraseToCopy = minCharWidth;
+    while (start < messageLength) {
+        int end = start + lineWidth;
+        if (end > messageLength) {
+            end = messageLength;
+        }
 
-  int numOfCharsLeftBeforeASpace = 0;
-  int j = 0, k = 0;
+        // Find the last space within the line width to avoid breaking words
+        while (end > start && message[end] != ' ' && message[end] != '\0') {
+            end--;
+        }
 
-  for (int i = 0; i < strlen(inputStr); i+= minCharWidth) {
-    while(startIndexOffset < strlen(inputStr)) {
-      while (startIndexOffset + phraseToCopy + j < strlen(inputStr) && inputStr[startIndexOffset + phraseToCopy + j] != ' ') {
-        numOfCharsLeftBeforeASpace++;
-        j++;
-      }
-      phraseToCopy += numOfCharsLeftBeforeASpace;
+        // If no space was found, break at the line width
+        if (end == start) {
+            end = start + lineWidth;
+        }
 
-      if (inputStr[startIndexOffset + k ] == '\t' && startIndexOffset != 0)
-        phraseToCopy -= 8;
-      if (inputStr[startIndexOffset] == ' ' && startIndexOffset != 0)
-        k++;
+        strncpy(substrings[*count], message + start, end - start);
+        substrings[*count][end - start] = '\0'; // Null-terminate the substring
+        (*count)++;
 
-      strncpy(paragraphSubstrings[*paragraphSubstringsCount], inputStr + startIndexOffset + k, phraseToCopy);
-
-      paragraphSubstrings[*paragraphSubstringsCount][phraseToCopy + numOfCharsLeftBeforeASpace] = '\0';
-
-      startIndexOffset += phraseToCopy;
-      
-      (*paragraphSubstringsCount)++;
-
-      phraseToCopy = minCharWidth;
-      j = 0, k = 0;
-      numOfCharsLeftBeforeASpace = 0;
-
+        start = end + 1; // Move to the next part of the message
     }
-  }
 }
 void printWithinWidthCentered(char *message[], int messageSize, char *header) {
   char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
   int paragraphSubstringsCount = 0;
 
-  int lineWidth = SET_WIDTH * 0.7; 
-  int phraseToCopy = lineWidth;
+  int lineWidth = SET_WIDTH * 0.8; 
 
   for (int i = 0; i < messageSize; i++) {
     splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
   }
 
   programHeader(header);
-  printf("\n");
 
   for (int i = 0; i < paragraphSubstringsCount; i++) {
     displayCenterText(paragraphSubstrings[i]);
@@ -181,22 +170,20 @@ void printWithinWidthCentered(char *message[], int messageSize, char *header) {
   }
 }
 void printWithinWidth(char *message[], int messageSize, char *header) {
+    char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+    int paragraphSubstringsCount = 0;
 
-  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
-  int paragraphSubstringsCount = 0;
+    int lineWidth = SET_WIDTH * 0.9;
 
-  int lineWidth = SET_WIDTH * 0.7; 
-  int phraseToCopy = lineWidth;
+    for (int i = 0; i < messageSize; i++) {
+        splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+    }
 
-  for (int i = 0; i < messageSize; i++) {
-    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
-  }
+    programHeader(header);
 
-  programHeader(header);
-
-  for (int i = 0; i < paragraphSubstringsCount; i++) {
-    printf("%s", paragraphSubstrings[i]);
-  }
+    for (int i = 0; i < paragraphSubstringsCount; i++) {
+        printf("  %s\n", paragraphSubstrings[i]);
+    }
 }
 void functionNotDone(char *header) {
   system("cls");

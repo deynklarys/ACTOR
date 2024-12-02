@@ -84,7 +84,11 @@ int chooseDataType () {
 }
 
 int initializeArray (Array *array) {
-  char *message[] = {"Arrays are a collection of elements of the same types of  data.\n", "Examples:\n", "\t1, 2, 3, 4, 5 is an array of numbers or integers\n", "\ta, b, c, d, e is an array of letters or characters\n", "\tapple, banana, mango, orange is an array of words or strings\n","Each number, letter, or word in an array is called an element.\n"};
+  char *message[] = {"Arrays are a collection of elements of the same types of  data.", "Examples:",
+  "\t1, 2, 3, 4, 5 is an array of numbers or integers",
+  "\ta, b, c, d, e is an array of letters or characters",
+  "\tapple, banana, mango, orange is an array of words or strings",
+  "Each number, letter, or word in an array is called an element."};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
   printWithinWidth(message, messageSize, "Arrays");
