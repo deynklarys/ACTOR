@@ -196,13 +196,11 @@ int main () {
         case 3:
           system("cls");
           insertList();
-          promptExit();
           system("cls");
           break;
         case 4:
           system("cls");
           deleteList();
-          promptExit();
           system("cls");
           break;
         case 5:
@@ -281,9 +279,13 @@ void insertList() {
         functionNotDone("Insert at the end");
         insertAtEnd();
         break;
+      case 4:
+        promptExit();
+        break;
       default:
         moveCursor(0, cursorYpos + 1);
         printf("Invalid choice. Please choose a valid option.\n");
+        break;
     }
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (chosenOption != insertMenuSize);
@@ -338,9 +340,13 @@ void deleteList() {
         functionNotDone("Delete at the end");
         deleteFromEnd();
         break;
-        default:
-          moveCursor(0, cursorYpos + 1);
-          printf("Invalid choice. Please choose a valid option.\n");
+      case 4:
+        promptExit();
+        break;
+      default:
+        moveCursor(0, cursorYpos + 1);
+        printf("Invalid choice. Please choose a valid option.\n");
+        break;
       }
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (chosenOption != deleteMenuSize);
