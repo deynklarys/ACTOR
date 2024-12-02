@@ -18,6 +18,8 @@ sort
 #define STRING 3
 #define ARRAY_MAX_LENGTH 50
 #define STRING_MAX_LENGTH 50
+#define INSERT 3
+#define DELETE 4
 
 typedef struct {
   int dataType;
@@ -140,6 +142,72 @@ int initializeArray (Array *array) {
   }
 }
 
+void printArrayPositions (Array *array, int operation) {
+  switch (operation) {
+    case INSERT:
+      switch (array->dataType) {
+        case INTEGER:
+        case CHARACTER:
+          printf("Position of elements: ");
+          for (int i = 0; i < array->size + 1; i++) {
+            printf("%d ", i + 1);
+          }
+          break;
+        case STRING:
+          printf("Position of elements: ");
+          for (int i = 0; i < array->size + 1; i++) {
+            int strLength = strlen(array->data.strArray[i]);
+            int mid = strLength / 2;
+            mid = strLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= strLength; j++) {
+              if (j == mid) {
+                printf("%d", i + 1);
+              } else {
+                printf(".");
+              }
+            }
+            printf(" ");
+          }
+          break;
+        default:
+          printf("Unknown data type.\n");
+          return;
+      }
+      break;
+    case DELETE:
+      switch (array->dataType) {
+        case INTEGER:
+        case CHARACTER:
+          printf("Position of elements: ");
+          for (int i = 0; i < array->size; i++) {
+            printf("%d ", i + 1);
+          }
+          break;
+        case STRING:
+          printf("Position of elements: ");
+          for (int i = 0; i < array->size; i++) {
+            int strLength = strlen(array->data.strArray[i]);
+            int mid = strLength / 2;
+            mid = strLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= strLength; j++) {
+              if (j == mid) {
+                printf("%d", i + 1);
+              } else {
+                printf(".");
+              }
+            }
+            printf(" ");
+          }
+          break;
+        default:
+          printf("Unknown data type.\n");
+          return;
+      }
+      break;
+  }
+  printf("\n\n");
+}
+
 int main () {
   programHeader("Arrays");
 
@@ -149,6 +217,7 @@ int main () {
   while (1) {
 
     if (!initializeArray(&array)) {
+      system("cls");
       return 0;
     }
 
@@ -334,11 +403,7 @@ void insertArrayKey(Array *array, Key *key, int position) {
 void insertArray(Array *array, Key *key) {
   programHeader("Insert in an Array");
   traverseArray(array);
-  printf("Position of elements: ");
-  for (int i = 0; i < array->size + 1; i++) {
-    printf("%d ", i + 1);
-  }
-  printf("\n\n");
+  printArrayPositions(array, INSERT);
 
   // do while loop to check if the user wants to insert another element
 
