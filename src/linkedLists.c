@@ -330,8 +330,13 @@ void insertList(List *list) {
   system("cls");
 }
 
-void insertAtBeginning() {
-    // Implementation of insertAtBeginning
+void insertAtBeginning(List *list, void *data) {
+  Node *newNode = (Node *)malloc(sizeof(Node));
+  newNode->data = malloc(list->dataSize);
+  memcpy(newNode->data, data, list->dataSize);
+  newNode->next = list->head;
+  list->head = newNode;
+  list->listSize++;
 }
 
 void insertAtEnd() {
