@@ -95,9 +95,9 @@ int chooseDataTypeArrays () {
 
 int initializeArray (Array *array) {
   char *message[] = {"Arrays are a collection of elements of the same types of  data.", "Examples:",
-  "\t1, 2, 3, 4, 5 is an array of numbers or integers",
-  "\ta, b, c, d, e is an array of letters or characters",
-  "\tapple, banana, mango, orange is an array of words or strings",
+  "\t1, 2, 3, 4, 5 is an array of integers or numbers",
+  "\ta, b, c, d, e is an array of characters or letters",
+  "\tapple, banana, mango, orange is an array of strings or words",
   "Each number, letter, or word in an array is called an element."};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
