@@ -440,9 +440,47 @@ void insertArray(Array *array, Key *key) {
 
 }
 
+void deleteArrayKey(Array *array, int position) {
+  if (position < 0 || position >= array->size) {
+    printf("Invalid position.\n");
+    return;
+  }
 
-void deleteArray() {
-  // Implementation of delete
+  switch (array->dataType) {
+    case INTEGER:
+      for (int i = position; i < array->size - 1; i++) {
+        array->data.intArray[i] = array->data.intArray[i + 1];
+      }
+      array->size--;
+      break;
+    case CHARACTER:
+      for (int i = position; i < array->size - 1; i++) {
+        array->data.charArray[i] = array->data.charArray[i + 1];
+      }
+      array->size--;
+      break;
+    case STRING:
+      free(array->data.strArray[position]);
+      for (int i = position; i < array->size - 1; i++) {
+          array->data.strArray[i] = array->data.strArray[i + 1];
+      }
+      array->size--;
+      break;
+    default:
+      printf("Unknown data type.\n");
+      return;
+  }
+}
+void deleteArray(Array *array) {
+  programHeader("Delete from an Array");
+  traverseArray(array);
+  printArrayPositions(array, DEL);
+
+  int position;
+  printf("Enter the position of the element to delete from 1 to %d: ", array->size);
+  scanf("%d", &position);
+  deleteArrayKey(array, position - 1);
+  traverseArray(array);
 }
 
 void mergeArray() {
