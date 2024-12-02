@@ -314,6 +314,7 @@ int main () {
           promptExit();
           break;
         default:
+          moveCursor(0, cursorYpos + 1);
           printf("Invalid choice. Please choose a valid option.\n");
       }
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
