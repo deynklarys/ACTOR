@@ -263,8 +263,10 @@ int main () {
           system("cls");
           break;
         case 5:
-          functionNotDone("Sort");
-          sortArray();
+          system("cls");
+          sortArray(&array);
+          promptExit();
+          system("cls");
           break;
         case 6:
           system("cls");
@@ -588,6 +590,56 @@ void mergeArray(Array *array1) {
   mergeTwoArrays(array1, &array2);
 }
 
-void sortArray() {
-  // Implementation of sort
+void bubbleSortArray (Array *array) {
+  switch (array->dataType) {
+  case INTEGER:
+    for (int i = 0; i < array->size - 1; i++) {
+      for (int j = 0; j < array->size - i - 1; j++) {
+        if (array->data.intArray[j] > array->data.intArray[j + 1]) {
+          int temp = array->data.intArray[j];
+          array->data.intArray[j] = array->data.intArray[j + 1];
+          array->data.intArray[j + 1] = temp;
+        }
+      }
+    }
+    break;
+  case CHARACTER:
+    for (int i = 0; i < array->size - 1; i++) {
+      for (int j = 0; j < array->size - i - 1; j++) {
+        if (array->data.charArray[j] > array->data.charArray[j + 1]) {
+          char temp = array->data.charArray[j];
+          array->data.charArray[j] = array->data.charArray[j + 1];
+          array->data.charArray[j + 1] = temp;
+        }
+      }
+    }
+    break;
+  case STRING:
+    for (int i = 0; i < array->size - 1; i++) {
+      for (int j = 0; j < array->size - i - 1; j++) {
+        if (strcmp(array->data.strArray[j], array->data.strArray[j + 1]) > 0) {
+          char *temp = array->data.strArray[j];
+          array->data.strArray[j] = array->data.strArray[j + 1];
+          array->data.strArray[j + 1] = temp;
+        }
+      }
+    }
+    break;
+  default:
+    printf("Unknown data type.\n");
+    return;
+  }
+  printf("Array sorted successfully.\n");
+  traverseArray(array);
+
+}
+void sortArray(Array *array) {
+  char *message[] = {"Numbers will be sorted in ascending order. Letters and words will be sorted in alphabetical order.Bubble sorting algorithm will be used in this operation. To learn more about other sorting algorithms, go to Algorithms > Sorting." };
+  int messageSize = sizeof(message)/sizeof(message[0]);
+  printWithinWidth(message, messageSize, "Sort an Array");
+
+  printf("\nArray before sorting:\n");
+  traverseArray(array);
+  printf("\n");
+  bubbleSortArray(array);
 }
