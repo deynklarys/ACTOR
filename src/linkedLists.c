@@ -97,7 +97,7 @@ int chooseDataTypeLists () {
   } while (chosenOption != dataTypeMenuSize);
 }
 
-int initializeList (List *list) {
+int introduceLists (List *list) {
   char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
     "\t1, 2, 3, 4, 5 is a list of numbers or integers",
     "\ta, b, c, d, e is a list of characters",
@@ -112,54 +112,7 @@ int initializeList (List *list) {
   if (listDataType == -1) {
     return 0; 
   }
-  list->size = 0;
 
-  printf("Initialize your list to work on.\n\n");
-  printf("Enter elements (space-separated, press Enter to finish):\n");
-
-  int num;
-  char ch;
-  char str[STRING_MAX_LENGTH];
-
-  switch (list->dataType) {
-    case INTEGER: 
-      do {
-        if (scanf("%d", &num) == 1) {
-          list->data.intList[list->size++] = num;
-        } else {
-          clearInputBuffer(); // Clear invalid input
-          break;
-        }
-      } while (getchar() != '\n' && list->size < LIST_MAX_LENGTH);
-      break;
-    case CHARACTER:
-      do {
-        if (scanf(" %c", &ch) == 1) {
-          list->data.charList[list->size++] = ch;
-        } else {
-          clearInputBuffer(); // Clear invalid input
-          break;
-        }
-      } while (getchar() != '\n' && list->size < LIST_MAX_LENGTH);
-      break;
-    case STRING:
-      do {
-        if (scanf("%s", str) == 1) {
-          list->data.strList[list->size] = malloc(strlen(str) + 1); // Allocate memory for the string
-          if (list->data.strList[list->size] != NULL) {
-            strcpy(list->data.strList[list->size], str); // Copy the string
-            list->size++;
-          } else {
-            printf("Memory allocation failed.\n");
-            break;
-          }
-        } else {
-          clearInputBuffer(); // Clear invalid input
-          break;
-        }
-      } while (getchar() != '\n' && list->size < LIST_MAX_LENGTH);
-      break;
-  }
 }
 
 
@@ -169,7 +122,7 @@ int main () {
   List list;
   
   while (1) {
-    if (!initializeList(&list)) {
+    if (!introduceLists(&list)) {
       system("cls");
       return 0;
     }
