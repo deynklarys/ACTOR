@@ -471,7 +471,7 @@ void insertAtEnd(List *list) {
 void deleteList(List *list) {
   char *deleteMenu[] = {
     "Delete at the beginning", 
-    "Delete at the middle", 
+    "Delete at an index", 
     "Delete at the end", 
     "Exit"};
   int deleteMenuSize = sizeof(deleteMenu) / sizeof(deleteMenu[0]);
@@ -496,18 +496,30 @@ void deleteList(List *list) {
 
     switch (chosenOption) {
       case 1:
-        functionNotDone("Delete at the beginning");
+        system("cls");
+        programHeader("Delete at the Beginning");
         deleteFromBeginning(list);
+        traverseList(list);
+        promptExit();
+        system("cls");
         break;
       case 2:
         positionPtr = (int *)scanData("Enter the position to insert: ", INTEGER);
         int position = *positionPtr;
-        functionNotDone("Delete at the middle");
+        system("cls");
+        programHeader("Delete at an Index");
         deleteFromIndex(list, position - 1);
+        traverseList(list);
+        promptExit();
+        system("cls");
         break; 
       case 3:
-        functionNotDone("Delete at the end");
+        system("cls");
+        programHeader("Delete at the End");
         deleteFromEnd(list);
+        traverseList(list);
+        promptExit();
+        system("cls");
         break;
       case 4:
         promptExit();
