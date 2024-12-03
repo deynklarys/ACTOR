@@ -175,7 +175,8 @@ void *scanData(char promptMessage[], int dataType) {
       }
       data = charData;
       break;
-    case STRING: 
+    case STRING:
+      clearInputBuffer(); // Clear any leftover input
       char buffer[STRING_MAX_LENGTH];
       if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
         printf("Invalid input. Please enter a string.\n");
@@ -184,6 +185,10 @@ void *scanData(char promptMessage[], int dataType) {
       // Remove newline character if present
       buffer[strcspn(buffer, "\n")] = '\0';
       char *strData = (char *)malloc(strlen(buffer) + 1);
+      if (strData == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+      }
       strcpy(strData, buffer);
       data = strData;
       break;
@@ -373,14 +378,27 @@ Node* createNode(void *data, size_t dataSize) {
     fprintf(stderr, "Memory allocation failed\n");
     exit(EXIT_FAILURE);
   }
+  if (dataSize == sizeof(char *)) {
+    newNode->data = malloc(strlen((char *)data) + 1);
+    strcpy((char *)newNode->data, (char *)data);
+  } else {
+  newNode->data = malloc(dataSize);
   newNode->data = malloc(dataSize);
   if (newNode->data == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
     free(newNode);
     exit(EXIT_FAILURE);
   }
-  memcpy(newNode->data, data, dataSize);
+    newNode->data = malloc(dataSize);
+  if (newNode->data == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    free(newNode);
+    exit(EXIT_FAILURE);
+  }
+    memcpy(newNode->data, data, dataSize);
+  }
   newNode->next = NULL;
+  printf("Created a new node: %s\n", (char *)newNode->data);
   return newNode;
 }
 

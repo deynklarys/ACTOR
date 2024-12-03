@@ -15,8 +15,13 @@ typedef struct {
 
 Node* createNode(void *data, size_t dataSize) {
     Node *newNode = (Node *)malloc(sizeof(Node));
-    newNode->data = malloc(dataSize);
-    memcpy(newNode->data, data, dataSize);
+    if (dataSize == sizeof(char *)) {
+        newNode->data = malloc(strlen((char *)data) + 1);
+        strcpy((char *)newNode->data, (char *)data);
+    } else {
+        newNode->data = malloc(dataSize);
+        memcpy(newNode->data, data, dataSize);
+    }
     newNode->next = NULL;
     return newNode;
 }
@@ -75,7 +80,7 @@ int main() {
     printList(&floatList);
 
     List stringList = {NULL, sizeof(char *), printString};
-    char str1[] = "apple", str2[] = "banana", str3[] = "cherry";
+    char str1[] = "apple", str2[] = "deanneclarice", str3[] = "cherry";
     addNode(&stringList, str1);
     addNode(&stringList, str2);
     addNode(&stringList, str3);
