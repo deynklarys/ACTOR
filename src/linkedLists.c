@@ -523,6 +523,7 @@ void deleteList(List *list) {
     system("cls");
 }
 
+// All delete subfunctions can be implemented into only one function using delete from an index
 void deleteFromBeginning(List *list) {
     // Implementation of deleteFromBeginning
 }
