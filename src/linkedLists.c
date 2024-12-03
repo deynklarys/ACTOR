@@ -47,12 +47,12 @@ void traverseList(List *list);
 void searchList();
 void insertList(List *list);
   void insertAtBeginning(List *list);
-  void insertAtEnd(List *list);
   void insertAtIndex(List *list, int index);
-void deleteList();
-  void deleteFromBeginning();
-  void deleteFromEnd();
-  void deleteFromMiddle();
+  void insertAtEnd(List *list);
+void deleteList(List *list);
+  void deleteFromBeginning(List *list);
+  void deleteFromIndex(List *list, int index);
+  void deleteFromEnd(List *list);
 void mergeLists();
 void sortList();
 
@@ -275,7 +275,7 @@ int main () {
           break;
         case 4:
           system("cls");
-          deleteList();
+          deleteList(&list);
           system("cls");
           break;
         case 5:
@@ -468,7 +468,7 @@ void insertAtEnd(List *list) {
   list->listSize++;
 }
 
-void deleteList() {
+void deleteList(List *list) {
   char *deleteMenu[] = {
     "Delete at the beginning", 
     "Delete at the middle", 
@@ -497,17 +497,17 @@ void deleteList() {
     switch (chosenOption) {
       case 1:
         functionNotDone("Delete at the beginning");
-        deleteFromBeginning();
+        deleteFromBeginning(list);
         break;
       case 2:
         positionPtr = (int *)scanData("Enter the position to insert: ", INTEGER);
         int position = *positionPtr;
         functionNotDone("Delete at the middle");
-        deleteFromMiddle();
-        break;
+        deleteFromIndex(list, position - 1);
+        break; 
       case 3:
         functionNotDone("Delete at the end");
-        deleteFromEnd();
+        deleteFromEnd(list);
         break;
       case 4:
         promptExit();
@@ -523,16 +523,16 @@ void deleteList() {
     system("cls");
 }
 
-void deleteFromBeginning() {
+void deleteFromBeginning(List *list) {
     // Implementation of deleteFromBeginning
 }
 
-void deleteFromEnd() {
-    // Implementation of deleteFromEnd
+void deleteFromIndex(List *list, int index) {
+    // Implementation of deleteFromMiddle
 }
 
-void deleteFromMiddle() {
-    // Implementation of deleteFromMiddle
+void deleteFromEnd(List *list) {
+    // Implementation of deleteFromEnd
 }
 
 void mergeTwoLists() {
