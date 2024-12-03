@@ -23,6 +23,7 @@ sortList
 #define INS 3
 #define DEL 4
 int cursorXpos, cursorYpos;
+void *data;
 
 typedef struct Node {
   void *data;
@@ -198,7 +199,7 @@ void *scanData(char promptMessage[], int dataType) {
   return data;
 }
 
-void freeList(List *list) {
+void freeAll(List *list) {
   Node *current = list->head;
   Node *nextNode;
   while (current != NULL) {
@@ -209,9 +210,8 @@ void freeList(List *list) {
   }
   list->head = NULL;
   list->listSize = 0;
+  free(data);
 }
-
-void *data;
 
 int main () {
   programHeader("Linked Lists");
@@ -294,8 +294,7 @@ int main () {
     system("cls");
   }
 
-  freeList(&list);
-  free(data);
+  freeAll(&list);
   system("cls");
   return 0;
 }
