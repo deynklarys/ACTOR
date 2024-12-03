@@ -199,6 +199,21 @@ void *scanData(char promptMessage[], int dataType) {
   return data;
 }
 
+void freeList(List *list) {
+  Node *current = list->head;
+  Node *nextNode;
+  while (current != NULL) {
+    nextNode = current->next;
+    free(current->data);
+    free(current);
+    current = nextNode;
+  }
+  list->head = NULL;
+  list->listSize = 0;
+}
+
+void *data;
+
 int main () {
   programHeader("Linked Lists");
 
@@ -280,6 +295,8 @@ int main () {
     system("cls");
   }
 
+  freeList(&list);
+  free(data);
   system("cls");
   return 0;
 }
