@@ -341,10 +341,25 @@ void insertList(List *list) {
   system("cls");
 }
 
-void insertAtBeginning(List *list, void *data) {
+Node* createNode(void *data, size_t dataSize) {
   Node *newNode = (Node *)malloc(sizeof(Node));
-  newNode->data = malloc(list->dataSize);
-  memcpy(newNode->data, data, list->dataSize);
+  if (newNode == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    exit(EXIT_FAILURE);
+  }
+  newNode->data = malloc(dataSize);
+  if (newNode->data == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    free(newNode);
+    exit(EXIT_FAILURE);
+  }
+  memcpy(newNode->data, data, dataSize);
+  newNode->next = NULL;
+  return newNode;
+}
+
+void insertAtBeginning(List *list, void *data) {
+  Node *newNode = createNode(data, list->dataSize);
   newNode->next = list->head;
   list->head = newNode;
   list->listSize++;
