@@ -210,7 +210,9 @@ void freeAll(List *list) {
   }
   list->head = NULL;
   list->listSize = 0;
+  printf("List freed.\n");
   free(data);
+  printf("Data freed.\n");
 }
 
 int main () {
