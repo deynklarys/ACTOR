@@ -27,6 +27,9 @@ array.c
 - display the array sa operation screen
 
 
+linkedLists.c
+- pwedeng hindi ipasa ang list since yung list structure is utilities lang; pwede gawing global variable
+
 
 
 Screen 1
