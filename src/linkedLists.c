@@ -398,7 +398,6 @@ Node* createNode(void *data, size_t dataSize) {
     memcpy(newNode->data, data, dataSize);
   }
   newNode->next = NULL;
-  printf("Created a new node: %s\n", (char *)newNode->data);
   return newNode;
 }
 
