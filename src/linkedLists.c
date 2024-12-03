@@ -45,9 +45,9 @@ typedef struct {
 void traverseList(List *list);
 void searchList();
 void insertList(List *list);
-  void insertAtBeginning(List *list, void *data);
-  void insertAtEnd(List *list, void *data);
-  void insertAtIndex(List *list, void *data, int index);
+  void insertAtBeginning(List *list);
+  void insertAtEnd(List *list);
+  void insertAtIndex(List *list, int index);
 void deleteList();
   void deleteFromBeginning();
   void deleteFromEnd();
@@ -350,7 +350,7 @@ void insertList(List *list) {
       case 1:
         system("cls");
         programHeader("Insert at the beginning");
-        insertAtBeginning(list, data);
+        insertAtBeginning(list);
         traverseList(list);
         promptExit();
         system("cls");
@@ -361,7 +361,7 @@ void insertList(List *list) {
         free(positionPtr); // Free the allocated memory
         system("cls");
         programHeader("Insert at an Index");
-        insertAtIndex(list, data, position - 1);
+        insertAtIndex(list, position - 1);
         traverseList(list);
         promptExit();
         system("cls");
@@ -369,7 +369,7 @@ void insertList(List *list) {
       case 3:
         system("cls");
         programHeader("Insert at the end");
-        insertAtEnd(list, data);
+        insertAtEnd(list);
         traverseList(list);
         promptExit();
         system("cls");
@@ -388,7 +388,7 @@ void insertList(List *list) {
   system("cls");
 }
 
-Node* createNode(void *data, size_t dataSize) {
+Node* createNode(size_t dataSize) {
   Node *newNode = (Node *)malloc(sizeof(Node));
   if (newNode == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
@@ -417,21 +417,21 @@ Node* createNode(void *data, size_t dataSize) {
   return newNode;
 }
 
-void insertAtBeginning(List *list, void *data) {
-  Node *newNode = createNode(data, list->dataSize);
+void insertAtBeginning(List *list) {
+  Node *newNode = createNode(list->dataSize);
   newNode->next = list->head;
   list->head = newNode;
   list->listSize++;
 }
 
-void insertAtIndex(List *list, void *data, int index) {
+void insertAtIndex(List *list, int index) {
   if (index > list->listSize) {
     printf("Index out of bounds.\n");
     return;
   }
 
   if (index == 0) {
-    insertAtBeginning(list, data);
+    insertAtBeginning(list);
     return;
   }
 
@@ -445,15 +445,15 @@ void insertAtIndex(List *list, void *data, int index) {
     currIndex++;
   }
 
-  Node *newNode = createNode(data, list->dataSize);
+  Node *newNode = createNode(list->dataSize);
   newNode->next = currNode;
   prevNode->next = newNode;
 
   list->listSize++;
 }
 
-void insertAtEnd(List *list, void *data) {
-  Node *newNode = createNode(data, list->dataSize);
+void insertAtEnd(List *list) {
+  Node *newNode = createNode(list->dataSize);
   if (list->head == NULL) {
     list->head = newNode;
   } else {
