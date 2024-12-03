@@ -157,17 +157,32 @@ void *scanData(char promptMessage[], int dataType) {
   switch (dataType) {
     case INTEGER: 
       int *intData = (int *)malloc(sizeof(int));
-      scanf("%d", intData);
+      if (scanf("%d", intData) != 1) {
+        printf("Invalid input. Please enter an integer.\n");
+        free(intData);
+        clearInputBuffer(); // Clear invalid input
+        return NULL;
+      }
       data = intData;
       break;
     case CHARACTER: 
       char *charData = (char *)malloc(sizeof(char));
-      scanf(" %c", charData);
+      if (scanf(" %c", charData) != 1) {
+        printf("Invalid input. Please enter a character.\n");
+        free(charData);
+        clearInputBuffer(); // Clear invalid input
+        return NULL;
+      }
       data = charData;
       break;
     case STRING: 
-      char buffer[100];
-      scanf("%s", buffer);
+      char buffer[STRING_MAX_LENGTH];
+      if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
+        printf("Invalid input. Please enter a string.\n");
+        return NULL;
+      }
+      // Remove newline character if present
+      buffer[strcspn(buffer, "\n")] = '\0';
       char *strData = (char *)malloc(strlen(buffer) + 1);
       strcpy(strData, buffer);
       data = strData;
