@@ -195,6 +195,12 @@ void *scanData(char promptMessage[], int dataType) {
 }
 
 void freeAll(List *list) {
+  if (list->head == NULL) {
+    printf("Nothing to free. The list is already empty.\n");
+    return;
+  }
+
+  printf("Freeing memory allocations...\n");
   Node *current = list->head;
   Node *nextNode;
   while (current != NULL) {
@@ -206,10 +212,16 @@ void freeAll(List *list) {
   list->head = NULL;
   list->listSize = 0;
   printf("List freed.\n");
-  free(data);
-  printf("Data freed.\n");
-  free(positionPtr);
-  printf("Position pointer freed.\n");
+
+  if (data != NULL) {
+    free(data);
+    printf("Data freed.\n");
+  }
+
+  if (positionPtr != NULL) {
+    free(positionPtr);
+    printf("Position pointer freed.\n");
+  }
 }
 
 int main () {
