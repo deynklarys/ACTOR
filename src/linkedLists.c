@@ -53,25 +53,19 @@ void deleteList(List *list);
   void deleteFromBeginning(List *list);
   void deleteFromIndex(List *list, int index);
   void deleteFromEnd(List *list);
-void mergeLists();
-void sortList();
+void mergeLists(List *list);
+  void mergeTwoLists(List *list1, List *list2);
+void sortList(List *list);
 
 void printInt(void *data) {
   printf("%d -> ", *(int *)data);
 }
-
 void printChar(void *data) {
   printf("%c -> ", *(char *)data);
 }
-
-void printFloat(void *data) {
-  printf("%.2f -> ", *(float *)data);
-}
-
 void printString(void *data) {
   printf("%s -> ", (char *)data);
 }
-
 int chooseDataTypeLists () {
   int chosenOption;
   printf("\nChoose a data type for your list:\n");
@@ -161,7 +155,7 @@ void *scanData(char promptMessage[], int dataType) {
       if (scanf("%d", intData) != 1) {
         printf("Invalid input. Please enter an integer.\n");
         free(intData);
-        clearInputBuffer(); // Clear invalid input
+        clearInputBuffer();
         return NULL;
       }
       data = intData;
@@ -171,7 +165,7 @@ void *scanData(char promptMessage[], int dataType) {
       if (scanf(" %c", charData) != 1) {
         printf("Invalid input. Please enter a character.\n");
         free(charData);
-        clearInputBuffer(); // Clear invalid input
+        clearInputBuffer();
         return NULL;
       }
       data = charData;
@@ -251,7 +245,7 @@ int main () {
       if (scanf("%d", &chosenOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
-        clearInputBuffer(); // Clear invalid input
+        clearInputBuffer();
         printf("Invalid input. Please enter a number.\n");
         clearWord(cursorYpos, cursorXpos, SET_WIDTH);
         continue;
@@ -382,7 +376,7 @@ void insertList(List *list) {
     if (scanf("%d", &chosenOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer();
       printf("Invalid input. Please enter a number.\n");
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
       continue;
@@ -531,7 +525,7 @@ void deleteList(List *list) {
     if (scanf("%d", &chosenOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer();
       printf("Invalid input. Please enter a number.\n");
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
       continue;
