@@ -345,14 +345,14 @@ void insertList(List *list) {
     clearLines(cursorYpos + 1, cursorYpos + 1);
     moveCursor(0, cursorYpos + 2);
 
-    if (chosenOption != insertMenuSize) {
+    if (chosenOption > 0 && chosenOption < insertMenuSize) {
       data = scanData("Enter data to insert: ", list->listDataType);
     }
     
     switch (chosenOption) {
       case 1:
         system("cls");
-        programHeader("Insert at the beginning");
+        programHeader("Insert at the Beginning");
         insertAtBeginning(list);
         traverseList(list);
         promptExit();
