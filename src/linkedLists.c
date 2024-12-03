@@ -46,8 +46,8 @@ void traverseList(List *list);
 void searchList();
 void insertList(List *list);
   void insertAtBeginning(List *list, void *data);
-  void insertAtEnd();
-  void insertAtMiddle();
+  void insertAtEnd(List *list, void *data);
+  void insertAtIndex(List *list, void *data, int index);
 void deleteList();
   void deleteFromBeginning();
   void deleteFromEnd();
@@ -320,12 +320,23 @@ void insertList(List *list) {
         system("cls");
         break;
       case 2:
-        functionNotDone("Insert at the middle");
-        insertAtMiddle();
+        int *positionPtr = (int *)scanData("Enter the position to insert: ", INTEGER);
+        int position = *positionPtr;
+        free(positionPtr); // Free the allocated memory
+        system("cls");
+        programHeader("Insert at an Index");
+        insertAtIndex(list, data, position - 1);
+        traverseList(list);
+        promptExit();
+        system("cls");
         break;
       case 3:
-        functionNotDone("Insert at the end");
-        insertAtEnd();
+        system("cls");
+        programHeader("Insert at the end");
+        insertAtEnd(list, data);
+        traverseList(list);
+        promptExit();
+        system("cls");
         break;
       case 4:
         promptExit();
@@ -365,12 +376,46 @@ void insertAtBeginning(List *list, void *data) {
   list->listSize++;
 }
 
-void insertAtEnd() {
-    // Implementation of insertAtEnd
+void insertAtIndex(List *list, void *data, int index) {
+  if (index > list->listSize) {
+    printf("Index out of bounds.\n");
+    return;
+  }
+
+  if (index == 0) {
+    insertAtBeginning(list, data);
+    return;
+  }
+
+  Node *prevNode = NULL;
+  Node *currNode = list->head;
+  int currIndex = 0;
+
+  while (currIndex < index) {
+    prevNode = currNode;
+    currNode = currNode->next;
+    currIndex++;
+  }
+
+  Node *newNode = createNode(data, list->dataSize);
+  newNode->next = currNode;
+  prevNode->next = newNode;
+
+  list->listSize++;
 }
 
-void insertAtMiddle() {
-    // Implementation of insertAtMiddle
+void insertAtEnd(List *list, void *data) {
+  Node *newNode = createNode(data, list->dataSize);
+  if (list->head == NULL) {
+    list->head = newNode;
+  } else {
+    Node *current = list->head;
+    while (current->next != NULL) {
+      current = current->next;
+    }
+    current->next = newNode;
+  }
+  list->listSize++;
 }
 
 void deleteList() {
