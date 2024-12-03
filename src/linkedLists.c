@@ -235,6 +235,7 @@ int main () {
     list.listDataType = listResult.chosenDataType;
     if (listResult.chosenDataType == -1) {
       system("cls");
+      freeAll(&list);
       return 0;
     }
 
@@ -319,8 +320,6 @@ int main () {
     system("cls");
   }
 
-  freeAll(&list);
-  system("cls");
   return 0;
 }
 
