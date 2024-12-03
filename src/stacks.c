@@ -41,6 +41,27 @@ typedef struct {
   int chosenDataType;
 } StackResult;
 
+void push();
+void pop();
+void peek();
+void isFull();
+void isEmpty();
+
+void printInt(void *data) {
+  printf("%d -> ", *(int *)data);
+}
+void printChar(void *data) {
+  printf("%c -> ", *(char *)data);
+}
+void printString(void *data) {
+  printf("%s -> ", (char *)data);
+}
+
+int chooseDataTypeStacks();
+StackResult initializeStacks();
+void *scanData(char prompt[], DataType dataType); // can be used for all data structures needing input
+void freeAll(Stack *stack);
+
 int main () {
   char *stacksMenu[] = {"Add an item", "Remove an item","Look for an item", "Check if the stack is full", "Check if the stack is empty", "Exit"};
   int stacksMenuSize = sizeof(stacksMenu) / sizeof(stacksMenu[0]);
