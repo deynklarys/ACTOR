@@ -265,8 +265,12 @@ int main () {
           traverseList(&list);
           break;
         case 2:
-          functionNotDone("Search");
-          searchList();
+          system("cls");
+          programHeader("Search in a Linked List");
+          searchList(&list);
+          traverseList(&list);
+          promptExit();
+          system("cls");
           break;
         case 3:
           system("cls");
@@ -313,11 +317,43 @@ void traverseList(List *list) {
   }
   printf("NULL\n");
 }
-void searchListKey() {
-    // Implementation of searchListKey
+
+int compareData(void *data1, void *data2, int dataType) {
+  switch (dataType) {
+    case INTEGER:
+      return (*(int *)data1 == *(int *)data2);
+    case CHARACTER:
+      return (*(char *)data1 == *(char *)data2);
+    case STRING:
+      return (strcmp((char *)data1, (char *)data2) == 0);
+    default:
+      return 0;
+  }
 }
-void searchList() {
-    // Implementation of searchList
+void searchList(List *list) {
+  if (list->head == NULL) {
+    printf("List is empty.\n");
+    return;
+  }
+
+  data = scanData("Enter data to search: ", list->listDataType);
+  if (data == NULL) {
+    return;
+  }
+
+  Node *tempNode = list->head;
+  int currIndex = 0;
+
+  while (tempNode != NULL) {
+    if (compareData(tempNode->data, data, list->listDataType)) {
+      printf("Data found at position %d\n", currIndex + 1);
+      return;
+    } 
+    
+    tempNode = tempNode->next;
+    currIndex++;
+  }
+  printf("Data not found.\n");
 }
 
 void insertList(List *list) {
