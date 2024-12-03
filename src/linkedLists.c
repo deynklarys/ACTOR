@@ -498,7 +498,10 @@ void deleteList(List *list) {
       case 1:
         system("cls");
         programHeader("Delete at the Beginning");
+        printf("Previous list: ");
+        traverseList(list);
         deleteFromBeginning(list);
+        printf("New list: ");
         traverseList(list);
         promptExit();
         system("cls");
@@ -508,7 +511,10 @@ void deleteList(List *list) {
         int position = *positionPtr;
         system("cls");
         programHeader("Delete at an Index");
+        printf("Previous list: ");
+        traverseList(list);
         deleteFromIndex(list, position - 1);
+        printf("New list: ");
         traverseList(list);
         promptExit();
         system("cls");
@@ -516,7 +522,10 @@ void deleteList(List *list) {
       case 3:
         system("cls");
         programHeader("Delete at the End");
+        printf("Previous list: ");
+        traverseList(list);
         deleteFromEnd(list);
+        printf("New list: ");
         traverseList(list);
         promptExit();
         system("cls");
