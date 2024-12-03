@@ -558,7 +558,7 @@ void deleteList(List *list) {
         system("cls");
         break;
       case 2:
-        positionPtr = (int *)scanData("Enter the position to insert: ", INTEGER);
+        positionPtr = (int *)scanData("Enter the position to delete: ", INTEGER);
         int position = *positionPtr;
         system("cls");
         programHeader("Delete at an Index");
