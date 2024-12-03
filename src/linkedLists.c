@@ -649,6 +649,45 @@ void mergeLists() {
 void sortTheList() {
     // Implementation of sortTheList
 }
-void sortList() {
-    // Implementation of sortList
+
+void sortList(List *list) {
+  if (list->head == NULL || list->head->next == NULL) {
+    printf("List is empty or has only one element.\n");
+    return;
+  }
+
+  Node *i, *j;
+  void *tempData = malloc(list->dataSize);
+  if (tempData == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    return;
+  }
+
+  for (i = list->head; i != NULL; i = i->next) {
+    for (j = i->next; j != NULL; j = j->next) {
+      int comparison;
+      switch (list->listDataType) {
+        case INTEGER:
+          comparison = (*(int *)i->data > *(int *)j->data);
+          break;
+        case CHARACTER:
+          comparison = (*(char *)i->data > *(char *)j->data);
+          break;
+        case STRING:
+          comparison = (strcmp((char *)i->data, (char *)j->data) > 0);
+          break;
+        default:
+          comparison = 0;
+          break;
+      }
+      if (comparison) {
+        memcpy(tempData, i->data, list->dataSize);
+        memcpy(i->data, j->data, list->dataSize);
+        memcpy(j->data, tempData, list->dataSize);
+      }
+    }
+  }
+
+  free(tempData);
+  printf("\nList sorted.\n\n");
 }
