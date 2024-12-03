@@ -28,7 +28,6 @@ typedef struct Node {
   void *data;
   struct Node *next;
 } Node;
-Node *listHead = NULL;
 
 typedef struct {
   Node *head;
@@ -342,7 +341,6 @@ void insertList(List *list) {
     clearLines(cursorYpos + 1, cursorYpos + 1);
     moveCursor(0, cursorYpos + 2);
 
-    void *data;
     if (chosenOption != insertMenuSize) {
       data = scanData("Enter data to insert: ", list->listDataType);
     }
