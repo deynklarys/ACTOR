@@ -193,7 +193,14 @@ int main () {
       return 0;
     }
 
-    char *listMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
+    char *listMenu[] = {
+      "Traverse", 
+      "Search", 
+      "Insert", 
+      "Delete", 
+      "Sort", 
+      "Merge two lists", 
+      "Exit"};
     int listMenuSize = sizeof(listMenu) / sizeof(listMenu[0]);
     int chosenOption;
 
@@ -274,7 +281,11 @@ void searchList() {
 }
 
 void insertList(List *list) {
-  char *insertMenu[] = {"Insert at the beginning", "Insert at the middle", "Insert at the end", "Exit"};
+  char *insertMenu[] = {
+    "Insert at the beginning",
+    "Insert at a position",
+    "Insert at the end",
+    "Exit"};
   int insertMenuSize = sizeof(insertMenu) / sizeof(insertMenu[0]);
   int chosenOption;
 
@@ -348,7 +359,11 @@ void insertAtMiddle() {
 }
 
 void deleteList() {
-  char *deleteMenu[] = {"Delete at the beginning", "Delete at the middle", "Delete at the end", "Exit"};
+  char *deleteMenu[] = {
+    "Delete at the beginning", 
+    "Delete at the middle", 
+    "Delete at the end", 
+    "Exit"};
   int deleteMenuSize = sizeof(deleteMenu) / sizeof(deleteMenu[0]);
   int chosenOption;
 
