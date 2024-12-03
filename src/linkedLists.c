@@ -24,6 +24,7 @@ sortList
 #define DEL 4
 int cursorXpos, cursorYpos;
 void *data;
+int *positionPtr;
 
 typedef struct Node {
   void *data;
@@ -213,6 +214,8 @@ void freeAll(List *list) {
   printf("List freed.\n");
   free(data);
   printf("Data freed.\n");
+  free(positionPtr);
+  printf("Position pointer freed.\n");
 }
 
 int main () {
@@ -356,9 +359,8 @@ void insertList(List *list) {
         system("cls");
         break;
       case 2:
-        int *positionPtr = (int *)scanData("Enter the position to insert: ", INTEGER);
+        positionPtr = (int *)scanData("Enter the position to insert: ", INTEGER);
         int position = *positionPtr;
-        free(positionPtr); // Free the allocated memory
         system("cls");
         programHeader("Insert at an Index");
         insertAtIndex(list, position - 1);
@@ -498,6 +500,8 @@ void deleteList() {
         deleteFromBeginning();
         break;
       case 2:
+        positionPtr = (int *)scanData("Enter the position to insert: ", INTEGER);
+        int position = *positionPtr;
         functionNotDone("Delete at the middle");
         deleteFromMiddle();
         break;
