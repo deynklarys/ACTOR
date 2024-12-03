@@ -525,15 +525,61 @@ void deleteList(List *list) {
 
 // All delete subfunctions can be implemented into only one function using delete from an index
 void deleteFromBeginning(List *list) {
-    // Implementation of deleteFromBeginning
+  if (list->head == NULL) {
+    printf("List is empty.\n");
+    return;
+  }
+  Node *temp = list->head;
+  list->head = list->head->next;
+  free(temp->data);
+  free(temp);
+  list->listSize--;
 }
 
 void deleteFromIndex(List *list, int index) {
-    // Implementation of deleteFromMiddle
+  if (index >= list->listSize || index < 0) {
+    printf("Index out of bounds.\n");
+    return;
+  }
+  if (index == 0) {
+    deleteFromBeginning(list);
+    return;
+  }
+  Node *prevNode = NULL;
+  Node *currNode = list->head;
+  int currIndex = 0;
+  while (currIndex < index) {
+    prevNode = currNode;
+    currNode = currNode->next;
+    currIndex++;
+  }
+  prevNode->next = currNode->next;
+  free(currNode->data);
+  free(currNode);
+  list->listSize--;
 }
 
 void deleteFromEnd(List *list) {
-    // Implementation of deleteFromEnd
+  if (list->head == NULL) {
+    printf("List is empty.\n");
+    return;
+  }
+  if (list->head->next == NULL) {
+    free(list->head->data);
+    free(list->head);
+    list->head = NULL;
+  } else {
+    Node *prevNode = NULL;
+    Node *currNode = list->head;
+    while (currNode->next != NULL) {
+      prevNode = currNode;
+      currNode = currNode->next;
+    }
+    prevNode->next = NULL;
+    free(currNode->data);
+    free(currNode);
+  }
+  list->listSize--;
 }
 
 void mergeTwoLists() {
