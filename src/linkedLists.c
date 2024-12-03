@@ -294,8 +294,11 @@ int main () {
           system("cls");
           break;
         case 6:
-          functionNotDone("Merge Two Lists");
-          mergeLists();
+          system("cls");
+          programHeader("Merge Two Lists");
+          mergeLists(&list);
+          promptExit();
+          system("cls");
           break;
         case 7:
           promptExit();
@@ -646,11 +649,49 @@ void deleteFromEnd(List *list) {
   list->listSize--;
 }
 
-void mergeTwoLists() {
-    // Implementation of mergeTwoLists
+void mergeTwoLists(List *list1, List *list2) {
+  if (list1->head == NULL) {
+    list1->head = list2->head; 
+  } else { 
+    Node *current = list1->head; 
+    while (current->next != NULL) {
+      current = current->next; 
+    }
+    current->next = list2->head;
+    }
+  list1->listSize += list2->listSize;
 }
-void mergeLists() {
-    // Implementation of mergeLists
+void mergeLists(List *list1) {
+  List list2;
+  list2.head = NULL;
+  list2.listDataType = list1->listDataType;
+  list2.dataSize = list1->dataSize;
+  list2.printFunc = list1->printFunc;
+  list2.listSize = 0;
+
+  int nodes;
+  printf("Enter the number of nodes in the second list: ");
+  scanf("%d", &nodes);
+
+  printf("Enter the second list.\n");
+  while (nodes--) {
+    data = scanData("Enter data: ", list2.listDataType);
+    Node *newNode = createNode(list2.dataSize);
+    if (list2.head == NULL) {
+      list2.head = newNode;
+    } else {
+      Node *current = list2.head;
+      while (current->next != NULL) {
+        current = current->next;
+      }
+      current->next = newNode;
+    }
+    list2.listSize++;
+  }
+  mergeTwoLists(list1, &list2);
+
+  printf("Merged list: ");
+  traverseList(list1);
 }
 
 void sortList(List *list) {
