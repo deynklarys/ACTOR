@@ -283,8 +283,15 @@ int main () {
           system("cls");
           break;
         case 5:
-          functionNotDone("Sort");
-          sortList();
+          system("cls");
+          programHeader("Sort");
+          printf("Original list: ");
+          traverseList(&list);
+          sortList(&list);
+          printf("Sorted list: ");
+          traverseList(&list);
+          promptExit();
+          system("cls");
           break;
         case 6:
           functionNotDone("Merge Two Lists");
@@ -644,10 +651,6 @@ void mergeTwoLists() {
 }
 void mergeLists() {
     // Implementation of mergeLists
-}
-
-void sortTheList() {
-    // Implementation of sortTheList
 }
 
 void sortList(List *list) {
