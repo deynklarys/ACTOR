@@ -18,10 +18,7 @@ sortList
 #define INTEGER 1
 #define CHARACTER 2
 #define STRING 3
-#define LIST_MAX_LENGTH 50
 #define STRING_MAX_LENGTH 50
-#define INS 3
-#define DEL 4
 int cursorXpos, cursorYpos;
 void *data;
 int *positionPtr;
