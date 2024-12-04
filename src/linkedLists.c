@@ -36,12 +36,13 @@ typedef struct {
   int listSize;
 } List;
 typedef struct {
-    List list;
-    int chosenDataType;
+  List list;
+  int chosenDataType;
 } ListResult;
 
 void traverseList(List *list);
-void searchList();
+void searchList(List *list);
+  int compareData(void *data1, void *data2, int dataType);
 void insertList(List *list);
   void insertAtBeginning(List *list);
   void insertAtIndex(List *list, int index);
@@ -448,19 +449,12 @@ Node* createNode(size_t dataSize) {
     newNode->data = malloc(strlen((char *)data) + 1);
     strcpy((char *)newNode->data, (char *)data);
   } else {
-  newNode->data = malloc(dataSize);
-  newNode->data = malloc(dataSize);
-  if (newNode->data == NULL) {
-    fprintf(stderr, "Memory allocation failed\n");
-    free(newNode);
-    exit(EXIT_FAILURE);
-  }
     newNode->data = malloc(dataSize);
-  if (newNode->data == NULL) {
-    fprintf(stderr, "Memory allocation failed\n");
-    free(newNode);
-    exit(EXIT_FAILURE);
-  }
+    if (newNode->data == NULL) {
+      fprintf(stderr, "Memory allocation failed\n");
+      free(newNode);
+      exit(EXIT_FAILURE);
+    }
     memcpy(newNode->data, data, dataSize);
   }
   newNode->next = NULL;
