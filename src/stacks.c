@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
 #include "../utility.h"
@@ -9,8 +11,6 @@
 #define STACK_MAX_SIZE 50
 #define STRING_MAX_LENGTH 50
 int cursorXpos, cursorYpos;
-void *data;
-int *positionPtr;
 
 typedef enum {
   INTEGER,
@@ -32,7 +32,7 @@ typedef struct {
 } Stack;
 
 typedef struct {
-  Stack list;
+  Stack stack;
   int chosenDataType;
 } StackResult;
 
@@ -54,18 +54,17 @@ void printString(void *data) {
 
 int chooseDataTypeStacks();
 StackResult initializeStacks();
-void *scanData(char prompt[], DataType dataType); 
+void *scanData(char prompt[], DataType dataType);
 void freeAll(Stack *stack);
 
-int main () {
-
+int main() {
   programHeader("Stacks");
 
   Stack stack;
 
   while (1) {
     StackResult stackResult = initializeStacks();
-    stack = stackResult.list;
+    stack = stackResult.stack;
     stack.stackDataType = stackResult.chosenDataType;
     if (stack.stackDataType == -1) {
       system("cls");
@@ -73,10 +72,9 @@ int main () {
       return 0;
     }
 
-    char *stacksMenu[] = {"Add an item", "Remove an item","Check the top item", "Check if the stack is full", "Check if the stack is empty", "Exit"};
+    char *stacksMenu[] = {"Add an item", "Remove an item", "Check the top item", "Check if the stack is full", "Check if the stack is empty", "Exit"};
     int stacksMenuSize = sizeof(stacksMenu) / sizeof(stacksMenu[0]);
     int chosenOption;
-
 
     do {
       programHeader("Stacks Operations");
@@ -96,23 +94,18 @@ int main () {
 
       switch (chosenOption) {
         case 1:
-          functionNotDone("Add an item");
           push(&stack);
           break;
         case 2:
-          functionNotDone("Remove an item");
           pop(&stack);
           break;
         case 3:
-          functionNotDone("Check the top item");
           peek(&stack);
           break;
         case 4:
-          functionNotDone("Check if the stack is full");
           isFull(&stack);
           break;
         case 5:
-          functionNotDone("Check if the stack is empty");
           isEmpty(&stack);
           break;
         case 6:
@@ -129,7 +122,7 @@ int main () {
   return 0;
 }
 
-int chooseDataTypeStacks () {
+int chooseDataTypeStacks() {
   int chosenOption;
   printf("\nChoose a data type for your stack:\n");
   char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
@@ -188,21 +181,22 @@ StackResult initializeStacks() {
 
   switch (result.chosenDataType) {
     case INTEGER:
-      result.list = (Stack) {NULL, sizeof(int),printInt, INTEGER, 0};
+      result.stack = (Stack) {NULL, sizeof(int), printInt, INTEGER, 0};
       break;
     case CHARACTER:
-      result.list = (Stack) {NULL, sizeof(char),printChar, CHARACTER, 0};
+      result.stack = (Stack) {NULL, sizeof(char), printChar, CHARACTER, 0};
       break;
     case STRING:
-      result.list = (Stack) {NULL, sizeof (char *),printString, STRING, 0};
+      result.stack = (Stack) {NULL, sizeof (char *),printString, STRING, 0};
       break;
   }
+  return result;
 }
-void *scanData (char prompt[], DataType dataType) {
+void *scanData(char prompt[], DataType dataType) {
   void *data = NULL;
   printf("%s", prompt);
   switch (dataType) {
-    case INTEGER:
+    case INTEGER: {
       int *intData = (int *)malloc(sizeof(int));
       if (scanf("%d", intData) != 1) {
         printf("Invalid input. Please enter an integer.\n");
@@ -212,7 +206,8 @@ void *scanData (char prompt[], DataType dataType) {
       }
       data = intData;
       break;
-    case CHARACTER:
+    }
+    case CHARACTER: {
       char *charData = (char *)malloc(sizeof(char));
       if (scanf(" %c", charData) != 1) {
         printf("Invalid input. Please enter a character.\n");
@@ -222,7 +217,8 @@ void *scanData (char prompt[], DataType dataType) {
       }
       data = charData;
       break;
-    case STRING:
+    }
+    case STRING: {
       clearInputBuffer(); // Clear any leftover input
       char buffer[STRING_MAX_LENGTH];
       if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
@@ -230,13 +226,16 @@ void *scanData (char prompt[], DataType dataType) {
         return NULL;
       }
       // Remove newline character if present
-      if (buffer[strlen(buffer) - 1] == '\n') {
-        buffer[strlen(buffer) - 1] = '\0';
-      }
+      buffer[strcspn(buffer, "\n")] = '\0';
       char *strData = (char *)malloc(strlen(buffer) + 1);
+      if (strData == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+      }
       strcpy(strData, buffer);
       data = strData;
       break;
+    }
   }
   return data;
 }
@@ -274,6 +273,7 @@ void push(Stack *stack) {
   StackNode *newNode = (StackNode *)malloc(sizeof(StackNode));
   if (newNode == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
+    free(data);
     return;
   }
   newNode->data = data;
