@@ -192,7 +192,7 @@ void *scanData(char promptMessage[], int dataType) {
   return data;
 }
 
-void freeAll(List *list) {
+void freeAll(List *list, void *data, int *positionPtr) {
   if (list->head == NULL) {
     printf("Nothing to free. The list is already empty.\n");
     return;
@@ -233,7 +233,7 @@ int main () {
     list.listDataType = listResult.chosenDataType;
     if (listResult.chosenDataType == -1) {
       system("cls");
-      freeAll(&list);
+      freeAll(&list, NULL, NULL);
       return 0;
     }
 
@@ -367,6 +367,7 @@ void searchList(List *list) {
     currIndex++;
   }
   printf("Data not found.\n");
+  free(data);
 }
 
 void insertList(List *list) {
@@ -435,6 +436,8 @@ void insertList(List *list) {
     }
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (chosenOption != insertMenuSize);
+
+  freeAll(NULL, data, positionPtr);
 
   system("cls");
 }
@@ -583,7 +586,9 @@ void deleteList(List *list) {
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (chosenOption != deleteMenuSize);
 
-    system("cls");
+  freeAll(NULL, data, positionPtr);
+
+  system("cls");
 }
 
 // All delete subfunctions can be implemented into only one function using delete from an index
@@ -688,6 +693,8 @@ void mergeLists(List *list1) {
 
   printf("Merged list: ");
   traverseList(list1);
+
+  freeAll(&list2, data, NULL);
 }
 
 void sortList(List *list) {
