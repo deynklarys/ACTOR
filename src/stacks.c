@@ -1,16 +1,10 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
-#include "utility.h"
+#include "../utility.h"
 
-/*
-Functions to implement:
-push
-pop 
-peek
-is full
-is empty
-*/
+// run using
+// cd "c:\Academic-related_Programs\ACTOR\src\" ; if ($?) { gcc stacks.c -o stacks ..\utility.c} ; if ($?) { .\stacks }
 
 #define STACK_MAX_SIZE 50
 #define STRING_MAX_LENGTH 50
@@ -79,7 +73,7 @@ int main () {
       return 0;
     }
 
-    char *stacksMenu[] = {"Add an item", "Remove an item","Look for an item", "Check if the stack is full", "Check if the stack is empty", "Exit"};
+    char *stacksMenu[] = {"Add an item", "Remove an item","Check the top item", "Check if the stack is full", "Check if the stack is empty", "Exit"};
     int stacksMenuSize = sizeof(stacksMenu) / sizeof(stacksMenu[0]);
     int chosenOption;
 
@@ -103,23 +97,23 @@ int main () {
       switch (chosenOption) {
         case 1:
           functionNotDone("Add an item");
-          push();
+          push(&stack);
           break;
         case 2:
           functionNotDone("Remove an item");
-          pop();
+          pop(&stack);
           break;
         case 3:
-          functionNotDone("Look for an item");
-          peek();
+          functionNotDone("Check the top item");
+          peek(&stack);
           break;
         case 4:
           functionNotDone("Check if the stack is full");
-          isFull();
+          isFull(&stack);
           break;
         case 5:
           functionNotDone("Check if the stack is empty");
-          isEmpty();
+          isEmpty(&stack);
           break;
         case 6:
           promptExit();
@@ -185,7 +179,7 @@ StackResult initializeStacks() {
   char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) principle.", "This means that the last element added to the stack will be the first one to be removed.", "Like a stack of books!"};
   int messageSize = sizeof(message) / sizeof(message[0]);
 
-  printWithinWidthCentered(message, messageSize, "Stacks");
+  printWithinWidth(message, messageSize, "Stacks");
 
   StackResult result;
   result.chosenDataType = chooseDataTypeStacks();
@@ -267,4 +261,70 @@ void freeAll(Stack *stack) {
   stack->top = NULL;
   stack->stackSize = 0;
   printf("Stack freed.\n");
+}
+
+void push(Stack *stack) {
+  if (stack->stackSize == STACK_MAX_SIZE) {
+    printf("Stack overflow\n");
+    return;
+  }
+
+  void *data = scanData("Enter data to add: ", stack->stackDataType);
+  if (data == NULL) {
+    return;
+  }
+
+  StackNode *newNode = (StackNode *)malloc(sizeof(StackNode));
+  if (newNode == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    return;
+  }
+  newNode->data = data;
+  newNode->next = stack->top;
+  stack->top = newNode;
+  stack->stackSize++;
+}
+
+void pop(Stack *stack) {
+  if (stack->top == NULL) {
+    printf("Stack underflow\n");
+    return;
+  }
+
+  StackNode *temp = stack->top;
+  stack->top = stack->top->next;
+
+  stack->printFunc(temp->data);
+  printf(" is removed from the stack.\n");
+
+  free(temp->data);
+  free(temp);
+  stack->stackSize--;
+}
+
+void peek(Stack *stack) {
+  if (stack->top == NULL) {
+    printf("Stack is empty\n");
+    return;
+  }
+
+  printf("Top element: ");
+  stack->printFunc(stack->top->data);
+  printf("\n");
+}
+
+void isFull(Stack *stack) {
+  if (stack->stackSize == STACK_MAX_SIZE) {
+    printf("Stack is full\n");
+  } else {
+    printf("Stack is not full\n");
+  }
+}
+
+void isEmpty(Stack *stack) {
+  if (stack->top == NULL) {
+    printf("Stack is empty\n");
+  } else {
+    printf("Stack is not empty\n");
+  }
 }
