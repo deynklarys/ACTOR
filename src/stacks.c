@@ -36,11 +36,11 @@ typedef struct {
   int chosenDataType;
 } StackResult;
 
-void push();
-void pop();
-void peek();
-void isFull();
-void isEmpty();
+void push(Stack *stack);
+void pop(Stack *stack);
+void peek(Stack *stack);
+void isFull(Stack *stack);
+void isEmpty(Stack *stack);
 
 void printInt(void *data) {
   printf("%d -> ", *(int *)data);
@@ -54,7 +54,7 @@ void printString(void *data) {
 
 int chooseDataTypeStacks();
 StackResult initializeStacks();
-void *scanData(char prompt[], DataType dataType); // can be used for all data structures needing input
+void *scanData(char prompt[], DataType dataType); 
 void freeAll(Stack *stack);
 
 int main () {
@@ -174,7 +174,6 @@ int chooseDataTypeStacks () {
     moveCursor(menuCursorXpos, menuCursorYpos);
   } while (chosenOption != dataTypeMenuSize);
 }
-
 StackResult initializeStacks() {
   char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) principle.", "This means that the last element added to the stack will be the first one to be removed.", "Like a stack of books!"};
   int messageSize = sizeof(message) / sizeof(message[0]);
@@ -199,7 +198,6 @@ StackResult initializeStacks() {
       break;
   }
 }
-
 void *scanData (char prompt[], DataType dataType) {
   void *data = NULL;
   printf("%s", prompt);
@@ -242,7 +240,6 @@ void *scanData (char prompt[], DataType dataType) {
   }
   return data;
 }
-
 void freeAll(Stack *stack) {
   if (stack->top == NULL) {
     printf("Nothing to free. The stack is already empty.\n");
@@ -284,7 +281,6 @@ void push(Stack *stack) {
   stack->top = newNode;
   stack->stackSize++;
 }
-
 void pop(Stack *stack) {
   if (stack->top == NULL) {
     printf("Stack underflow\n");
@@ -301,7 +297,6 @@ void pop(Stack *stack) {
   free(temp);
   stack->stackSize--;
 }
-
 void peek(Stack *stack) {
   if (stack->top == NULL) {
     printf("Stack is empty\n");
@@ -312,7 +307,6 @@ void peek(Stack *stack) {
   stack->printFunc(stack->top->data);
   printf("\n");
 }
-
 void isFull(Stack *stack) {
   if (stack->stackSize == STACK_MAX_SIZE) {
     printf("Stack is full\n");
@@ -320,7 +314,6 @@ void isFull(Stack *stack) {
     printf("Stack is not full\n");
   }
 }
-
 void isEmpty(Stack *stack) {
   if (stack->top == NULL) {
     printf("Stack is empty\n");
