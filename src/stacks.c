@@ -80,6 +80,18 @@ int main() {
     system("cls");
     do {
       programHeader("Stacks Operations");
+      printf("Stack data type: ");
+      switch (stack.stackDataType) {
+        case INTEGER:
+          printf("Integer\n");
+          break;
+        case CHARACTER:
+          printf("Character\n");
+          break;
+        case STRING:
+          printf("String\n");
+          break;
+      }
       printMenu(stacksMenu, stacksMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
