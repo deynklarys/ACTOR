@@ -36,6 +36,7 @@ typedef struct {
   int chosenDataType;
 } StackResult;
 
+void printStack(Stack *stack);
 void push(Stack *stack);
 void pop(Stack *stack);
 void peek(Stack *stack);
@@ -43,13 +44,13 @@ void isFull(Stack *stack);
 void isEmpty(Stack *stack);
 
 void printInt(void *data) {
-  printf("%d -> ", *(int *)data);
+  printf(" %d", *(int *)data);
 }
 void printChar(void *data) {
-  printf("%c -> ", *(char *)data);
+  printf(" %c ", *(char *)data);
 }
 void printString(void *data) {
-  printf("%s -> ", (char *)data);
+  printf(" %s ", (char *)data);
 }
 
 int chooseDataTypeStacks();
@@ -76,6 +77,7 @@ int main() {
     int stacksMenuSize = sizeof(stacksMenu) / sizeof(stacksMenu[0]);
     int chosenOption;
 
+    system("cls");
     do {
       programHeader("Stacks Operations");
       printMenu(stacksMenu, stacksMenuSize);
@@ -88,16 +90,26 @@ int main() {
         clearWord(cursorYpos, cursorXpos, SET_WIDTH);
         continue;
       }
-
+      
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 2);
 
       switch (chosenOption) {
         case 1:
+          system("cls");
+          programHeader("Add an onto the stack"); 
           push(&stack);
+          printStack(&stack);
+          promptExit();
+          system("cls");
           break;
         case 2:
+          system("cls");
+          programHeader("Remove an item from the stack");
           pop(&stack);
+          printStack(&stack);
+          promptExit();
+          system("cls");
           break;
         case 3:
           peek(&stack);
@@ -115,7 +127,7 @@ int main() {
           moveCursor(0, cursorYpos + 1);
           printf("Invalid choice. Please choose a valid option.\n");
       }
-      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      clearLines(cursorYpos, 24);
     } while (chosenOption != stacksMenuSize);
     system("cls");
   }
@@ -168,7 +180,7 @@ int chooseDataTypeStacks() {
   } while (chosenOption != dataTypeMenuSize);
 }
 StackResult initializeStacks() {
-  char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) principle.", "This means that the last element added to the stack will be the first one to be removed.", "Like a stack of books!"};
+  char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) or the First In Last Out (FILO) principle", "This means that the last element added to the stack will be the first one to be removed. Like a stack of books!"};
   int messageSize = sizeof(message) / sizeof(message[0]);
 
   printWithinWidth(message, messageSize, "Stacks");
@@ -259,6 +271,20 @@ void freeAll(Stack *stack) {
   printf("Stack freed.\n");
 }
 
+void printStack(Stack *stack) {
+  printf("Your stack: \n");
+  if (stack->top == NULL) {
+    printf("Stack is empty\n");
+    return;
+  }
+
+  StackNode *temp = stack->top;
+  while (temp != NULL) {
+    stack->printFunc(temp->data);
+    temp = temp->next;
+    printf("\n");
+  }
+}
 void push(Stack *stack) {
   if (stack->stackSize == STACK_MAX_SIZE) {
     printf("Stack overflow\n");
