@@ -13,9 +13,9 @@
 int cursorXpos, cursorYpos;
 
 typedef enum {
-  INTEGER,
-  CHARACTER,
-  STRING
+  INTEGER = 1,
+  CHARACTER = 2,
+  STRING = 3
 } DataType;
 
 typedef struct Node {
@@ -44,7 +44,7 @@ void isFull(Stack *stack);
 void isEmpty(Stack *stack);
 
 void printInt(void *data) {
-  printf(" %d", *(int *)data);
+  printf(" %d ", *(int *)data);
 }
 void printChar(void *data) {
   printf(" %c ", *(char *)data);
@@ -139,7 +139,7 @@ int main() {
           moveCursor(0, cursorYpos + 1);
           printf("Invalid choice. Please choose a valid option.\n");
       }
-      clearLines(cursorYpos, 24);
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
     } while (chosenOption != stacksMenuSize);
     system("cls");
   }
@@ -192,7 +192,7 @@ int chooseDataTypeStacks() {
   } while (chosenOption != dataTypeMenuSize);
 }
 StackResult initializeStacks() {
-  char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) or the First In Last Out (FILO) principle", "This means that the last element added to the stack will be the first one to be removed. Like a stack of books!"};
+  char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) or the First In Last Out (FILO) principle.", "This means that the last element added to the stack will be the first one to be removed. Like a stack of books!"};
   int messageSize = sizeof(message) / sizeof(message[0]);
 
   printWithinWidth(message, messageSize, "Stacks");
@@ -284,7 +284,7 @@ void freeAll(Stack *stack) {
 }
 
 void printStack(Stack *stack) {
-  printf("Your stack: \n");
+  printf("\nYour stack: \n");
   if (stack->top == NULL) {
     printf("Stack is empty\n");
     return;
