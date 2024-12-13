@@ -18,7 +18,7 @@ int exitXpos, exitYpos;
 
 // Utility function definitions
 void getTerminalSize() {
-    /* Function to get the terminal size. */
+  /* Function to get the terminal size. */
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 	terminalWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
@@ -55,11 +55,11 @@ void showCursor() {
   SetConsoleCursorInfo(consoleHandle, &info);
 }
 void getCursorPos(int *Xpos, int *Ypos) {
-    /* Function to get the current position of the cursor */
-    CONSOLE_SCREEN_BUFFER_INFO info;
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
-    *Xpos = info.dwCursorPosition.X;
-    *Ypos = info.dwCursorPosition.Y;
+  /* Function to get the current position of the cursor */
+  CONSOLE_SCREEN_BUFFER_INFO info;
+  GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+  *Xpos = info.dwCursorPosition.X;
+  *Ypos = info.dwCursorPosition.Y;
 }
 void moveCursor(int x, int y) {
   /* Function to move the cursor at a specified coordinate in the terminal */
@@ -69,22 +69,22 @@ void moveCursor(int x, int y) {
 	SetConsoleCursorPosition(hConsole, pos);
 }
 void clearLines(int startLine, int endLine) {
-    /* Function to clear lines in the terminal given a starting and ending y-coordinate */
-    hideCursor();
+  /* Function to clear lines in the terminal given a starting and ending y-coordinate */
+  hideCursor();
 	for (int i = startLine; i <= endLine; i++) {
 		moveCursor(0, i);
 		for (int j = 0; j < SET_WIDTH; j++) {
 			printf(" ");
 		}
 	}
-    showCursor();
+  showCursor();
 }
 void clearWord(int y, int startCol, int endCol) {
-    /* Function to clear a specific portion of a line in the terminal */
-    moveCursor(startCol, y);
-    for (int i = 0; i < endCol - startCol; i++) {
-		printf(" ");
-    }
+  /* Function to clear a specific portion of a line in the terminal */
+  moveCursor(startCol, y);
+  for (int i = 0; i < endCol - startCol; i++) {
+  printf(" ");
+  }
 }
 void clearPrompts(char *header) {
   /* Function to clear the prompts of the program. It will essentially clear everything below the program header. */
@@ -126,31 +126,31 @@ void printMenu(char *arrString[], int size) {
   printf("Choose a number: ");
 }
 void splitStrings(char *message, char substrings[][SUBSTRINGS_MAX_LENGTH], int *count, int lineWidth) {
-    int messageLength = strlen(message);
-    int start = 0;
+  int messageLength = strlen(message);
+  int start = 0;
 
-    while (start < messageLength) {
-        int end = start + lineWidth;
-        if (end > messageLength) {
-            end = messageLength;
-        }
-
-        // Find the last space within the line width to avoid breaking words
-        while (end > start && message[end] != ' ' && message[end] != '\0') {
-            end--;
-        }
-
-        // If no space was found, break at the line width
-        if (end == start) {
-            end = start + lineWidth;
-        }
-
-        strncpy(substrings[*count], message + start, end - start);
-        substrings[*count][end - start] = '\0'; // Null-terminate the substring
-        (*count)++;
-
-        start = end + 1; // Move to the next part of the message
+  while (start < messageLength) {
+    int end = start + lineWidth;
+    if (end > messageLength) {
+      end = messageLength;
     }
+
+    // Find the last space within the line width to avoid breaking words
+    while (end > start && message[end] != ' ' && message[end] != '\0') {
+      end--;
+    }
+
+    // If no space was found, break at the line width
+    if (end == start) {
+      end = start + lineWidth;
+    }
+
+    strncpy(substrings[*count], message + start, end - start);
+    substrings[*count][end - start] = '\0'; // Null-terminate the substring
+    (*count)++;
+
+    start = end + 1; // Move to the next part of the message
+  }
 }
 void printWithinWidthCentered(char *message[], int messageSize, char *header) {
   char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
@@ -170,22 +170,22 @@ void printWithinWidthCentered(char *message[], int messageSize, char *header) {
   }
 }
 void printWithinWidth(char *message[], int messageSize, char *header) {
-    char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
-    int paragraphSubstringsCount = 0;
+  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+  int paragraphSubstringsCount = 0;
 
-    int lineWidth = SET_WIDTH * 0.9;
+  int lineWidth = SET_WIDTH * 0.9;
 
-    for (int i = 0; i < messageSize; i++) {
-        splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
-    }
+  for (int i = 0; i < messageSize; i++) {
+    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+  }
 
   if (header != NULL) {
     programHeader(header);
   }
 
-    for (int i = 0; i < paragraphSubstringsCount; i++) {
-        printf("  %s\n", paragraphSubstrings[i]);
-    }
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    printf("  %s\n", paragraphSubstrings[i]);
+  }
 }
 void functionNotDone(char *header) {
   system("cls");
