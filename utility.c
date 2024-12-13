@@ -179,7 +179,9 @@ void printWithinWidth(char *message[], int messageSize, char *header) {
         splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
     }
 
+  if (header != NULL) {
     programHeader(header);
+  }
 
     for (int i = 0; i < paragraphSubstringsCount; i++) {
         printf("  %s\n", paragraphSubstrings[i]);
