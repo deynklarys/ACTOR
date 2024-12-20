@@ -19,6 +19,54 @@ int strLength (char *string[]); // returns the length of the string
 char *concatenate (char *string1[], char *string2[]); // returns the concatenation of string1 and string2
 int compareStr (char *string1[], char *string2[]); // returns 0 if string1 and string2 are equal, -1 if string1 < string2, 1 if string1 > string2
 
+int scanPosition() {
+  int position;
+  printf("Enter the position: ");
+  if (scanf("%d", &position) != 1) {
+    printf("Invalid input. Please enter a number.\n");
+    clearInputBuffer();
+    return -1;
+  }
+  return position;
+}
+char scanChar() {
+  char character;
+  printf("Enter the character: ");
+  if (scanf(" %c", &character) != 1) {
+    printf("Invalid input. Please enter a character.\n");
+    clearInputBuffer();
+    return '\0';
+  }
+  return character;
+}
+char *scanString() {
+  char *string = (char *)malloc(STRING_MAX_LENGTH);
+  if (string == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    return NULL;
+  }
+  printf("Enter the string: ");
+  clearInputBuffer(); // Clear any leftover input
+  if (fgets(string, STRING_MAX_LENGTH, stdin) == NULL) {
+    printf("Invalid input. Please enter a string.\n");
+    free(string);
+    return NULL;
+  }
+  // Remove newline character if present
+  string[strcspn(string, "\n")] = '\0';
+  return string;
+}
+int scanLength() {
+  int length;
+  printf("Enter the length: ");
+  if (scanf("%d", &length) != 1) {
+    printf("Invalid input. Please enter a number.\n");
+    clearInputBuffer();
+    return -1;
+  }
+  return length;
+}
+
 int main () {
   char *stringsMenu[] = {
     "Find a character", 
