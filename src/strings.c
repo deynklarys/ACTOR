@@ -10,7 +10,7 @@ int position, charToBeInserted, length;
 char *string, *stringToFind, *stringToInsert;
 
 // Declarations
-char findChar (char *string, int pos); // returns the nth character of the string
+void findChar (char *string, int pos); // returns the nth character of the string
 void replaceChar (char *string, int pos, char charToBeInserted); // sets the nth character of the string to charToBeInserted
 char *insertChar (char *string, int pos, char charToBeInserted); // inserts charToBeInserted into the string at position n
 char *deleteChar (char *string, int pos); // deletes the nth character of the string
@@ -147,6 +147,7 @@ int main () {
         break;
       case 11:
         promptExit();
+        system("cls");
         break;
       default:
         moveCursor(0, cursorYpos + 1);
@@ -158,7 +159,7 @@ int main () {
   return 0;
 }
 
-char findChar (char *string, int pos) {
+void findChar (char *string, int pos) {
   while (1) {
     int position = scanPosition();
     if (position == -1) {
@@ -169,7 +170,7 @@ char findChar (char *string, int pos) {
       continue;
     }
     printf("Character at position %d: %c\n", position, string[position]);
-    return string[position];
+    break;
   }
 }
 void replaceChar (char *string, int pos, char charToBeInserted) {
