@@ -1,103 +1,127 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
-#include "utility.h"
+#include "../utility.h"
+
+#define STRING_MAX_LENGTH 50
+
+int cursorXpos, cursorYpos;
 
 // Declarations
-int getChar (char *string[], int n); // returns the nth character of the string
-void putChar (char *string[], int n, char charToBeInserted); // sets the nth character of the string to charToBeInserted
-int strLength (char *string[]); // returns the length of the string
-int position (char *string[], char *stringToFind[]); // returns the position of the first occurrence of stringToFind in string
-char *concatenate (char *string1[], char *string2[]); // returns the concatenation of string1 and string2
-char *substring (char *string[], int position, int length); // returns the substring of string starting at position and of length length
-void deleteStr (char *string[], int position, int length); // deletes the substring of string starting at position and of length length
+int findChar (char *string[], int pos); // returns the nth character of the string
+void replaceChar (char *string[], int pos, char charToBeInserted); // sets the nth character of the string to charToBeInserted
+char *insertChar (char *string[], int pos, char charToBeInserted); // inserts charToBeInserted into the string at position n
+char *deleteChar (char *string[], int pos); // deletes the nth character of the string
+int findStr (char *string[], char *stringToFind[]); // returns the position of the first occurrence of stringToFind in string
 char *insertStr (char *string[], char *stringToInsert[], int position); // inserts stringToInsert into string at position
+void deleteStr (char *string[], int pos, int length); // deletes the substring of string starting at position and of length length
+int strLength (char *string[]); // returns the length of the string
+char *concatenate (char *string1[], char *string2[]); // returns the concatenation of string1 and string2
 int compareStr (char *string1[], char *string2[]); // returns 0 if string1 and string2 are equal, -1 if string1 < string2, 1 if string1 > string2
 
 int main () {
-  char *stringsMenu[] = {"Find a letter", "Replace a letter", "Insert a letter", "Delete a letter", "Exit"};
+  char *stringsMenu[] = {
+    "Find a character", 
+    "Replace a character", 
+    "Insert a character", 
+    "Delete a character",
+    "Find the position of a substring",
+    "Insert a string",
+    "Delete a string", 
+    "Find the length of a string",    
+    "Concatenate two strings",
+    "Compare two strings",
+    "Exit" };
   int stringsMenuSize = sizeof(stringsMenu) / sizeof(stringsMenu[0]);
   int chosenOption;
 
 
   do {
-    programHeader("Linked List");
+    programHeader("Strings");
     printMenu(stringsMenu, stringsMenuSize);
     if (scanf("%d", &chosenOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      continue;
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
     }
 
     switch (chosenOption) {
       case 1:
-        functionNotDone("Arrays");
-        traverseList();
+        functionNotDone("Find a character");
         break;
       case 2:
-        functionNotDone("Linked Lists");
-        searchList();
+        functionNotDone("Replace a character");
         break;
       case 3:
-        functionNotDone("Stacks");
-        insert();
+        functionNotDone("Insert a character");
         break;
       case 4:
-        functionNotDone("Queues");
-        delete();
+        functionNotDone("Delete a character");
         break;
       case 5:
+        functionNotDone("Find a substring");
+        break;
+      case 6:
+        functionNotDone("Insert a string");
+        break;
+      case 7:
+        functionNotDone("Delete a string");
+        break;
+      case 8:
+        functionNotDone("Find the position of a substring");
+        break;
+      case 9:
+        functionNotDone("Find the length of a string");
+        break;
+      case 10:
+        functionNotDone("Concatenate two strings");
+        break;
+      case 11:
+        functionNotDone("Compare two strings");
+        break;
+      case 12:
         promptExit();
         break;
       default:
+        moveCursor(0, cursorYpos + 1);
         printf("Invalid choice. Please choose a valid option.\n");
     }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (chosenOption != stringsMenuSize);
 
   return 0;
 }
 
-//Definitions
-
-int getChar (char *string[], int n) {
-  // Function definition
+int findChar (char *string[], int pos) {
   return 0;
 }
-
-void putChar (char *string[], int n, char charToBeInserted) {
-  // Function definition
+void replaceChar (char *string[], int pos, char charToBeInserted) {
+  return;
 }
-
-int strLength (char *string[]) {
-  // Function definition
+char *insertChar (char *string[], int pos, char charToBeInserted) {
+  return string;
+}
+char *deleteChar (char *string[], int pos) {
+  return string;
+}
+int findStr (char *string[], char *stringToFind[]) {
   return 0;
 }
-
-int position (char *string[], char *stringToFind[]) {
-  // Function definition
-  return 0;
-}
-
-char *concatenate (char *string1[], char *string2[]) {
-  // Function definition
-  return NULL;
-}
-
-char *substring (char *string[], int position, int length) {
-  // Function definition
-  return NULL;
-}
-
-void deleteStr (char *string[], int position, int length) {
-  // Function definition
-}
-
 char *insertStr (char *string[], char *stringToInsert[], int position) {
-  // Function definition
-  return NULL;
+  return string;
 }
-
+void deleteStr (char *string[], int pos, int length) {
+  return;
+}
+int strLength (char *string[]) {
+  return 0;
+}
+char *concatenate (char *string1[], char *string2[]) {
+  return string1;
+}
 int compareStr (char *string1[], char *string2[]) {
-  // Function definition
   return 0;
 }
