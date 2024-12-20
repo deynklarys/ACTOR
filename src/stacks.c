@@ -103,7 +103,7 @@ int main() {
         continue;
       }
       
-      clearLines(cursorYpos + 1, cursorYpos + 1);
+      clearLines(cursorYpos + 1, 24);
       moveCursor(0, cursorYpos + 2);
 
       switch (chosenOption) {
@@ -133,6 +133,7 @@ int main() {
           isEmpty(&stack);
           break;
         case 6:
+          freeAll(&stack);
           promptExit();
           break;
         default:
@@ -346,11 +347,15 @@ void peek(Stack *stack) {
   printf("\n");
 }
 void isFull(Stack *stack) {
+  char *message[] = {
+    "\nNote:", "This program implements a stack data structure using linked lists. As a result, the stack will only be full when the system runs out of memory.",
+    "However, for practical purposes, the stack is considered full when it reaches a predefined maximum size. In this implementation, the maximum stack size is set to 50."};
   if (stack->stackSize == STACK_MAX_SIZE) {
     printf("Stack is full\n");
   } else {
     printf("Stack is not full\n");
   }
+  printWithinWidth(message, sizeof(message) / sizeof(message[0]), NULL);
 }
 void isEmpty(Stack *stack) {
   if (stack->top == NULL) {
