@@ -10,16 +10,16 @@ int position, charToBeInserted, length;
 char *string, *stringToFind, *stringToInsert;
 
 // Declarations
-int findChar (char *string[], int pos); // returns the nth character of the string
-void replaceChar (char *string[], int pos, char charToBeInserted); // sets the nth character of the string to charToBeInserted
-char *insertChar (char *string[], int pos, char charToBeInserted); // inserts charToBeInserted into the string at position n
-char *deleteChar (char *string[], int pos); // deletes the nth character of the string
-int findStr (char *string[], char *stringToFind[]); // returns the position of the first occurrence of stringToFind in string
-char *insertStr (char *string[], char *stringToInsert[], int position); // inserts stringToInsert into string at position
-void deleteStr (char *string[], int pos, int length); // deletes the substring of string starting at position and of length length
-int strLength (char *string[]); // returns the length of the string
-char *concatenate (char *string1[], char *string2[]); // returns the concatenation of string1 and string2
-int compareStr (char *string1[], char *string2[]); // returns 0 if string1 and string2 are equal, -1 if string1 < string2, 1 if string1 > string2
+char findChar (char *string, int pos); // returns the nth character of the string
+void replaceChar (char *string, int pos, char charToBeInserted); // sets the nth character of the string to charToBeInserted
+char *insertChar (char *string, int pos, char charToBeInserted); // inserts charToBeInserted into the string at position n
+char *deleteChar (char *string, int pos); // deletes the nth character of the string
+int findStr (char *string, char *stringToFind); // returns the position of the first occurrence of stringToFind in string
+char *insertStr (char *string, char *stringToInsert, int position); // inserts stringToInsert into string at position
+void deleteStr (char *string, int pos, int length); // deletes the substring of string starting at position and of length length
+int strLength (char *string); // returns the length of the string
+char *concatenate (char *string1, char *string2); // returns the concatenation of string1 and string2
+int compareStr (char *string1, char *string2); // returns 0 if string1 and string2 are equal, -1 if string1 < string2, 1 if string1 > string2
 
 int scanPosition() {
   int position;
@@ -89,56 +89,63 @@ int main () {
   int stringsMenuSize = sizeof(stringsMenu) / sizeof(stringsMenu[0]);
   int chosenOption;
 
-  
+    string = "Hello World!";
+    position = 2;
+    charToBeInserted = 'a';
+    stringToFind = "World";
+
   do {
     programHeader("Strings");
+
+    printString(string, "");
+    printf("\n");
+    
     printMenu(stringsMenu, stringsMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
-        clearLines(cursorYpos + 1, cursorYpos + 1);
-        moveCursor(0, cursorYpos + 1);
-        clearInputBuffer();
-        printf("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-        continue;
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer();
+      printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      continue;
     }
     clearLines(cursorYpos + 1, 24);
     moveCursor(0, cursorYpos + 2);
 
     switch (chosenOption) {
       case 1:
-        functionNotDone("Find a character");
+        findChar(string, position);
         break;
       case 2:
-        functionNotDone("Replace a character");
+        replaceChar(string, position, charToBeInserted);
         break;
       case 3:
-        functionNotDone("Insert a character");
+        insertChar(string, position, charToBeInserted);
         break;
       case 4:
-        functionNotDone("Delete a character");
+        deleteChar(string, position);
         break;
       case 5:
-        functionNotDone("Find a substring");
+        findStr(string, stringToFind);
         break;
       case 6:
-        functionNotDone("Insert a string");
+        insertStr(string, stringToInsert, position);
         break;
       case 7:
-        functionNotDone("Delete a string");
+        deleteStr(string, position, length);
         break;
       case 8:
-        functionNotDone("Find the position of a substring");
+        strLength(string);
         break;
       case 9:
-        functionNotDone("Find the length of a string");
+        char *string2 = "MY LOVE";
+        concatenate(string, string2);
         break;
       case 10:
-        functionNotDone("Concatenate two strings");
+        compareStr(string, stringToFind);
         break;
       case 11:
-        functionNotDone("Compare two strings");
-        break;
-      case 12:
         promptExit();
         break;
       default:
@@ -151,20 +158,21 @@ int main () {
   return 0;
 }
 
-int findChar (char *string[], int pos) {
+char findChar (char *string, int pos) {
   while (1) {
     int position = scanPosition();
     if (position == -1) {
       continue;
     }
-    if (position < 0 || position >= strLength(string)) {
+    if (position < 0 || position >= strlen(string)) {
       printf("Invalid position. Please enter a valid position.\n");
       continue;
     }
     printf("Character at position %d: %c\n", position, string[position]);
+    return string[position];
   }
 }
-void replaceChar (char *string[], int pos, char charToBeInserted) {
+void replaceChar (char *string, int pos, char charToBeInserted) {
   while (1) {
     int position = scanPosition();
     if (position == -1) {
@@ -180,7 +188,7 @@ void replaceChar (char *string[], int pos, char charToBeInserted) {
     break;
   }
 }
-char *insertChar (char *string[], int pos, char charToBeInserted) {
+char *insertChar (char *string, int pos, char charToBeInserted) {
   while (1) {
     int position = scanPosition();
     if (position == -1) {
@@ -197,7 +205,7 @@ char *insertChar (char *string[], int pos, char charToBeInserted) {
   }
   return string;
 }
-char *deleteChar (char *string[], int pos) {
+char *deleteChar (char *string, int pos) {
   while (1) {
     int position = scanPosition();
     if (position == -1) {
@@ -216,7 +224,7 @@ char *deleteChar (char *string[], int pos) {
   }
   return string;
 }
-int findStr (char *string[], char *stringToFind[]) {
+int findStr (char *string, char *stringToFind) {
   while (1) {
     char *stringToFind = scanString();
     if (stringToFind == NULL) {
@@ -241,7 +249,7 @@ int findStr (char *string[], char *stringToFind[]) {
   }
   return -1;
 }
-char *insertStr (char *string[], char *stringToInsert[], int position) {
+char *insertStr (char *string, char *stringToInsert, int position) {
   while (1) {
     int position = scanPosition();
     if (position == -1) {
@@ -260,7 +268,7 @@ char *insertStr (char *string[], char *stringToInsert[], int position) {
   }
   return string;
 }
-void deleteStr (char *string[], int pos, int length) {
+void deleteStr (char *string, int pos, int length) {
   while (1) {
     int position = scanPosition();
     if (position == -1) {
@@ -279,7 +287,7 @@ void deleteStr (char *string[], int pos, int length) {
   }
   return;
 }
-int strLength (char *string[]) {
+int strLength (char *string) {
   while (1) {
     char *string = scanString();
     if (string == NULL) {
@@ -295,7 +303,7 @@ int strLength (char *string[]) {
     break;
   }
 }
-char *concatenate (char *string1[], char *string2[]) {
+char *concatenate (char *string1, char *string2) {
   while (1) {
     char *string1 = scanString();
     if (string1 == NULL) {
@@ -322,7 +330,7 @@ char *concatenate (char *string1[], char *string2[]) {
     return concatenatedString;
   }
 }
-int compareStr (char *string1[], char *string2[]) {
+int compareStr (char *string1, char *string2) {
   while (1) {
     char *string1 = scanString();
     if (string1 == NULL) {
