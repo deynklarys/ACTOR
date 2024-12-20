@@ -12,8 +12,7 @@ char string[STRING_MAX_LENGTH], stringToFind[STRING_MAX_LENGTH], stringToInsert[
 // Declarations
 void findChar (char string[]); // returns the nth character of the string
 char *replaceChar (char string[]); // sets the nth character of the string to charToBeInserted
-char *insertChar (char string[], int pos, char charToBeInserted); // inserts charToBeInserted into the string at position n
-/*
+char *insertChar (char string[]); // inserts charToBeInserted into the string at position n
 char deleteChar (char string[], int pos); // deletes the nth character of the string
 int findStr (char string[], char stringToFind[]); // returns the position of the first occurrence of stringToFind in string
 char insertStr (char string[], char stringToInsert[], int position); // inserts stringToInsert into string at position
@@ -120,7 +119,7 @@ int main () {
         strcpy(string, replaceChar(string));
         break;
       case 3:
-        insertChar(string, position, charToBeInserted);
+        insertChar(string);
         break;
       case 4:
         // deleteChar(string, position);
@@ -187,7 +186,7 @@ char *replaceChar (char string[]) {
   }
 }
 
-char *insertChar (char string[], int pos, char charToBeInserted) {
+char *insertChar (char string[]) {
   while (1) {
     position = scanPosition();
     charToBeInserted = scanChar();
