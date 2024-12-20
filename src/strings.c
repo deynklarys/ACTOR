@@ -14,8 +14,8 @@ void findChar (); // returns the nth character of the string
 char *replaceChar (); // sets the nth character of the string to charToBeInserted
 char *insertChar (); // inserts charToBeInserted into the string at position n
 char *deleteChar (); // deletes the nth character of the string
+int findStr (); // returns the position of the first occurrence of stringToFind in string
 /*
-int findStr (char string[], char stringToFind[]); // returns the position of the first occurrence of stringToFind in string
 char insertStr (char string[], char stringToInsert[], int position); // inserts stringToInsert into string at position
 void deleteStr (char string[], int pos, int length); // deletes the substring of string starting at position and of length length
 int strLength (char string[]); // returns the length of the string
@@ -126,7 +126,7 @@ int main () {
         deleteChar();
         break;
       case 5:
-        // findStr(string, stringToFind);
+        int substringPos = findStr();
         break;
       case 6:
         // insertStr(string, stringToInsert, position);
@@ -231,22 +231,22 @@ char *deleteChar () {
   }
   return string;
 }
-/*
-int findStr (char string[], char stringToFind[]) {
+
+int findStr () {
   while (1) {
-    char stringToFind[] = scanString();
+    strcpy(stringToFind, scanString(stringToFind));
     if (stringToFind == NULL) {
       continue;
     }
-    for (int i = 0; i < strLength(string); i++) {
+    for (int i = 0; i < strlen(string); i++) {
       if (string[i] == stringToFind[0]) {
         int j;
-        for (j = 1; j < strLength(stringToFind); j++) {
+        for (j = 1; j < strlen(stringToFind); j++) {
           if (string[i + j] != stringToFind[j]) {
             break;
           }
         }
-        if (j == strLength(stringToFind)) {
+        if (j == strlen(stringToFind)) {
           printf("Substring found at position %d\n", i);
           return i;
         }
@@ -257,6 +257,7 @@ int findStr (char string[], char stringToFind[]) {
   }
   return -1;
 }
+/*
 char insertStr (char string[], char stringToInsert[], int position) {
   while (1) {
     int position = scanPosition();
