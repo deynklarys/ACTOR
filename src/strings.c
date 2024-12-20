@@ -10,16 +10,16 @@ int indexPos, position, length;
 char string[STRING_MAX_LENGTH], stringToFind[STRING_MAX_LENGTH], stringToInsert[STRING_MAX_LENGTH], string2[STRING_MAX_LENGTH],charToBeInserted;
 
 // Declarations
-void findChar (); // returns the nth character of the string
-char *replaceChar (); // sets the nth character of the string to charToBeInserted
-char *insertChar (); // inserts charToBeInserted into the string at position n
-char *deleteChar (); // deletes the nth character of the string
-int findStr (); // returns the position of the first occurrence of stringToFind in string
-char *insertStr (); // inserts stringToInsert into string at position
-void deleteStr (); // deletes the substring of string starting at position and of length length
-int strLength (); // returns the length of the string
-char *concatenate (); // returns the concatenation of string1 and string2
-int compareStr (); // returns 0 if string1 and string2 are equal, -1 if string1 < string2, 1 if string1 > string2
+void findChar ();
+char *replaceChar ();
+char *insertChar ();
+char *deleteChar ();
+int findStr ();
+char *insertStr ();
+void deleteStr ();
+int strLength ();
+char *concatenate ();
+int compareStr ();
 
 int scanPosition() {
   int position;
@@ -94,7 +94,9 @@ int main () {
 
   do {
     programHeader("Strings");
-
+    getCursorPos(&cursorXpos, &cursorYpos);
+    clearLines(cursorYpos, cursorYpos + 1);
+    moveCursor(0, cursorYpos);   
     printString(string, "");
     printf("\n");
     
@@ -116,7 +118,7 @@ int main () {
         findChar();
         break;
       case 2:
-        strcpy(string, replaceChar());
+        replaceChar();
         break;
       case 3:
         insertChar();
@@ -125,23 +127,22 @@ int main () {
         deleteChar();
         break;
       case 5:
-        int substringPos = findStr();
+        findStr();
         break;
       case 6:
-        strcpy(string, insertStr());
+        insertStr();
         break;
       case 7:
-        deleteStr(string, position, length);
+        deleteStr();
         break;
       case 8:
-        strLength(string);
+        strLength();
         break;
       case 9:
-        strcpy(string2,"MY LOVE");
-        concatenate(string, string2);
+        concatenate();
         break;
       case 10:
-        compareStr(string, stringToFind);
+        compareStr();
         break;
       case 11:
         promptExit();
@@ -150,6 +151,7 @@ int main () {
       default:
         moveCursor(0, cursorYpos + 1);
         printf("Invalid choice. Please choose a valid option.\n");
+        break;
     }
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (chosenOption != stringsMenuSize);
@@ -203,7 +205,7 @@ char *insertChar () {
       printf("Invalid position. Please enter a valid position.\n");
       continue;
     }
-    for (int i = strlen(string); i > indexPos; i--) {
+    for (int i = strlen(string); i >= indexPos; i--) {
       string[i + 1] = string[i];
     }
     string[indexPos] = charToBeInserted;
@@ -250,8 +252,8 @@ int findStr () {
           }
         }
         if (j == strlen(stringToFind)) {
-          printf("Substring found at position %d\n", i);
-          return i;
+          printf("Substring found starting at position %d\n", i + 1);
+          return i + 1;
         }
       }
     }
