@@ -42,7 +42,7 @@ char scanChar() {
   }
   return character;
 }
-char *scanString() {
+char *scanString(char *string) {
   if (string == NULL) {
     fprintf(stderr, "Memory allocation failed\n");
     return NULL;
