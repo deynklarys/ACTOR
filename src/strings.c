@@ -72,7 +72,6 @@ char *scanString(char *string) {
     return NULL;
   }
   printf("Enter the string: ");
-  clearInputBuffer(); // Clear any leftover input
   if (fgets(string, STRING_MAX_LENGTH, stdin) == NULL) {
     printf("Invalid input. Please enter a string.\n");
     return NULL;
@@ -112,6 +111,17 @@ void printString(char string[], char *status) {
   printf("%s\n", string);
 }
 
+void introduceStrings() {
+  char *introduction[] = {
+    "A string is a sequence of characters terminated by a null character ('\\0'). Strings are typically represented as arrays of characters. The null character indicates the end of the string, allowing functions to determine the length of the string.",
+    "Think of it like a necklace of beads, where each bead is a character and the clasp is the null character.",
+    "Strings can be manipulated by finding, replacing, inserting, deleting characters, and more!\n"
+  };
+  int introductionSize = sizeof(introduction) / sizeof(introduction[0]);
+
+  printWithinWidth(introduction, introductionSize, "Strings");
+}
+
 int main () {
   char *stringsMenu[] = {
     "Find a character", 
@@ -128,11 +138,14 @@ int main () {
   int stringsMenuSize = sizeof(stringsMenu) / sizeof(stringsMenu[0]);
   int chosenOption;
 
-    strcpy(string, "Hello World!");
-    position = 2;
-    charToBeInserted = 'a';
-    strcpy(stringToFind, "World");
+  system("cls");
 
+  introduceStrings();
+
+  strcpy(string, scanString(string));
+  promptExit();
+
+  system("cls");
   do {
     programHeader("Strings");
     getCursorPos(&cursorXpos, &cursorYpos);
