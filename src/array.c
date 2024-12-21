@@ -33,161 +33,18 @@ typedef struct {
   } dataKey;
 } Key;
 
-void traverseArray();
-void searchArray();
-void insertArray();
-void deleteArray();
-void mergeArray();
-void sortArray();
-
-int initializeArray (Array *array) {
-  char *message[] = {"Arrays are a collection of elements of the same types of  data.", "Examples:",
-  "\t1, 2, 3, 4, 5 is an array of integers or numbers",
-  "\ta, b, c, d, e is an array of characters or letters",
-  "\tapple, banana, mango, orange is an array of strings or words",
-  "Each number, letter, or word in an array is called an element."};
-  int messageSize = sizeof(message)/sizeof(message[0]);
-
-  printWithinWidth(message, messageSize, "Arrays");
-
-  array->dataType = chooseDataType("array");
-  if (array->dataType == -1) {
-    return 0; 
-  }
-  array->size = 0;
-
-  printf("Initialize your array to work on.\n\n");
-  printf("Enter elements (space-separated, press Enter to finish):\n");
-
-  int num;
-  char ch;
-  char str[50];
-
-  switch (array->dataType) {
-    case INTEGER: 
-      do {
-        if (scanf("%d", &num) == 1) {
-          array->data.intArray[array->size++] = num;
-        } else {
-          clearInputBuffer(); // Clear invalid input
-          break;
-        }
-      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
-      break;
-    case CHARACTER:
-      do {
-        if (scanf(" %c", &ch) == 1) {
-          array->data.charArray[array->size++] = ch;
-        } else {
-          clearInputBuffer(); // Clear invalid input
-          break;
-        }
-      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
-      break;
-    case STRING:
-      do {
-        if (scanf("%s", str) == 1) {
-          array->data.strArray[array->size] = malloc(strlen(str) + 1); // Allocate memory for the string
-          if (array->data.strArray[array->size] != NULL) {
-            strcpy(array->data.strArray[array->size], str); // Copy the string
-            array->size++;
-          } else {
-            printf("Memory allocation failed.\n");
-            break;
-          }
-        } else {
-          clearInputBuffer(); // Clear invalid input
-          break;
-        }
-      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
-      break;
-  }
-}
-
-void printArrayPositions(Array *array, int operation) {
-  printf("Position of elements: ");
-  switch (operation) {
-    case INS:
-      switch (array->dataType) {
-        case INTEGER:
-          for (int i = 0; i < array->size + 1; i++) {
-            char intStr[10];
-            int intLength = 0;
-            if (i == array->size) {
-              intLength = 3;
-            } else {
-              sprintf(intStr, "%d", array->data.intArray[i] + 1);
-              intLength = strlen(intStr);
-            }
-            int mid = intLength / 2;
-            mid = intLength % 2 == 0 ? mid : mid + 1;
-            for (int j = 1; j <= intLength; j++) {
-              j == mid ? printf("%d", i + 1) : printf(" ");
-            }
-            printf(" ");
-          }
-          break;
-        case CHARACTER:
-          for (int i = 0; i < array->size + 1; i++) {
-            printf("%d ", i + 1);
-          }
-          break;
-        case STRING:
-          for (int i = 0; i < array->size + 1; i++) {
-            int strLength = strlen(array->data.strArray[i]);
-            if (i == array->size) {
-              strLength = 5;
-            }
-            int mid = strLength / 2;
-            mid = strLength % 2 == 0 ? mid : mid + 1;
-            for (int j = 1; j <= strLength; j++) {
-              j == mid ? printf("%d", i + 1) : printf(" ");
-            }
-            printf(" ");
-          }
-          break;
-        default:
-          printf("Unknown data type.\n");
-      }
-      break;
-    case DEL:
-      switch (array->dataType) {
-        case INTEGER:
-          for (int i = 0; i < array->size; i++) {
-            char intStr[10];
-            sprintf(intStr, "%d", array->data.intArray[i] + 1);
-            int intLength = strlen(intStr);
-            int mid = intLength / 2;
-            mid = intLength % 2 == 0 ? mid : mid + 1;
-            for (int j = 1; j <= intLength; j++) {
-              j == mid ? printf("%d", i + 1) : printf(" ");
-            }
-            printf(" ");
-          }
-          break;
-        case CHARACTER:
-          for (int i = 0; i < array->size; i++) {
-            printf("%d ", i + 1);
-          }
-          break;
-        case STRING:
-          for (int i = 0; i < array->size; i++) {
-            int strLength = strlen(array->data.strArray[i]);
-            int mid = strLength / 2;
-            mid = strLength % 2 == 0 ? mid : mid + 1;
-            for (int j = 1; j <= strLength; j++) {
-              j == mid ? printf("%d", i + 1) : printf(" ");
-            }
-            printf(" ");
-          }
-          break;
-        default:
-          printf("Unknown data type.\n");
-      }
-      break;
-  }
-  printf("\n\n");
-}
+void traverseArray(Array *array);
+void searchArray(Array *array, Key *key);
+void insertArray(Array *array, Key *key);
+void deleteArray(Array *array);
+void mergeArray(Array *array1);
+void sortArray(Array *array);
+void insertArrayKey(Array *array, Key *key, int position);
+void deleteArrayKey(Array *array, int position);
+void mergeTwoArrays(Array *array1, Array *array2);
+void bubbleSortArray(Array *array);
+int initializeArray(Array *array);
+void printArrayPositions(Array *array, int operation);
 
 int main () {
   programHeader("Arrays");
@@ -295,7 +152,6 @@ void traverseArray(Array *array) {
   }
   printf("\n");
 }
-
 int linearSearch(Array array, Key *key) {
   switch (array.dataType) {
     case INTEGER:
@@ -359,7 +215,6 @@ void searchArray(Array *array, Key *key) {
     printf("Element found at position %d.\n", result + 1);
   }
 }
-
 void insertArrayKey(Array *array, Key *key, int position) {
   if (position < 0 || position > array->size || array->size >= ARRAY_MAX_LENGTH) {
     printf("Invalid position or array is full.\n");
@@ -432,7 +287,6 @@ void insertArray(Array *array, Key *key) {
   traverseArray(array);
 
 }
-
 void deleteArrayKey(Array *array, int position) {
   if (position < 0 || position >= array->size) {
     printf("Invalid position.\n");
@@ -475,7 +329,6 @@ void deleteArray(Array *array) {
   deleteArrayKey(array, position - 1);
   traverseArray(array);
 }
-
 void mergeTwoArrays(Array *array1, Array *array2) {
   if (array1->dataType != array2->dataType) {
     printf("Arrays have different data types and cannot be merged.\n");
@@ -574,7 +427,6 @@ void mergeArray(Array *array1) {
   }  
   mergeTwoArrays(array1, &array2);
 }
-
 void bubbleSortArray (Array *array) {
   switch (array->dataType) {
   case INTEGER:
@@ -627,4 +479,151 @@ void sortArray(Array *array) {
   traverseArray(array);
   printf("\n");
   bubbleSortArray(array);
+}
+int initializeArray (Array *array) {
+  char *message[] = {"Arrays are a collection of elements of the same types of  data.", "Examples:",
+  "\t1, 2, 3, 4, 5 is an array of integers or numbers",
+  "\ta, b, c, d, e is an array of characters or letters",
+  "\tapple, banana, mango, orange is an array of strings or words",
+  "Each number, letter, or word in an array is called an element."};
+  int messageSize = sizeof(message)/sizeof(message[0]);
+
+  printWithinWidth(message, messageSize, "Arrays");
+
+  array->dataType = chooseDataType("array");
+  if (array->dataType == -1) {
+    return 0; 
+  }
+  array->size = 0;
+
+  printf("Initialize your array to work on.\n\n");
+  printf("Enter elements (space-separated, press Enter to finish):\n");
+
+  int num;
+  char ch;
+  char str[50];
+
+  switch (array->dataType) {
+    case INTEGER: 
+      do {
+        if (scanf("%d", &num) == 1) {
+          array->data.intArray[array->size++] = num;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
+      break;
+    case CHARACTER:
+      do {
+        if (scanf(" %c", &ch) == 1) {
+          array->data.charArray[array->size++] = ch;
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
+      break;
+    case STRING:
+      do {
+        if (scanf("%s", str) == 1) {
+          array->data.strArray[array->size] = malloc(strlen(str) + 1); // Allocate memory for the string
+          if (array->data.strArray[array->size] != NULL) {
+            strcpy(array->data.strArray[array->size], str); // Copy the string
+            array->size++;
+          } else {
+            printf("Memory allocation failed.\n");
+            break;
+          }
+        } else {
+          clearInputBuffer(); // Clear invalid input
+          break;
+        }
+      } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
+      break;
+  }
+}
+void printArrayPositions(Array *array, int operation) {
+  printf("Position of elements: ");
+  switch (operation) {
+    case INS:
+      switch (array->dataType) {
+        case INTEGER:
+          for (int i = 0; i < array->size + 1; i++) {
+            char intStr[10];
+            int intLength = 0;
+            if (i == array->size) {
+              intLength = 3;
+            } else {
+              sprintf(intStr, "%d", array->data.intArray[i] + 1);
+              intLength = strlen(intStr);
+            }
+            int mid = intLength / 2;
+            mid = intLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= intLength; j++) {
+              j == mid ? printf("%d", i + 1) : printf(" ");
+            }
+            printf(" ");
+          }
+          break;
+        case CHARACTER:
+          for (int i = 0; i < array->size + 1; i++) {
+            printf("%d ", i + 1);
+          }
+          break;
+        case STRING:
+          for (int i = 0; i < array->size + 1; i++) {
+            int strLength = strlen(array->data.strArray[i]);
+            if (i == array->size) {
+              strLength = 5;
+            }
+            int mid = strLength / 2;
+            mid = strLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= strLength; j++) {
+              j == mid ? printf("%d", i + 1) : printf(" ");
+            }
+            printf(" ");
+          }
+          break;
+        default:
+          printf("Unknown data type.\n");
+      }
+      break;
+    case DEL:
+      switch (array->dataType) {
+        case INTEGER:
+          for (int i = 0; i < array->size; i++) {
+            char intStr[10];
+            sprintf(intStr, "%d", array->data.intArray[i] + 1);
+            int intLength = strlen(intStr);
+            int mid = intLength / 2;
+            mid = intLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= intLength; j++) {
+              j == mid ? printf("%d", i + 1) : printf(" ");
+            }
+            printf(" ");
+          }
+          break;
+        case CHARACTER:
+          for (int i = 0; i < array->size; i++) {
+            printf("%d ", i + 1);
+          }
+          break;
+        case STRING:
+          for (int i = 0; i < array->size; i++) {
+            int strLength = strlen(array->data.strArray[i]);
+            int mid = strLength / 2;
+            mid = strLength % 2 == 0 ? mid : mid + 1;
+            for (int j = 1; j <= strLength; j++) {
+              j == mid ? printf("%d", i + 1) : printf(" ");
+            }
+            printf(" ");
+          }
+          break;
+        default:
+          printf("Unknown data type.\n");
+      }
+      break;
+  }
+  printf("\n\n");
 }
