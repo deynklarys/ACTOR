@@ -269,7 +269,7 @@ int main () {
 
 // Screen handlers function definitions
 void welcomeScreen () {
-  // system("cls");
+  system("cls");
   for (int i = 1; i <= SET_WIDTH; i++) {
     i == 1 || i == SET_WIDTH ? printf(" ") : printf("-");
   }
@@ -1389,7 +1389,7 @@ void linkedLists () {
       "\ta, b, c, d, e is a list of characters",
       "\t\"apple\", \"banana\", \"cherry\" is a list of strings",
       "If you have encountered arrays, you would realize that arrays and lists are basically the same. The difference is how they are stored in the memory.",
-      "Each element in a list is called a node."};
+      "Each element in a list is called a node.\n"};
     int messageSize = sizeof(message)/sizeof(message[0]);
 
     printWithinWidth(message, messageSize, "Lists");
@@ -1492,7 +1492,7 @@ void stacks () {
   }
 }
   StackResult initializeStacks() {
-    char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) or the First In Last Out (FILO) principle.", "This means that the last element added to the stack will be the first one to be removed. Like a stack of books!"};
+    char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) or the First In Last Out (FILO) principle.", "This means that the last element added to the stack will be the first one to be removed. Like a stack of books!\n"};
     int messageSize = sizeof(message) / sizeof(message[0]);
 
     printWithinWidth(message, messageSize, "Stacks");
