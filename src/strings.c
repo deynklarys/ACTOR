@@ -19,107 +19,12 @@ void deleteStr ();
 int strLength ();
 char *concatenate ();
 int compareStr ();
-
-int scanPosition(char *prompt) {
-  int scanPositionPosX, scanPositionPosY;
-  int position;
-  printf("Enter the position %s: ", prompt);
-  getCursorPos(&scanPositionPosX, &scanPositionPosY);
-  if (scanf("%d", &position) != 1) {
-    clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
-    moveCursor(0, scanPositionPosY + 1);
-    printf("Invalid input. Please enter a number.\n");
-    clearInputBuffer();
-    clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
-    moveCursor(0, scanPositionPosY);
-    return -1;
-  }
-  if (position < 1 || position > strlen(string) + 1) {
-    clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
-    moveCursor(0, scanPositionPosY + 1);
-    clearInputBuffer();
-    printf("Invalid position. Please enter a valid position.\n");
-    clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
-    moveCursor(0, scanPositionPosY);
-    return -1;
-  }
-  clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
-  moveCursor(0, scanPositionPosY + 1);
-  return position;
-}
-char scanChar(char *prompt) {
-  int scanCharPosX, scanCharPosY;
-  char character;
-  getCursorPos(&scanCharPosX, &scanCharPosY);
-  printf("Enter the character %s: ", prompt);
-  if (scanf(" %c", &character) != 1) {
-    clearLines(scanCharPosY + 1, scanCharPosY + 1);
-    moveCursor(0, scanCharPosY + 1);
-    printf("Invalid input. Please enter a character.\n");
-    clearInputBuffer();
-    clearWord(scanCharPosY, scanCharPosX, SET_WIDTH);
-    moveCursor(0, scanCharPosY);
-    return '\0';
-  }
-  clearLines(scanCharPosY + 1, scanCharPosY + 1);
-  moveCursor(0, scanCharPosY + 1);
-  return character;
-}
-char *scanString(char *string) {
-  if (string == NULL) {
-    fprintf(stderr, "Memory allocation failed\n");
-    return NULL;
-  }
-  printf("Enter the string: ");
-  if (fgets(string, STRING_MAX_LENGTH, stdin) == NULL) {
-    printf("Invalid input. Please enter a string.\n");
-    return NULL;
-  }
-  // Remove newline character if present
-  string[strcspn(string, "\n")] = '\0';
-  return string;
-}
-int scanLength(char *prompt) {
-  int scanLengthPosX, scanLengthPosY;
-  int length;
-  printf("Enter the length  %s: ", prompt);
-  getCursorPos(&scanLengthPosX, &scanLengthPosY);
-  if (scanf("%d", &length) != 1) {
-    clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
-    moveCursor(0, scanLengthPosY + 1);
-    printf("Invalid input. Please enter a number.\n");
-    clearInputBuffer();
-    clearWord(scanLengthPosY, scanLengthPosX, SET_WIDTH);
-    moveCursor(0, scanLengthPosY);
-    return -1;
-  }
-  if (length < 1 || length > strlen(string)) {
-    clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
-    moveCursor(0, scanLengthPosY + 1);
-    printf("Invalid length. Please enter a valid length.\n");
-    clearWord(scanLengthPosY, scanLengthPosX, SET_WIDTH);
-    moveCursor(0, scanLengthPosY);
-    return -1;
-  }
-  clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
-  moveCursor(0, scanLengthPosY + 1);
-  return length;
-}
-void printString(char string[], char *status) {
-  printf("Your %s string: ", status);
-  printf("%s\n", string);
-}
-
-void introduceStrings() {
-  char *introduction[] = {
-    "A string is a sequence of characters terminated by a null character ('\\0'). Strings are typically represented as arrays of characters. The null character indicates the end of the string, allowing functions to determine the length of the string.",
-    "Think of it like a necklace of beads, where each bead is a character and the clasp is the null character.",
-    "Strings can be manipulated by finding, replacing, inserting, deleting characters, and more!\n"
-  };
-  int introductionSize = sizeof(introduction) / sizeof(introduction[0]);
-
-  printWithinWidth(introduction, introductionSize, "Strings");
-}
+int scanPosition(char *prompt);
+char scanChar(char *prompt);
+char *scanString(char *string);
+int scanLength(char *prompt);
+void printString(char string[], char *status);
+void introduceStrings();
 
 int main () {
   char *stringsMenu[] = {
@@ -266,6 +171,7 @@ char *deleteChar () {
     for (int i = position - 1; i < strlen(string) - 1; i++) {
       string[i] = string[i + 1];
     }
+    string[strlen(string) - 1] = '\0';
     printf("Character at position %d deleted\n", position);
     printString(string, "new");
     break;
@@ -402,4 +308,105 @@ int compareStr () {
   }
   return 0;
 }
+int scanPosition(char *prompt) {
+  int scanPositionPosX, scanPositionPosY;
+  int position;
+  printf("Enter the position %s: ", prompt);
+  getCursorPos(&scanPositionPosX, &scanPositionPosY);
+  if (scanf("%d", &position) != 1) {
+    clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+    moveCursor(0, scanPositionPosY + 1);
+    printf("Invalid input. Please enter a number.\n");
+    clearInputBuffer();
+    clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
+    moveCursor(0, scanPositionPosY);
+    return -1;
+  }
+  if (position < 1 || position > strlen(string) + 1) {
+    clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+    moveCursor(0, scanPositionPosY + 1);
+    clearInputBuffer();
+    printf("Invalid position. Please enter a valid position.\n");
+    clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
+    moveCursor(0, scanPositionPosY);
+    return -1;
+  }
+  clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+  moveCursor(0, scanPositionPosY + 1);
+  return position;
+}
+char scanChar(char *prompt) {
+  int scanCharPosX, scanCharPosY;
+  char character;
+  getCursorPos(&scanCharPosX, &scanCharPosY);
+  printf("Enter the character %s: ", prompt);
+  if (scanf(" %c", &character) != 1) {
+    clearLines(scanCharPosY + 1, scanCharPosY + 1);
+    moveCursor(0, scanCharPosY + 1);
+    printf("Invalid input. Please enter a character.\n");
+    clearInputBuffer();
+    clearWord(scanCharPosY, scanCharPosX, SET_WIDTH);
+    moveCursor(0, scanCharPosY);
+    return '\0';
+  }
+  clearLines(scanCharPosY + 1, scanCharPosY + 1);
+  moveCursor(0, scanCharPosY + 1);
+  return character;
+}
+char *scanString(char *string) {
+  if (string == NULL) {
+    fprintf(stderr, "Memory allocation failed\n");
+    return NULL;
+  }
+  printf("Enter the string: ");
+  clearInputBuffer();
+  if (fgets(string, STRING_MAX_LENGTH, stdin) == NULL) {
+    printf("Invalid input. Please enter a string.\n");
+    return NULL;
+  }
+  // Remove newline character if present
+  string[strcspn(string, "\n")] = '\0';
+  return string;
+}
+int scanLength(char *prompt) {
+  int scanLengthPosX, scanLengthPosY;
+  int length;
+  printf("Enter the length  %s: ", prompt);
+  getCursorPos(&scanLengthPosX, &scanLengthPosY);
+  if (scanf("%d", &length) != 1) {
+    clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
+    moveCursor(0, scanLengthPosY + 1);
+    printf("Invalid input. Please enter a number.\n");
+    clearInputBuffer();
+    clearWord(scanLengthPosY, scanLengthPosX, SET_WIDTH);
+    moveCursor(0, scanLengthPosY);
+    return -1;
+  }
+  if (length < 1 || length > strlen(string)) {
+    clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
+    moveCursor(0, scanLengthPosY + 1);
+    printf("Invalid length. Please enter a valid length.\n");
+    clearWord(scanLengthPosY, scanLengthPosX, SET_WIDTH);
+    moveCursor(0, scanLengthPosY);
+    return -1;
+  }
+  clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
+  moveCursor(0, scanLengthPosY + 1);
+  return length;
+}
+void printString(char string[], char *status) {
+  printf("Your %s string: ", status);
+  printf("%s\n", string);
+}
+void introduceStrings() {
+  char *introduction[] = {
+    "A string is a sequence of characters terminated by a null character ('\\0'). Strings are typically represented as arrays of characters. The null character indicates the end of the string, allowing functions to determine the length of the string.",
+    "Think of it like a necklace of beads, where each bead is a character and the clasp is the null character.",
+    "Strings can be manipulated by finding, replacing, inserting, deleting characters, and more!\n"
+  };
+  int introductionSize = sizeof(introduction) / sizeof(introduction[0]);
+
+  printWithinWidth(introduction, introductionSize, "Strings");
+}
+
 
