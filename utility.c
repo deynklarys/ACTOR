@@ -6,6 +6,7 @@
 #define ARRAY_MAX_LENGTH 50
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
 #define SUBSTRINGS_MAX_LENGTH 500
+#define STRING_MAX_LENGTH 50
 #define true 1
 #define false 0
 #define SET_WIDTH 80
@@ -16,11 +17,6 @@ int terminalHeight = 0;
 char anyChar;
 int exitXpos, exitYpos;
 
-typedef enum {
-  INTEGER = 1,
-  CHARACTER = 2,
-  STRING = 3
-} DataType;
 
 // Utility function definitions
 void getTerminalSize() {
@@ -246,4 +242,51 @@ int chooseDataType(char dataStructure[]) {
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
     moveCursor(menuCursorXpos, menuCursorYpos);
   } while (chosenOption != dataTypeMenuSize);
+}
+void *scanData(char prompt[], DataType dataType) {
+  void *data = NULL;
+  printf("%s", prompt);
+  switch (dataType) {
+    case INTEGER: {
+      int *intData = (int *)malloc(sizeof(int));
+      if (scanf("%d", intData) != 1) {
+        printf("Invalid input. Please enter an integer.\n");
+        free(intData);
+        clearInputBuffer();
+        return NULL;
+      }
+      data = intData;
+      break;
+    }
+    case CHARACTER: {
+      char *charData = (char *)malloc(sizeof(char));
+      if (scanf(" %c", charData) != 1) {
+        printf("Invalid input. Please enter a character.\n");
+        free(charData);
+        clearInputBuffer();
+        return NULL;
+      }
+      data = charData;
+      break;
+    }
+    case STRING: {
+      clearInputBuffer(); // Clear any leftover input
+      char buffer[STRING_MAX_LENGTH];
+      if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
+        printf("Invalid input. Please enter a string.\n");
+        return NULL;
+      }
+      // Remove newline character if present
+      buffer[strcspn(buffer, "\n")] = '\0';
+      char *strData = (char *)malloc(strlen(buffer) + 1);
+      if (strData == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+      }
+      strcpy(strData, buffer);
+      data = strData;
+      break;
+    }
+  }
+  return data;
 }

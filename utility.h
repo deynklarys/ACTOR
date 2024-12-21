@@ -10,6 +10,11 @@
 #define SET_WIDTH 80
 #define SET_HEIGHT 24
 
+typedef enum {
+  INTEGER = 1,
+  CHARACTER = 2,
+  STRING = 3
+} DataType;
 
 // Utility functions 
 void getTerminalSize();
@@ -30,4 +35,6 @@ void printWithinWidth(char *message[], int messageSize, char *header);
 void functionNotDone(char *header);
 void clearInputBuffer(); 
 int chooseDataType(char dataStructure[]);
+void *scanData(char prompt[], DataType dataType);
+
 #endif // UTILITY_H

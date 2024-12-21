@@ -16,12 +16,6 @@ is empty
 #define STRING_MAX_LENGTH 50
 int cursorXpos, cursorYpos;
 
-typedef enum {
-  INTEGER = 1,
-  CHARACTER = 2,
-  STRING = 3
-} DataType;
-
 typedef struct Node {
   void *data;
   struct Node *next;
@@ -58,7 +52,6 @@ void printString(void *data) {
 }
 
 QueueResult initializeQueue();
-void *scanData(char prompt[], DataType dataType);
 void freeAll(Queue *queue);
 void printQueue(Queue *queue);
 void printDataType(char dataStructure[], DataType dataType) {
@@ -181,53 +174,6 @@ QueueResult initializeQueue() {
   return result;
 }
 
-void *scanData(char prompt[], DataType dataType) {
-  void *data = NULL;
-  printf("%s", prompt);
-  switch (dataType) {
-    case INTEGER: {
-      int *intData = (int *)malloc(sizeof(int));
-      if (scanf("%d", intData) != 1) {
-        printf("Invalid input. Please enter an integer.\n");
-        free(intData);
-        clearInputBuffer();
-        return NULL;
-      }
-      data = intData;
-      break;
-    }
-    case CHARACTER: {
-      char *charData = (char *)malloc(sizeof(char));
-      if (scanf(" %c", charData) != 1) {
-        printf("Invalid input. Please enter a character.\n");
-        free(charData);
-        clearInputBuffer();
-        return NULL;
-      }
-      data = charData;
-      break;
-    }
-    case STRING: {
-      clearInputBuffer(); // Clear any leftover input
-      char buffer[STRING_MAX_LENGTH];
-      if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
-        printf("Invalid input. Please enter a string.\n");
-        return NULL;
-      }
-      // Remove newline character if present
-      buffer[strcspn(buffer, "\n")] = '\0';
-      char *strData = (char *)malloc(strlen(buffer) + 1);
-      if (strData == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        return NULL;
-      }
-      strcpy(strData, buffer);
-      data = strData;
-      break;
-    }
-  }
-  return data;
-}
 
 void freeAll(Queue *queue) {
   QueueNode *temp = queue->front;

@@ -15,9 +15,6 @@ mergeLists
 sortList
 */
 
-#define INTEGER 1
-#define CHARACTER 2
-#define STRING 3
 #define STRING_MAX_LENGTH 50
 int cursorXpos, cursorYpos;
 void *data;
@@ -97,54 +94,6 @@ ListResult initializeLists () {
   }
   return result;
 
-}
-
-void *scanData(char promptMessage[], int dataType) {
-  void *data = NULL;
-  printf("%s", promptMessage);
-  switch (dataType) {
-    case INTEGER: 
-      int *intData = (int *)malloc(sizeof(int));
-      if (scanf("%d", intData) != 1) {
-        printf("Invalid input. Please enter an integer.\n");
-        free(intData);
-        clearInputBuffer();
-        return NULL;
-      }
-      data = intData;
-      break;
-    case CHARACTER: 
-      char *charData = (char *)malloc(sizeof(char));
-      if (scanf(" %c", charData) != 1) {
-        printf("Invalid input. Please enter a character.\n");
-        free(charData);
-        clearInputBuffer();
-        return NULL;
-      }
-      data = charData;
-      break;
-    case STRING:
-      clearInputBuffer(); // Clear any leftover input
-      char buffer[STRING_MAX_LENGTH];
-      if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
-        printf("Invalid input. Please enter a string.\n");
-        return NULL;
-      }
-      // Remove newline character if present
-      buffer[strcspn(buffer, "\n")] = '\0';
-      char *strData = (char *)malloc(strlen(buffer) + 1);
-      if (strData == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        return NULL;
-      }
-      strcpy(strData, buffer);
-      data = strData;
-      break;
-    default:
-      printf("Invalid data type.\n");
-      break;
-  }
-  return data;
 }
 
 void freeAll(List *list, void *data, int *positionPtr) {
