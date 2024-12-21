@@ -307,7 +307,40 @@ void trees () {
   functionNotDone("Trees");
 }
 void nonLinearDS () {
-  functionNotDone("Non-Linear Data Structures");
+  char *linearDS_Menu[] = {"Trees", "Exit"};
+  int linearDS_MenuSize = sizeof(linearDS_Menu) / sizeof(linearDS_Menu[0]);
+  int nonLinearDSOption;
+
+
+  do {
+    programHeader("Linear Data Structures");
+    printMenu(linearDS_Menu, linearDS_MenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
+    if (scanf("%d", &nonLinearDSOption) != 1) {
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      continue;
+    }
+
+    switch (nonLinearDSOption) {
+      case 1:
+        system("cls");
+        trees();
+        system("cls");
+        break;
+      case 2:
+        moveCursor(0, cursorYpos + 2);
+        clearLines(cursorYpos + 2, cursorYpos + 2);
+        promptExit();
+        break;
+      default:
+        clearInputBuffer(); // Clear invalid input
+        printf("\n");
+        displayCenterText("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+        break;
+    }
+  } while (nonLinearDSOption != linearDS_MenuSize);
 }
 void arrays () {
   programHeader("Arrays");
@@ -330,6 +363,7 @@ void arrays () {
     system("cls");
     do {
       programHeader("Array Operations");
+      printDataType("array", array.dataType);
       printMenu(arraysMenu, arraysMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
@@ -1782,7 +1816,6 @@ void queues () {
       printf("Queue is not empty\n");
     }
   }
-
 void strings () {
   char *stringsMenu[] = {
     "Find a character", 
@@ -2161,20 +2194,20 @@ void strings () {
 void linearDS () {
   char *linearDS_Menu[] = {"Arrays", "Linked Lists", "Stacks", "Queues", "Exit"};
   int linearDS_MenuSize = sizeof(linearDS_Menu) / sizeof(linearDS_Menu[0]);
-  int chosenOption;
+  int linearDSOption;
 
 
   do {
     programHeader("Linear Data Structures");
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
+    if (scanf("%d", &linearDSOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
 
-    switch (chosenOption) {
+    switch (linearDSOption) {
       case 1:
         system("cls");
         arrays();
@@ -2207,7 +2240,7 @@ void linearDS () {
         clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
         break;
     }
-  } while (chosenOption != linearDS_MenuSize);
+  } while (linearDSOption != linearDS_MenuSize);
 }
 void dataStructures () {
   int dataStructuresOption;
