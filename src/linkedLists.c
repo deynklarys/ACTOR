@@ -5,6 +5,8 @@
 #include <conio.h> 
 #include "../utility.h"
 
+// cd "c:\Academic-related_Programs\ACTOR\src\" ; if ($?) { gcc linkedLists.c -o linkedLists ..\utility.c} ; if ($?) { .\linkedLists }
+
 #define STRING_MAX_LENGTH 50
 int cursorXpos, cursorYpos;
 void *data;

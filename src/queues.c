@@ -3,6 +3,8 @@
 #include <conio.h> 
 #include "../utility.h"
 
+// cd "c:\Academic-related_Programs\ACTOR\src\" ; if ($?) { gcc queues.c -o queues ..\utility.c} ; if ($?) { .\queues }
+
 #define QUEUE_MAX_SIZE 50
 #define STRING_MAX_LENGTH 50
 int cursorXpos, cursorYpos;

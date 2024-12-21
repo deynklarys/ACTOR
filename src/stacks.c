@@ -5,7 +5,6 @@
 #include <conio.h> // for _getch()
 #include "../utility.h"
 
-// run using
 // cd "c:\Academic-related_Programs\ACTOR\src\" ; if ($?) { gcc stacks.c -o stacks ..\utility.c} ; if ($?) { .\stacks }
 
 #define STACK_MAX_SIZE 50

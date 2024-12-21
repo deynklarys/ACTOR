@@ -4,6 +4,8 @@
 #include <conio.h> // for _getch()
 #include "utility.h"
 
+// cd "c:\Academic-related_Programs\ACTOR\" ; if ($?) { gcc ACTOR.c -o ACTOR utility.c } ; if ($?) { .\ACTOR}
+
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
 #define SUBSTRINGS_MAX_LENGTH 500
 #define STRING_MAX_LENGTH 50
