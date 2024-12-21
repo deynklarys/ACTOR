@@ -6,7 +6,7 @@
 #define STRING_MAX_LENGTH 50
 
 int cursorXpos, cursorYpos;
-int indexPos, position, length;
+int position, length;
 char string[STRING_MAX_LENGTH], stringToFind[STRING_MAX_LENGTH], stringToInsert[STRING_MAX_LENGTH], string2[STRING_MAX_LENGTH],charToBeInserted;
 
 // Declarations
@@ -82,13 +82,29 @@ char *scanString(char *string) {
   return string;
 }
 int scanLength(char *prompt) {
+  int scanLengthPosX, scanLengthPosY;
   int length;
   printf("Enter the length  %s: ", prompt);
+  getCursorPos(&scanLengthPosX, &scanLengthPosY);
   if (scanf("%d", &length) != 1) {
+    clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
+    moveCursor(0, scanLengthPosY + 1);
     printf("Invalid input. Please enter a number.\n");
     clearInputBuffer();
+    clearWord(scanLengthPosY, scanLengthPosX, SET_WIDTH);
+    moveCursor(0, scanLengthPosY);
     return -1;
   }
+  if (length < 1 || length > strlen(string)) {
+    clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
+    moveCursor(0, scanLengthPosY + 1);
+    printf("Invalid length. Please enter a valid length.\n");
+    clearWord(scanLengthPosY, scanLengthPosX, SET_WIDTH);
+    moveCursor(0, scanLengthPosY);
+    return -1;
+  }
+  clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
+  moveCursor(0, scanLengthPosY + 1);
   return length;
 }
 void printString(char string[], char *status) {
@@ -213,19 +229,15 @@ char *replaceChar () {
 char *insertChar () {
   while (1) {
     position = scanPosition("to insert");
-    indexPos = position - 1;
     charToBeInserted = scanChar("to insert");
     if (position == -1) {
       continue;
     }
-    if (indexPos < 0 || indexPos >= strlen(string)) {
-      printf("Invalid position. Please enter a valid position.\n");
-      continue;
-    }
-    for (int i = strlen(string); i >= indexPos; i--) {
+
+    for (int i = strlen(string); i >= position - 1; i--) {
       string[i + 1] = string[i];
     }
-    string[indexPos] = charToBeInserted;
+    string[position - 1] = charToBeInserted;
     printf("Character %c inserted at position %d\n", charToBeInserted, position);
     printString(string, "new");
     break;
@@ -236,15 +248,10 @@ char *insertChar () {
 char *deleteChar () {
   while (1) {
     position = scanPosition("to delete");
-    indexPos = position - 1;
     if (position == -1) {
       continue;
     }
-    if (indexPos < 0 || indexPos >= strlen(string)) {
-      printf("Invalid position. Please enter a valid position.\n");
-      continue;
-    }
-    for (int i = indexPos; i < strlen(string) - 1; i++) {
+    for (int i = position - 1; i < strlen(string) - 1; i++) {
       string[i] = string[i + 1];
     }
     printf("Character at position %d deleted\n", position);
@@ -283,20 +290,15 @@ int findStr () {
 char *insertStr () {
   while (1) {
     int position = scanPosition("to insert");
-    indexPos = position - 1;
     if (position == -1) {
       continue;
     }
-    if (indexPos < 0 || indexPos >= strlen(string)) {
-      printf("Invalid position. Please enter a valid position.\n");
-      continue;
-    }
     strcpy(stringToInsert, scanString(stringToInsert));
-    for (int i = strlen(string); i >= indexPos; i--) {
+    for (int i = strlen(string); i >= position - 1; i--) {
       string[i + strlen(stringToInsert)] = string[i];
     }
     for (int i = 0; i < strlen(stringToInsert); i++) {
-      string[indexPos + i] = stringToInsert[i];
+      string[position - 1 + i] = stringToInsert[i];
     }
     printf("String inserted at position %d\n", position);
     printString(string, "new");
@@ -307,16 +309,11 @@ char *insertStr () {
 void deleteStr () {
   while (1) {
     int position = scanPosition("to delete");
-    indexPos = position - 1;
     if (position == -1) {
       continue;
     }
-    if (indexPos < 0 || indexPos >= strlen(string)) {
-      printf("Invalid position. Please enter a valid position.\n");
-      continue;
-    }
     length = scanLength("to delete");
-    for (int i = indexPos; i < strlen(string) - length; i++) {
+    for (int i = position - 1; i < strlen(string) - length; i++) {
       string[i] = string[i + length];
     }
     string[strlen(string) - length] = '\0';
