@@ -49,13 +49,21 @@ int scanPosition(char *prompt) {
   return position;
 }
 char scanChar(char *prompt) {
+  int scanCharPosX, scanCharPosY;
   char character;
+  getCursorPos(&scanCharPosX, &scanCharPosY);
   printf("Enter the character %s: ", prompt);
   if (scanf(" %c", &character) != 1) {
+    clearLines(scanCharPosY + 1, scanCharPosY + 1);
+    moveCursor(0, scanCharPosY + 1);
     printf("Invalid input. Please enter a character.\n");
     clearInputBuffer();
+    clearWord(scanCharPosY, scanCharPosX, SET_WIDTH);
+    moveCursor(0, scanCharPosY);
     return '\0';
   }
+  clearLines(scanCharPosY + 1, scanCharPosY + 1);
+  moveCursor(0, scanCharPosY + 1);
   return character;
 }
 char *scanString(char *string) {
@@ -191,16 +199,11 @@ void findChar () {
 char *replaceChar () {
   while (1) {
     position = scanPosition("to replace");
-    indexPos = position - 1;
-    charToBeInserted = scanChar("to replace with");
     if (position == -1) {
       continue;
     }
-    if (indexPos < 0 || indexPos >= strlen(string)) {
-      printf("Invalid position. Please enter a valid position.\n");
-      continue;
-    }
-    string[indexPos] = charToBeInserted;
+    charToBeInserted = scanChar("to replace with");
+    string[position - 1] = charToBeInserted;
     printf("Character at position %d replaced with %c\n", position, charToBeInserted);
     printString(string, "new");
     return string;
