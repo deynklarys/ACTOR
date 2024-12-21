@@ -102,7 +102,7 @@ int main () {
   char *mainMenu[] = {"Data Structures", "Algorithms", "About", "Quit"};
   int mainMenuSize = sizeof(mainMenu)/sizeof(mainMenu[0]);
 
-
+  int mainOption;
   do {
     programHeader("Data Structures and Algorithms");
 
@@ -110,7 +110,7 @@ int main () {
     printMenu(mainMenu, mainMenuSize);
     /* Get the current position of the cursor after the prompt. This coordinate will be used to bring back the cursor at this position when the user inputs an invalid option and the option that they typed is cleared. */
     getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
+    if (scanf("%d", &mainOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("\n");
       displayCenterText("Invalid input. Please enter a number.\n");
@@ -118,7 +118,7 @@ int main () {
       continue;
     }
 
-      switch (chosenOption) {
+      switch (mainOption) {
         case 1:
           system("cls");
           dataStructures();
@@ -150,7 +150,7 @@ int main () {
           break; 
       }
 
-  } while (chosenOption != mainMenuSize);             
+  } while (mainOption != mainMenuSize);             
                    
   return 0;
 }
@@ -419,7 +419,7 @@ void strings () {
     "Compare two strings",
     "Exit" };
   int stringsMenuSize = sizeof(stringsMenu) / sizeof(stringsMenu[0]);
-  int chosenOption;
+  int stringsOption;
 
   system("cls");
 
@@ -441,7 +441,7 @@ void strings () {
     getCursorPos(&cursorXpos, &cursorYpos);
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
     moveCursor(cursorXpos, cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
+    if (scanf("%d", &stringsOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
       clearInputBuffer();
@@ -452,7 +452,7 @@ void strings () {
     clearLines(cursorYpos + 1, 24);
     moveCursor(0, cursorYpos + 2);
 
-    switch (chosenOption) {
+    switch (stringsOption) {
       case 1:
         findChar();
         break;
@@ -493,7 +493,7 @@ void strings () {
         break;
     }
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-  } while (chosenOption != stringsMenuSize);
+  } while (stringsOption != stringsMenuSize);
 }
   void findChar () {
     while (1) {
@@ -832,6 +832,7 @@ void linearDS () {
   } while (chosenOption != linearDS_MenuSize);
 }
 void dataStructures () {
+  int dataStructuresOption;
   char *dataStructuresMenu[] = {"Linear Data Structures", "Nonlinear Data Structures", "Strings", "Exit"};
   int dataStructuresMenuSize = sizeof(dataStructuresMenu) / sizeof(dataStructuresMenu[0]);
 
@@ -839,13 +840,13 @@ void dataStructures () {
     programHeader("Data Structures");
     printMenu(dataStructuresMenu, dataStructuresMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
+    if (scanf("%d", &dataStructuresOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
 
-    switch (chosenOption) {
+    switch (dataStructuresOption) {
       case 1:
         system("cls");
         linearDS();
@@ -873,8 +874,7 @@ void dataStructures () {
         clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
         break; 
     }
-
-  } while (chosenOption != dataStructuresMenuSize);
+  } while (dataStructuresOption != dataStructuresMenuSize);
 }
 
 void sorting() {
