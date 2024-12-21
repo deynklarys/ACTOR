@@ -62,6 +62,20 @@ QueueResult initializeQueue();
 void *scanData(char prompt[], DataType dataType);
 void freeAll(Queue *queue);
 void printQueue(Queue *queue);
+void printDataType(char dataStructure[], DataType dataType) {
+  printf("Your %s data type: ", dataStructure);
+  switch (dataType) {
+    case INTEGER:
+      printf("Integer\n");
+      break;
+    case CHARACTER:
+      printf("Character\n");
+      break;
+    case STRING:
+      printf("String\n");
+      break;
+  }
+}
 
 int main () {
   programHeader("Queues");
@@ -74,30 +88,19 @@ int main () {
     queue.queueDataType = queueResult.chosenDataType;
     if (queue.queueDataType == -1) {
       system("cls");
-      freeAll(&queue);
       return 0;
     }
 
-    char *queuesMenu[] = {"Add an item", "Remove an item","Look for an item", "Check if the queue is full", "Check if the queue is empty", "Exit"};
+    char *queuesMenu[] = {"Add an item", "Remove an item","Check the front item", "Check if the queue is full", "Check if the queue is empty", "Exit"};
     int queuesMenuSize = sizeof(queuesMenu) / sizeof(queuesMenu[0]);
     int chosenOption;
 
     system("cls");
     do {
-      programHeader("queues Operations");
-      printf("Queue data type: ");
-      switch (queue.queueDataType) {
-        case INTEGER:
-          printf("Integer\n");
-          break;
-        case CHARACTER:
-          printf("Character\n");
-          break;
-        case STRING:
-          printf("String\n");
-          break;
-      }
+      programHeader("Queues Operations");
+      printDataType("queue", queue.queueDataType);
       printMenu(queuesMenu, queuesMenuSize);
+      getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
