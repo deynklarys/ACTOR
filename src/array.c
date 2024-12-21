@@ -13,9 +13,12 @@ merge
 sort
 */
 
-#define INTEGER 1
-#define CHARACTER 2
-#define STRING 3
+typedef enum {
+  INTEGER = 1,
+  CHARACTER = 2,
+  STRING = 3
+} DataType;
+
 #define ARRAY_MAX_LENGTH 50
 #define STRING_MAX_LENGTH 50
 #define INS 3
@@ -47,52 +50,6 @@ void deleteArray();
 void mergeArray();
 void sortArray();
 
-int chooseDataTypeArrays () {
-  int chosenOption;
-  printf("\nChoose a data type for your array:\n");
-  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
-  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
-
-  int menuCursorXpos, menuCursorYpos;
-  getCursorPos(&menuCursorXpos, &menuCursorYpos);
-  do {
-    printMenu(dataTypeMenu, dataTypeMenuSize);
-    getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
-      clearLines(cursorYpos + 1, cursorYpos + 1);
-      moveCursor(0, cursorYpos + 1);
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-      moveCursor(menuCursorXpos, menuCursorYpos);
-      continue;
-    }
-    clearLines(cursorYpos + 1, cursorYpos + 1);
-    moveCursor(0, cursorYpos + 2);
-    switch(chosenOption) {
-      case 1:
-        printf("You chose Integer\n");
-        return INTEGER;
-      case 2:
-        printf("You chose Character\n");
-        return CHARACTER;
-      case 3:
-        printf("You chose String\n");
-        return STRING;
-      case 4:
-        printf("Exiting...\n");
-        return -1;
-      default:
-        clearLines(cursorYpos + 1, cursorYpos + 1);
-        moveCursor(0, cursorYpos + 1);
-        printf("Invalid choice. Please choose a valid option.\n");
-        break;
-    }
-    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    moveCursor(menuCursorXpos, menuCursorYpos);
-  } while(chosenOption != 4);
-}
-
 int initializeArray (Array *array) {
   char *message[] = {"Arrays are a collection of elements of the same types of  data.", "Examples:",
   "\t1, 2, 3, 4, 5 is an array of integers or numbers",
@@ -103,7 +60,7 @@ int initializeArray (Array *array) {
 
   printWithinWidth(message, messageSize, "Arrays");
 
-  array->dataType = chooseDataTypeArrays();
+  array->dataType = chooseDataType("array");
   if (array->dataType == -1) {
     return 0; 
   }
@@ -248,6 +205,7 @@ int main () {
   Array array;
   Key key;
 
+  system("cls");
   while (1) {
 
     if (!initializeArray(&array)) {
