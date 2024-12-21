@@ -1,17 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
-#include <conio.h> // for getch()
+#include <conio.h>
 #include "../utility.h"
-
-/*
-Functions to implement
-traverse
-search
-insert [beginning, end, middle]
-delete [beginning, end, middle]
-merge
-sort
-*/
 
 typedef enum {
   INTEGER = 1,

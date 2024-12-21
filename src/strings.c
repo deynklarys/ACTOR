@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <windows.h>
-#include <conio.h> // for _getch()
+#include <conio.h> 
 #include "../utility.h"
 
 #define STRING_MAX_LENGTH 50
@@ -9,7 +9,6 @@ int cursorXpos, cursorYpos;
 int position, length;
 char string[STRING_MAX_LENGTH], stringToFind[STRING_MAX_LENGTH], stringToInsert[STRING_MAX_LENGTH], string2[STRING_MAX_LENGTH],charToBeInserted;
 
-// Declarations
 void findChar ();
 char *replaceChar ();
 char *insertChar ();

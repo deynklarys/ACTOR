@@ -1,16 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
-#include <conio.h> // for _getch()
+#include <conio.h> 
 #include "../utility.h"
-
-/*
-Functions to implement:
-push
-pop 
-peek
-is full
-is empty
-*/
 
 #define QUEUE_MAX_SIZE 50
 #define STRING_MAX_LENGTH 50

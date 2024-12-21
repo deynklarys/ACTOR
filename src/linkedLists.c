@@ -2,18 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-#include <conio.h> // for getch()
+#include <conio.h> 
 #include "../utility.h"
-
-/*
-Functions to implement
-traverseList
-searchList
-insert [beginning, end, middle]
-delete [beginning, end, middle]
-mergeLists
-sortList
-*/
 
 #define STRING_MAX_LENGTH 50
 int cursorXpos, cursorYpos;
