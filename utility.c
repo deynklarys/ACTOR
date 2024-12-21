@@ -201,6 +201,16 @@ void clearInputBuffer() {
   while ((c = getchar()) != '\n' && c != EOF);
 }
 
+void printInt(void *data) {
+  printf(" %d ", *(int *)data);
+}
+void printChar(void *data) {
+  printf(" %c ", *(char *)data);
+}
+void printString(void *data) {
+  printf(" %s ", (char *)data);
+}
+
 int chooseDataType(char dataStructure[]) {
   int cursorXpos, cursorYpos;
   int chosenOption;

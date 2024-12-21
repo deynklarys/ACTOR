@@ -36,5 +36,8 @@ void functionNotDone(char *header);
 void clearInputBuffer(); 
 int chooseDataType(char dataStructure[]);
 void *scanData(char prompt[], DataType dataType);
+void printInt(void *data);
+void printChar(void *data);
+void printString(void *data);
 
 #endif // UTILITY_H

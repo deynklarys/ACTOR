@@ -43,6 +43,7 @@ void deleteList(List *list);
 void mergeLists(List *list);
   void mergeTwoLists(List *list1, List *list2);
 void sortList(List *list);
+ListResult initializeLists ();
 
 void printInt(void *data) {
   printf(" %d ", *(int *)data);
@@ -54,39 +55,6 @@ void printString(void *data) {
   printf(" %s ", (char *)data);
 }
 
-ListResult initializeLists () {
-  char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
-    "\t1, 2, 3, 4, 5 is a list of numbers or integers",
-    "\ta, b, c, d, e is a list of characters",
-    "\t\"apple\", \"banana\", \"cherry\" is a list of strings",
-    "If you have encountered arrays, you would realize that arrays and lists are basically the same. The difference is how they are stored in the memory.",
-    "Each element in a list is called a node."};
-  int messageSize = sizeof(message)/sizeof(message[0]);
-
-  printWithinWidth(message, messageSize, "Lists");
-
-  ListResult result;
-  result.chosenDataType = chooseDataType("list");
-  if (result.chosenDataType == -1) {
-    return result; 
-  }  
-  switch (result.chosenDataType) {
-    case INTEGER:
-      result.list = (List){NULL, sizeof(int), printInt, INTEGER, 0};
-      break;
-    case CHARACTER:
-      result.list = (List){NULL, sizeof(char), printChar, CHARACTER, 0};
-      break;
-    case STRING:
-      result.list = (List){NULL, sizeof(char *), printString, STRING, 0};
-      break;
-    default:
-      result.list = (List){NULL, 0, NULL, -1, 0};
-      break;
-  }
-  return result;
-
-}
 
 void freeAll(List *list, void *data, int *positionPtr) {
   if (list->head == NULL) {
@@ -228,7 +196,6 @@ void traverseList(List *list) {
   }
   printf("NULL\n");
 }
-
 int compareData(void *data1, void *data2, int dataType) {
   switch (dataType) {
     case INTEGER:
@@ -268,7 +235,6 @@ void searchList(List *list) {
   printf("Data not found.\n");
   free(data);
 }
-
 void insertList(List *list) {
   char *insertMenu[] = {
     "Insert at the beginning",
@@ -337,7 +303,6 @@ void insertList(List *list) {
   } while (insertOption != insertMenuSize);
   system("cls");
 }
-
 Node* createNode(size_t dataSize) {
   Node *newNode = (Node *)malloc(sizeof(Node));
   if (newNode == NULL) {
@@ -359,14 +324,12 @@ Node* createNode(size_t dataSize) {
   newNode->next = NULL;
   return newNode;
 }
-
 void insertAtBeginning(List *list) {
   Node *newNode = createNode(list->dataSize);
   newNode->next = list->head;
   list->head = newNode;
   list->listSize++;
 }
-
 void insertAtIndex(List *list, int index) {
   if (index > list->listSize) {
     printf("Index out of bounds.\n");
@@ -394,7 +357,6 @@ void insertAtIndex(List *list, int index) {
 
   list->listSize++;
 }
-
 void insertAtEnd(List *list) {
   Node *newNode = createNode(list->dataSize);
   if (list->head == NULL) {
@@ -408,7 +370,6 @@ void insertAtEnd(List *list) {
   }
   list->listSize++;
 }
-
 void deleteList(List *list) {
   char *deleteMenu[] = {
     "Delete at the beginning", 
@@ -483,7 +444,6 @@ void deleteList(List *list) {
   } while (deleteOption != deleteMenuSize);
   system("cls");
 }
-
 // All delete subfunctions can be implemented into only one function using delete from an index
 void deleteFromBeginning(List *list) {
   if (list->head == NULL) {
@@ -496,7 +456,6 @@ void deleteFromBeginning(List *list) {
   free(temp);
   list->listSize--;
 }
-
 void deleteFromIndex(List *list, int index) {
   if (index >= list->listSize || index < 0) {
     printf("Index out of bounds.\n");
@@ -519,7 +478,6 @@ void deleteFromIndex(List *list, int index) {
   free(currNode);
   list->listSize--;
 }
-
 void deleteFromEnd(List *list) {
   if (list->head == NULL) {
     printf("List is empty.\n");
@@ -542,7 +500,6 @@ void deleteFromEnd(List *list) {
   }
   list->listSize--;
 }
-
 void mergeTwoLists(List *list1, List *list2) {
   if (list1->head == NULL) {
     list1->head = list2->head; 
@@ -587,7 +544,6 @@ void mergeLists(List *list1) {
   printf("Merged list: ");
   traverseList(list1);
 }
-
 void sortList(List *list) {
   if (list->head == NULL || list->head->next == NULL) {
     printf("List is empty or has only one element.\n");
@@ -628,4 +584,37 @@ void sortList(List *list) {
 
   free(tempData);
   printf("\nList sorted.\n\n");
+}
+ListResult initializeLists () {
+  char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
+    "\t1, 2, 3, 4, 5 is a list of numbers or integers",
+    "\ta, b, c, d, e is a list of characters",
+    "\t\"apple\", \"banana\", \"cherry\" is a list of strings",
+    "If you have encountered arrays, you would realize that arrays and lists are basically the same. The difference is how they are stored in the memory.",
+    "Each element in a list is called a node."};
+  int messageSize = sizeof(message)/sizeof(message[0]);
+
+  printWithinWidth(message, messageSize, "Lists");
+
+  ListResult result;
+  result.chosenDataType = chooseDataType("list");
+  if (result.chosenDataType == -1) {
+    return result; 
+  }  
+  switch (result.chosenDataType) {
+    case INTEGER:
+      result.list = (List){NULL, sizeof(int), printInt, INTEGER, 0};
+      break;
+    case CHARACTER:
+      result.list = (List){NULL, sizeof(char), printChar, CHARACTER, 0};
+      break;
+    case STRING:
+      result.list = (List){NULL, sizeof(char *), printString, STRING, 0};
+      break;
+    default:
+      result.list = (List){NULL, 0, NULL, -1, 0};
+      break;
+  }
+  return result;
+
 }
