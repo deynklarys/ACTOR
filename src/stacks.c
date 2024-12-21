@@ -53,7 +53,6 @@ void printString(void *data) {
   printf(" %s ", (char *)data);
 }
 
-int chooseDataTypeStacks();
 StackResult initializeStacks();
 void *scanData(char prompt[], DataType dataType);
 void freeAll(Stack *stack);
@@ -109,7 +108,7 @@ int main() {
       switch (chosenOption) {
         case 1:
           system("cls");
-          programHeader("Add an onto the stack"); 
+          programHeader("Add an item onto the stack"); 
           push(&stack);
           printStack(&stack);
           promptExit();
@@ -147,51 +146,6 @@ int main() {
   return 0;
 }
 
-int chooseDataTypeStacks() {
-  int chosenOption;
-  printf("\nChoose a data type for your stack:\n");
-  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
-  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
-
-  int menuCursorXpos, menuCursorYpos;
-  getCursorPos(&menuCursorXpos, &menuCursorYpos);
-  do {
-    printMenu(dataTypeMenu, dataTypeMenuSize);
-    getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
-      clearLines(cursorYpos + 1, cursorYpos + 1);
-      moveCursor(0, cursorYpos + 1);
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-      moveCursor(menuCursorXpos, menuCursorYpos);
-      continue;
-    }
-    clearLines(cursorYpos + 1, cursorYpos + 1);
-    moveCursor(0, cursorYpos + 2);
-    switch (chosenOption) {
-      case INTEGER:
-        printf("You chose Integer\n");
-        return INTEGER;
-      case CHARACTER:
-        printf("You chose Character\n");
-        return CHARACTER;
-      case STRING:
-        printf("You chose String\n");
-        return STRING;
-      case 4:
-        printf("Exiting...\n");
-        return -1;
-      default:
-        clearLines(cursorYpos + 1, cursorYpos + 1);
-        moveCursor(0, cursorYpos + 1);
-        printf("Invalid choice. Please choose a valid option.\n");
-        break;
-    }
-    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    moveCursor(menuCursorXpos, menuCursorYpos);
-  } while (chosenOption != dataTypeMenuSize);
-}
 StackResult initializeStacks() {
   char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) or the First In Last Out (FILO) principle.", "This means that the last element added to the stack will be the first one to be removed. Like a stack of books!"};
   int messageSize = sizeof(message) / sizeof(message[0]);
@@ -199,7 +153,7 @@ StackResult initializeStacks() {
   printWithinWidth(message, messageSize, "Stacks");
 
   StackResult result;
-  result.chosenDataType = chooseDataTypeStacks();
+  result.chosenDataType = chooseDataType("stack");
   if (result.chosenDataType == -1) {
     return result;
   }

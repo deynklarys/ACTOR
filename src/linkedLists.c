@@ -64,51 +64,6 @@ void printChar(void *data) {
 void printString(void *data) {
   printf("%s -> ", (char *)data);
 }
-int chooseDataTypeLists () {
-  int chosenOption;
-  printf("\nChoose a data type for your list:\n");
-  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
-  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
-
-  int menuCursorXpos, menuCursorYpos;
-  getCursorPos(&menuCursorXpos, &menuCursorYpos);
-  do {
-    printMenu(dataTypeMenu, dataTypeMenuSize);
-    getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
-      clearLines(cursorYpos + 1, cursorYpos + 1);
-      moveCursor(0, cursorYpos + 1);
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-      moveCursor(menuCursorXpos, menuCursorYpos);
-      continue;
-    }
-    clearLines(cursorYpos + 1, cursorYpos + 1);
-    moveCursor(0, cursorYpos + 2);
-    switch (chosenOption) {
-      case INTEGER:
-        printf("You chose Integer\n");
-        return INTEGER;
-      case CHARACTER:
-        printf("You chose Character\n");
-        return CHARACTER;
-      case STRING:
-        printf("You chose String\n");
-        return STRING;
-      case 4:
-        printf("Exiting...\n");
-        return -1;
-      default:
-        clearLines(cursorYpos + 1, cursorYpos + 1);
-        moveCursor(0, cursorYpos + 1);
-        printf("Invalid choice. Please choose a valid option.\n");
-        break;
-    }
-    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    moveCursor(menuCursorXpos, menuCursorYpos);
-  } while (chosenOption != dataTypeMenuSize);
-}
 
 ListResult initializeLists () {
   char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
@@ -122,7 +77,7 @@ ListResult initializeLists () {
   printWithinWidth(message, messageSize, "Lists");
 
   ListResult result;
-  result.chosenDataType = chooseDataTypeLists();
+  result.chosenDataType = chooseDataType("list");
   if (result.chosenDataType == -1) {
     return result; 
   }  

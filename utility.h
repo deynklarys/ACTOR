@@ -29,5 +29,5 @@ void printWithinWidthCentered(char *message[], int messageSize, char *header);
 void printWithinWidth(char *message[], int messageSize, char *header);
 void functionNotDone(char *header);
 void clearInputBuffer(); 
-
+int chooseDataType(char dataStructure[]);
 #endif // UTILITY_H

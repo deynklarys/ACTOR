@@ -57,7 +57,6 @@ void printString(void *data) {
   printf(" %s ", (char *)data);
 }
 
-int chooseDataTypeQueues();
 QueueResult initializeQueue();
 void *scanData(char prompt[], DataType dataType);
 void freeAll(Queue *queue);
@@ -155,54 +154,6 @@ int main () {
   return 0;
 }
 
-
-int chooseDataTypeQueues() {
-  int chosenOption;
-  printf("Choose data type for the queue: \n");
-
-  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
-  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
-
-  int menuCursorXpos, menuCursorYpos;
-  getCursorPos(&menuCursorXpos, &menuCursorYpos);
-  do {
-    printMenu(dataTypeMenu, dataTypeMenuSize);
-    getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
-      clearLines(cursorYpos + 1, cursorYpos + 1);
-      moveCursor(0, cursorYpos + 1);
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-      moveCursor(menuCursorXpos, menuCursorYpos);
-      continue;
-    }
-    clearLines(cursorYpos + 1, cursorYpos + 1);
-    moveCursor(0, cursorYpos + 2);
-    switch (chosenOption) {
-      case INTEGER:
-        printf("You chose Integer\n");
-        return INTEGER;
-      case CHARACTER:
-        printf("You chose Character\n");
-        return CHARACTER;
-      case STRING:
-        printf("You chose String\n");
-        return STRING;
-      case 4:
-        printf("Exiting...\n");
-        return -1;
-      default:
-        clearLines(cursorYpos + 1, cursorYpos + 1);
-        moveCursor(0, cursorYpos + 1);
-        printf("Invalid choice. Please choose a valid option.\n");
-        break;
-    }
-    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    moveCursor(menuCursorXpos, menuCursorYpos);
-  } while (chosenOption != dataTypeMenuSize);
-}
-
 QueueResult initializeQueue() {
   char *message[] = {"Queues are a type of data structure that follows the First In First Out (FIFO) principle.", "This means that the first element added to the queue will be the first one to be removed. Like a queue of people!\n"};
   int messageSize = sizeof(message) / sizeof(message[0]);
@@ -210,7 +161,7 @@ QueueResult initializeQueue() {
   printWithinWidth(message, messageSize, "Queues");
 
   QueueResult result;
-  result.chosenDataType = chooseDataTypeQueues();
+  result.chosenDataType = chooseDataType("queue");
   if (result.chosenDataType == -1) {
     return result;
   }

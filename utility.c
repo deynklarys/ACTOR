@@ -16,6 +16,12 @@ int terminalHeight = 0;
 char anyChar;
 int exitXpos, exitYpos;
 
+typedef enum {
+  INTEGER = 1,
+  CHARACTER = 2,
+  STRING = 3
+} DataType;
+
 // Utility function definitions
 void getTerminalSize() {
   /* Function to get the terminal size. */
@@ -197,4 +203,47 @@ void functionNotDone(char *header) {
 void clearInputBuffer() {
   int c;
   while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int chooseDataType(char dataStructure[]) {
+  int cursorXpos, cursorYpos;
+  int chosenOption;
+  printf("Choose data type for your %s: \n", dataStructure);
+  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
+  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
+
+  int menuCursorXpos, menuCursorYpos;
+  getCursorPos(&menuCursorXpos, &menuCursorYpos);
+  do {
+    printMenu(dataTypeMenu, dataTypeMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(menuCursorXpos, menuCursorYpos);
+      continue;
+    }
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 2);
+    switch (chosenOption) {
+      case INTEGER:
+        return INTEGER;
+      case CHARACTER:
+        return CHARACTER;
+      case STRING:
+        return STRING;
+      case 4:
+        return -1;
+      default:
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        printf("Invalid choice. Please choose a valid option.\n");
+        break;
+    }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    moveCursor(menuCursorXpos, menuCursorYpos);
+  } while (chosenOption != dataTypeMenuSize);
 }
