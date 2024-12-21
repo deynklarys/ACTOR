@@ -3,12 +3,6 @@
 #include <conio.h>
 #include "../utility.h"
 
-typedef enum {
-  INTEGER = 1,
-  CHARACTER = 2,
-  STRING = 3
-} DataType;
-
 #define ARRAY_MAX_LENGTH 50
 #define STRING_MAX_LENGTH 50
 #define INS 3
