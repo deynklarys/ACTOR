@@ -30,11 +30,12 @@ typedef struct {
 } StackResult;
 
 void printStack(Stack *stack);
-void push(Stack *stack);
-void pop(Stack *stack);
-void peek(Stack *stack);
-void isFull(Stack *stack);
-void isEmpty(Stack *stack);
+void pushStack(Stack *stack);
+void popStack(Stack *stack);
+void peekStack(Stack *stack);
+void isFullStack(Stack *stack);
+void isEmptyStack(Stack *stack);
+StackResult initializeStacks();
 
 void printInt(void *data) {
   printf(" %d ", *(int *)data);
@@ -46,7 +47,6 @@ void printString(void *data) {
   printf(" %s ", (char *)data);
 }
 
-StackResult initializeStacks();
 void freeAll(Stack *stack);
 
 int main() {
@@ -72,18 +72,7 @@ int main() {
     system("cls");
     do {
       programHeader("Stacks Operations");
-      printf("Stack data type: ");
-      switch (stack.stackDataType) {
-        case INTEGER:
-          printf("Integer\n");
-          break;
-        case CHARACTER:
-          printf("Character\n");
-          break;
-        case STRING:
-          printf("String\n");
-          break;
-      }
+      printDataType("stack", stack.stackDataType);
       printMenu(stacksMenu, stacksMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
@@ -198,7 +187,7 @@ void printStack(Stack *stack) {
     printf("\n");
   }
 }
-void push(Stack *stack) {
+void pushStack(Stack *stack) {
   if (stack->stackSize == STACK_MAX_SIZE) {
     printf("Stack overflow\n");
     return;
@@ -220,7 +209,7 @@ void push(Stack *stack) {
   stack->top = newNode;
   stack->stackSize++;
 }
-void pop(Stack *stack) {
+void popStack(Stack *stack) {
   if (stack->top == NULL) {
     printf("Stack underflow\n");
     return;
@@ -236,7 +225,7 @@ void pop(Stack *stack) {
   free(temp);
   stack->stackSize--;
 }
-void peek(Stack *stack) {
+void peekStack(Stack *stack) {
   if (stack->top == NULL) {
     printf("Stack is empty\n");
     return;
@@ -246,7 +235,7 @@ void peek(Stack *stack) {
   stack->printFunc(stack->top->data);
   printf("\n");
 }
-void isFull(Stack *stack) {
+void isFullStack(Stack *stack) {
   char *message[] = {
     "\nNote:", "This program implements a stack data structure using linked lists. As a result, the stack will only be full when the system runs out of memory.",
     "However, for practical purposes, the stack is considered full when it reaches a predefined maximum size. In this implementation, the maximum stack size is set to 50."};
@@ -257,7 +246,7 @@ void isFull(Stack *stack) {
   }
   printWithinWidth(message, sizeof(message) / sizeof(message[0]), NULL);
 }
-void isEmpty(Stack *stack) {
+void isEmptyStack(Stack *stack) {
   if (stack->top == NULL) {
     printf("Stack is empty\n");
   } else {
