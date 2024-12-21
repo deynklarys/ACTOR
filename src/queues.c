@@ -61,6 +61,7 @@ int chooseDataTypeQueues();
 QueueResult initializeQueue();
 void *scanData(char prompt[], DataType dataType);
 void freeAll(Queue *queue);
+void printQueue(Queue *queue);
 
 int main () {
   programHeader("Queues");
@@ -295,11 +296,15 @@ void printQueue(Queue *queue) {
   }
 
   QueueNode *temp = queue->front;
+  printf("Front -> ");
   while (temp != NULL) {
     queue->printFunc(temp->data);
     temp = temp->next;
-    printf("\n");
+    if (temp != NULL) {
+      printf(" -> ");
+    }
   }
+  printf(" <- Rear\n");
 }
 void push(Queue *queue) {
   if (queue->queueSize == QUEUE_MAX_SIZE) {
