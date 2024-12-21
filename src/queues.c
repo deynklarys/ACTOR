@@ -81,6 +81,7 @@ int main () {
 
   Queue queue;
 
+  system("cls");
   while (1) {
     QueueResult queueResult = initializeQueue();
     queue = queueResult.queue;

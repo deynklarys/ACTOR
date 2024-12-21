@@ -182,6 +182,7 @@ int main () {
 
   List list;
   
+  system("cls");
   while (1) {
     ListResult listResult = initializeLists();
     list = listResult.list;

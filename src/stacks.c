@@ -62,6 +62,7 @@ int main() {
 
   Stack stack;
 
+  system("cls");
   while (1) {
     StackResult stackResult = initializeStacks();
     stack = stackResult.stack;
