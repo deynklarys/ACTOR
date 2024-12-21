@@ -21,7 +21,7 @@ int strLength ();
 char *concatenate ();
 int compareStr ();
 
-int scanPosition() {
+int scanPosition(char *prompt) {
   int position;
   printf("Enter the position: ");
   if (scanf("%d", &position) != 1) {
@@ -31,9 +31,9 @@ int scanPosition() {
   }
   return position;
 }
-char scanChar() {
+char scanChar(char *prompt) {
   char character;
-  printf("Enter the character: ");
+  printf("Enter the character %s: ", prompt);
   if (scanf(" %c", &character) != 1) {
     printf("Invalid input. Please enter a character.\n");
     clearInputBuffer();
@@ -56,9 +56,9 @@ char *scanString(char *string) {
   string[strcspn(string, "\n")] = '\0';
   return string;
 }
-int scanLength() {
+int scanLength(char *prompt) {
   int length;
-  printf("Enter the length: ");
+  printf("Enter the length  %s: ", prompt);
   if (scanf("%d", &length) != 1) {
     printf("Invalid input. Please enter a number.\n");
     clearInputBuffer();
@@ -102,6 +102,8 @@ int main () {
     
     printMenu(stringsMenu, stringsMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    moveCursor(cursorXpos, cursorYpos);
     if (scanf("%d", &chosenOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
@@ -161,7 +163,7 @@ int main () {
 
 void findChar () {
   while (1) {
-    position = scanPosition();
+    position = scanPosition("to find");
     indexPos = position - 1;
     if (position == -1) {
       continue;
@@ -176,9 +178,9 @@ void findChar () {
 }
 char *replaceChar () {
   while (1) {
-    position = scanPosition();
+    position = scanPosition("to replace");
     indexPos = position - 1;
-    charToBeInserted = scanChar();
+    charToBeInserted = scanChar("to replace with");
     if (position == -1) {
       continue;
     }
@@ -195,9 +197,9 @@ char *replaceChar () {
 
 char *insertChar () {
   while (1) {
-    position = scanPosition();
+    position = scanPosition("to insert");
     indexPos = position - 1;
-    charToBeInserted = scanChar();
+    charToBeInserted = scanChar("to insert");
     if (position == -1) {
       continue;
     }
@@ -218,7 +220,7 @@ char *insertChar () {
 
 char *deleteChar () {
   while (1) {
-    position = scanPosition();
+    position = scanPosition("to delete");
     indexPos = position - 1;
     if (position == -1) {
       continue;
@@ -265,7 +267,7 @@ int findStr () {
 
 char *insertStr () {
   while (1) {
-    int position = scanPosition();
+    int position = scanPosition("to insert");
     indexPos = position - 1;
     if (position == -1) {
       continue;
@@ -289,7 +291,7 @@ char *insertStr () {
 }
 void deleteStr () {
   while (1) {
-    int position = scanPosition();
+    int position = scanPosition("to delete");
     indexPos = position - 1;
     if (position == -1) {
       continue;
@@ -298,7 +300,7 @@ void deleteStr () {
       printf("Invalid position. Please enter a valid position.\n");
       continue;
     }
-    length = scanLength();
+    length = scanLength("to delete");
     for (int i = indexPos; i < strlen(string) - length; i++) {
       string[i] = string[i + length];
     }
