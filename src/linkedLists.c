@@ -130,7 +130,6 @@ int main () {
     list.listDataType = listResult.chosenDataType;
     if (listResult.chosenDataType == -1) {
       system("cls");
-      freeAll(&list, NULL, NULL);
       return 0;
     }
 
@@ -143,14 +142,14 @@ int main () {
       "Merge two lists", 
       "Exit"};
     int listMenuSize = sizeof(listMenu) / sizeof(listMenu[0]);
-    int chosenOption;
 
     system("cls");
+    int listMenuOption;
     do {
       programHeader("Linked List Operations");
       printMenu(listMenu, listMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
-      if (scanf("%d", &chosenOption) != 1) {
+      if (scanf("%d", &listMenuOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
         clearInputBuffer();
@@ -159,20 +158,15 @@ int main () {
         continue;
       }
 
-      clearLines(cursorYpos + 1, cursorYpos + 1);
+      clearLines(cursorYpos + 1, 24);
       moveCursor(0, cursorYpos + 2);
 
-      switch (chosenOption) {
+      switch (listMenuOption) {
         case 1:
           traverseList(&list);
           break;
         case 2:
-          system("cls");
-          programHeader("Search in a Linked List");
-          searchList(&list);
-          traverseList(&list);
-          promptExit();
-          system("cls");
+          searchList(&list); 
           break;
         case 3:
           system("cls");
@@ -210,7 +204,7 @@ int main () {
           printf("Invalid choice. Please choose a valid option.\n");
       }
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    } while (chosenOption != listMenuSize);
+    } while (listMenuOption != listMenuSize);
 
     system("cls");
   }
@@ -220,6 +214,12 @@ int main () {
 
 void traverseList(List *list) {
   Node *current = list->head;
+
+  if (current == NULL) {
+    printf("List is empty.\n");
+    return;
+  }
+
   printf("\nHEAD -> ");
   while (current != NULL) {
     list->printFunc(current->data);
@@ -257,6 +257,7 @@ void searchList(List *list) {
   while (tempNode != NULL) {
     if (compareData(tempNode->data, data, list->listDataType)) {
       printf("Data found at position %d\n", currIndex + 1);
+
       return;
     } 
     
@@ -274,13 +275,13 @@ void insertList(List *list) {
     "Insert at the end",
     "Exit"};
   int insertMenuSize = sizeof(insertMenu) / sizeof(insertMenu[0]);
-  int chosenOption;
+  int insertOption;
 
   do {
     programHeader("Insert in a Linked List");
     printMenu(insertMenu, insertMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
+    if (scanf("%d", &insertOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
       clearInputBuffer();
@@ -289,14 +290,14 @@ void insertList(List *list) {
       continue;
     }
 
-    clearLines(cursorYpos + 1, cursorYpos + 1);
+    clearLines(cursorYpos + 1, 24);
     moveCursor(0, cursorYpos + 2);
 
-    if (chosenOption > 0 && chosenOption < insertMenuSize) {
+    if (insertOption > 0 && insertOption < insertMenuSize) {
       data = scanData("Enter data to insert: ", list->listDataType);
     }
     
-    switch (chosenOption) {
+    switch (insertOption) {
       case 1:
         system("cls");
         programHeader("Insert at the Beginning");
@@ -332,10 +333,7 @@ void insertList(List *list) {
         break;
     }
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-  } while (chosenOption != insertMenuSize);
-
-  freeAll(NULL, data, positionPtr);
-
+  } while (insertOption != insertMenuSize);
   system("cls");
 }
 
@@ -417,14 +415,14 @@ void deleteList(List *list) {
     "Delete at the end", 
     "Exit"};
   int deleteMenuSize = sizeof(deleteMenu) / sizeof(deleteMenu[0]);
-  int chosenOption;
+  int deleteOption;
 
 
   do {
     programHeader("Delete From a Linked List");
     printMenu(deleteMenu, deleteMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
+    if (scanf("%d", &deleteOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
       clearInputBuffer();
@@ -436,7 +434,7 @@ void deleteList(List *list) {
     clearLines(cursorYpos + 1, cursorYpos + 1);
     moveCursor(0, cursorYpos + 2);
 
-    switch (chosenOption) {
+    switch (deleteOption) {
       case 1:
         system("cls");
         programHeader("Delete at the Beginning");
@@ -481,10 +479,7 @@ void deleteList(List *list) {
         break;
       }
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-  } while (chosenOption != deleteMenuSize);
-
-  freeAll(NULL, data, positionPtr);
-
+  } while (deleteOption != deleteMenuSize);
   system("cls");
 }
 
@@ -571,9 +566,9 @@ void mergeLists(List *list1) {
   printf("Enter the number of nodes in the second list: ");
   scanf("%d", &nodes);
 
-  printf("Enter the second list.\n");
+  printf("Enter the second list. Press Enter after every data.\n");
   while (nodes--) {
-    data = scanData("Enter data: ", list2.listDataType);
+    data = scanData("Enter a data: ", list2.listDataType);
     Node *newNode = createNode(list2.dataSize);
     if (list2.head == NULL) {
       list2.head = newNode;
@@ -590,8 +585,6 @@ void mergeLists(List *list1) {
 
   printf("Merged list: ");
   traverseList(list1);
-
-  freeAll(&list2, data, NULL);
 }
 
 void sortList(List *list) {
