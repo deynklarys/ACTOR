@@ -57,12 +57,12 @@ void dataStructures ();
     void linkedLists();
       void *data;
       int *positionPtr;
-      typedef struct Node {
+      typedef struct ListNode {
         void *data;
-        struct Node *next;
-      } Node;
+        struct ListNode *next;
+      } ListNode;
       typedef struct {
-        Node *head;
+        ListNode *head;
         size_t dataSize;
         void (*printFunc)(void *);
         int listDataType;
@@ -89,11 +89,10 @@ void dataStructures ();
       ListResult initializeLists ();
     void stacks();
       #define STACK_MAX_SIZE 50
-      typedef struct Node {
+      typedef struct StackNode {
         void *data;
-        struct Node *next;
+        struct StackNode *next;
       } StackNode;
-
       typedef struct {
         StackNode *top;
         size_t dataSize;
@@ -101,7 +100,6 @@ void dataStructures ();
         DataType stackDataType;
         int stackSize;
       } Stack;
-
       typedef struct {
         Stack stack;
         int chosenDataType;
@@ -114,6 +112,30 @@ void dataStructures ();
       void isEmptyStack(Stack *stack);
       StackResult initializeStacks();
     void queues();
+      #define QUEUE_MAX_SIZE 50
+      typedef struct QueueNode {
+        void *data;
+        struct QueueNode *next;
+      } QueueNode;
+      typedef struct {
+        QueueNode *front;
+        QueueNode *rear;
+        size_t dataSize;
+        void (*printFunc)(void *);
+        DataType queueDataType;
+        int queueSize;
+      } Queue;
+      typedef struct {
+        Queue queue;
+        int chosenDataType;
+      } QueueResult;
+      QueueResult initializeQueue();
+      void printQueue(Queue *queue);
+      void push(Queue *queue);
+      void pop(Queue *queue);
+      void peek(Queue *queue);
+      void isFull(Queue *queue);
+      void isEmpty(Queue *queue);
   void nonLinearDS();
     void trees();
   void strings();
@@ -957,7 +979,7 @@ void linkedLists () {
   }
 }
   void traverseList(List *list) {
-    Node *current = list->head;
+    ListNode *current = list->head;
 
     if (current == NULL) {
       printf("List is empty.\n");
@@ -995,7 +1017,7 @@ void linkedLists () {
       return;
     }
 
-    Node *tempNode = list->head;
+    ListNode *tempNode = list->head;
     int currIndex = 0;
 
     while (tempNode != NULL) {
@@ -1079,8 +1101,8 @@ void linkedLists () {
     } while (insertOption != insertMenuSize);
     system("cls");
   }
-  Node* createNode(size_t dataSize) {
-    Node *newNode = (Node *)malloc(sizeof(Node));
+  ListNode* createNode(size_t dataSize) {
+    ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
     if (newNode == NULL) {
       fprintf(stderr, "Memory allocation failed\n");
       exit(EXIT_FAILURE);
@@ -1101,7 +1123,7 @@ void linkedLists () {
     return newNode;
   }
   void insertAtBeginning(List *list) {
-    Node *newNode = createNode(list->dataSize);
+    ListNode *newNode = createNode(list->dataSize);
     newNode->next = list->head;
     list->head = newNode;
     list->listSize++;
@@ -1117,8 +1139,8 @@ void linkedLists () {
       return;
     }
 
-    Node *prevNode = NULL;
-    Node *currNode = list->head;
+    ListNode *prevNode = NULL;
+    ListNode *currNode = list->head;
     int currIndex = 0;
 
     while (currIndex < index) {
@@ -1127,18 +1149,18 @@ void linkedLists () {
       currIndex++;
     }
 
-    Node *newNode = createNode(list->dataSize);
+    ListNode *newNode = createNode(list->dataSize);
     newNode->next = currNode;
     prevNode->next = newNode;
 
     list->listSize++;
   }
   void insertAtEnd(List *list) {
-    Node *newNode = createNode(list->dataSize);
+    ListNode *newNode = createNode(list->dataSize);
     if (list->head == NULL) {
       list->head = newNode;
     } else {
-      Node *current = list->head;
+      ListNode *current = list->head;
       while (current->next != NULL) {
         current = current->next;
       }
@@ -1226,7 +1248,7 @@ void linkedLists () {
       printf("List is empty.\n");
       return;
     }
-    Node *temp = list->head;
+    ListNode *temp = list->head;
     list->head = list->head->next;
     free(temp->data);
     free(temp);
@@ -1241,8 +1263,8 @@ void linkedLists () {
       deleteFromBeginning(list);
       return;
     }
-    Node *prevNode = NULL;
-    Node *currNode = list->head;
+    ListNode *prevNode = NULL;
+    ListNode *currNode = list->head;
     int currIndex = 0;
     while (currIndex < index) {
       prevNode = currNode;
@@ -1264,8 +1286,8 @@ void linkedLists () {
       free(list->head);
       list->head = NULL;
     } else {
-      Node *prevNode = NULL;
-      Node *currNode = list->head;
+      ListNode *prevNode = NULL;
+      ListNode *currNode = list->head;
       while (currNode->next != NULL) {
         prevNode = currNode;
         currNode = currNode->next;
@@ -1280,7 +1302,7 @@ void linkedLists () {
     if (list1->head == NULL) {
       list1->head = list2->head; 
     } else { 
-      Node *current = list1->head; 
+      ListNode *current = list1->head; 
       while (current->next != NULL) {
         current = current->next; 
       }
@@ -1303,11 +1325,11 @@ void linkedLists () {
     printf("Enter the second list. Press Enter after every data.\n"); 
     while (nodes--) {
       data = scanData("Enter a data: ", list2.listDataType);
-      Node *newNode = createNode(list2.dataSize);
+      ListNode *newNode = createNode(list2.dataSize);
       if (list2.head == NULL) {
         list2.head = newNode;
       } else {
-        Node *current = list2.head;
+        ListNode *current = list2.head;
         while (current->next != NULL) {
           current = current->next;
         }
@@ -1326,7 +1348,7 @@ void linkedLists () {
       return;
     }
 
-    Node *i, *j;
+    ListNode *i, *j;
     void *tempData = malloc(list->dataSize);
     if (tempData == NULL) {
       fprintf(stderr, "Memory allocation failed\n");
@@ -1406,7 +1428,6 @@ void stacks () {
     stack.stackDataType = stackResult.chosenDataType;
     if (stack.stackDataType == -1) {
       system("cls");
-      freeAll(&stack);
       return;
     }
 
@@ -1436,7 +1457,7 @@ void stacks () {
         case 1:
           system("cls");
           programHeader("Add an item onto the stack"); 
-          push(&stack);
+          pushStack(&stack);
           printStack(&stack);
           promptExit();
           system("cls");
@@ -1444,22 +1465,21 @@ void stacks () {
         case 2:
           system("cls");
           programHeader("Remove an item from the stack");
-          pop(&stack);
+          popStack(&stack);
           printStack(&stack);
           promptExit();
           system("cls");
           break;
         case 3:
-          peek(&stack);
+          peekStack(&stack);
           break;
         case 4:
-          isFull(&stack);
+          isFullStack(&stack);
           break;
         case 5:
-          isEmpty(&stack);
+          isEmptyStack(&stack);
           break;
         case 6:
-          freeAll(&stack);
           promptExit();
           break;
         default:
@@ -1491,7 +1511,7 @@ void stacks () {
         result.stack = (Stack) {NULL, sizeof(char), printChar, CHARACTER, 0};
         break;
       case STRING:
-        result.stack = (Stack) {NULL, sizeof (char *),printString, STRING, 0};
+        result.stack = (Stack) {NULL, sizeof (char *),printStr, STRING, 0};
         break;
     }
     return result;
@@ -1577,54 +1597,191 @@ void stacks () {
     }
   }
 void queues () {
-  char *queuesMenu[] = {"Add an item", "Remove an item","Look for an item", "Check if the queue is full", "Check if the queue is empty", "Exit"};
-  int queuesMenuSize = sizeof(queuesMenu) / sizeof(queuesMenu[0]);
-  int chosenOption;
+  programHeader("Queues");
 
-  do {
-    programHeader("Linked List");
-    printMenu(queuesMenu, queuesMenuSize);
-    getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      continue;
+  Queue queue;
+
+  system("cls");
+  while (1) {
+    QueueResult queueResult = initializeQueue();
+    queue = queueResult.queue;
+    queue.queueDataType = queueResult.chosenDataType;
+    if (queue.queueDataType == -1) {
+      system("cls");
+      return;
     }
-    switch (chosenOption) {
-      case 1:
-        functionNotDone("Add an item");
-        // push();
-        break;
-      case 2:
-        functionNotDone("Remove an item");
-        // pop();
-        break;
-      case 3:
-        functionNotDone("Look for an item");
-        // peek();
-        break;
-      case 4:
-        functionNotDone("Check if the queue is full");
-        // isFull();
-        break;
-      case 5:
-        functionNotDone("Check if the queue is empty");
-        // isEmpty();
-        break;
-      case 6:
-        moveCursor(0, cursorYpos + 2);
-        clearLines(cursorYpos + 2, cursorYpos + 2);
-        promptExit();
-        break;
-      default:
-        clearInputBuffer(); // Clear invalid input
-        printf("\n");
-        displayCenterText("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
-        break; 
-    }
-  } while (chosenOption != queuesMenuSize);
+
+    char *queuesMenu[] = {"Add an item", "Remove an item","Check the front item", "Check if the queue is full", "Check if the queue is empty", "Exit"};
+    int queuesMenuSize = sizeof(queuesMenu) / sizeof(queuesMenu[0]);
+    int chosenOption;
+
+    system("cls");
+    do {
+      programHeader("Queues Operations");
+      printDataType("queue", queue.queueDataType);
+      printMenu(queuesMenu, queuesMenuSize);
+      getCursorPos(&cursorXpos, &cursorYpos);
+      if (scanf("%d", &chosenOption) != 1) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
+      }
+
+      clearLines(cursorYpos + 1, 24);
+      moveCursor(0, cursorYpos + 2);
+
+      switch (chosenOption) {
+        case 1:
+          system("cls");
+          programHeader("Add an item");
+          push(&queue);
+          printQueue(&queue);
+          promptExit();
+          system("cls");
+          break;
+        case 2:
+          system("cls");
+          programHeader("Remove an item");
+          pop(&queue);
+          printQueue(&queue);
+          promptExit();
+          system("cls");
+          break;
+        case 3:
+          peek(&queue);
+          break;
+        case 4:
+          isFull(&queue);
+          break;
+        case 5:
+          isEmpty(&queue);
+          break;
+        case 6:
+          promptExit();
+          break;
+        default:
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
+      }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    } while (chosenOption != queuesMenuSize);
+    system("cls");
+  }
 }
+  QueueResult initializeQueue() {
+    char *message[] = {"Queues are a type of data structure that follows the First In First Out (FIFO) principle.", "This means that the first element added to the queue will be the first one to be removed. Like a queue of people!\n"};
+    int messageSize = sizeof(message) / sizeof(message[0]);
+
+    printWithinWidth(message, messageSize, "Queues");
+
+    QueueResult result;
+    result.chosenDataType = chooseDataType("queue");
+    if (result.chosenDataType == -1) {
+      return result;
+    }
+
+    switch (result.chosenDataType) {
+      case INTEGER:
+        result.queue = (Queue) {NULL, NULL, sizeof(int), printInt, INTEGER, 0};
+        break;
+      case CHARACTER:
+        result.queue = (Queue) {NULL, NULL, sizeof(char), printChar, CHARACTER, 0};
+        break;
+      case STRING:
+        result.queue = (Queue) {NULL, NULL, sizeof(char *), printStr, STRING, 0};
+        break;
+    }
+    return result;
+  }
+  void printQueue(Queue *queue) {
+    printf("\nYour queue: \n");
+    if (queue->front == NULL) {
+      printf("Queue is empty\n");
+      return;
+    }
+
+    QueueNode *temp = queue->front;
+    printf("Front -> ");
+    while (temp != NULL) {
+      queue->printFunc(temp->data);
+      temp = temp->next;
+      if (temp != NULL) {
+        printf(" -> ");
+      }
+    }
+    printf(" <- Rear\n");
+  }
+  void push(Queue *queue) {
+    if (queue->queueSize == QUEUE_MAX_SIZE) {
+      printf("Queue overflow\n");
+      return;
+    }
+
+    void *data = scanData("Enter data to add: ", queue->queueDataType);
+    if (data == NULL) {
+      return;
+    }
+
+    QueueNode *newNode = (QueueNode *)malloc(sizeof(QueueNode));
+    if (newNode == NULL) {
+      fprintf(stderr, "Memory allocation failed\n");
+      free(data);
+      return;
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (queue->front == NULL) {
+      queue->front = newNode;
+    } else {
+      queue->rear->next = newNode;
+    }
+    queue->rear = newNode;
+    queue->queueSize++;
+  }
+  void pop(Queue *queue) {
+    if (queue->front == NULL) {
+      printf("Queue underflow\n");
+      return;
+    }
+
+    QueueNode *temp = queue->front;
+    queue->front = queue->front->next;
+
+    queue->printFunc(temp->data);
+    printf(" is removed from the queue.\n");
+
+    free(temp->data);
+    free(temp);
+    queue->queueSize--;
+  }
+  void peek(Queue *queue) {
+    if (queue->front == NULL) {
+      printf("Queue is empty\n");
+      return;
+    }
+
+    printf("The front of the queue is: ");
+    queue->printFunc(queue->front->data);
+    printf("\n");
+  }
+  void isFull(Queue *queue) {
+    if (queue->queueSize == QUEUE_MAX_SIZE) {
+      printf("Queue is full\n");
+    } else {
+      printf("Queue is not full\n");
+    }
+  }
+  void isEmpty(Queue *queue) {
+    if (queue->front == NULL) {
+      printf("Queue is empty\n");
+    } else {
+      printf("Queue is not empty\n");
+    }
+  }
 
 void strings () {
   char *stringsMenu[] = {
@@ -2338,7 +2495,7 @@ void algorithms() {
 }
 
 void about() {
-  char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR/ACTO Algo is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n", "Pens and papers is one way of learning; practical implementation is understanding of it\n"};
+  char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n"};
   int messageSize = sizeof(message)/sizeof(message[0]);
 
   printWithinWidthCentered(message, messageSize, "About ACTOR");
