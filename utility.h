@@ -38,6 +38,7 @@ int chooseDataType(char dataStructure[]);
 void *scanData(char prompt[], DataType dataType);
 void printInt(void *data);
 void printChar(void *data);
-void printString(void *data);
+void printStr(void *data);
+void printDataType(char dataStructure[], DataType dataType);
 
 #endif // UTILITY_H

@@ -273,7 +273,7 @@ void arrays () {
 
     if (!initializeArray(&array)) {
       system("cls");
-      return 0;
+      return;
     }
 
     char *arraysMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two arrays", "Exit"};
@@ -840,59 +840,96 @@ void arrays () {
     printf("\n\n");
   }
 void linkedLists () {
-  char *linkedListMenu[] = {"Traverse", "Search", "Insert", "Delete", "Sort", "Merge two lists", "Exit"};
-  int linkedListMenuSize = sizeof(linkedListMenu) / sizeof(linkedListMenu[0]);
-  int chosenOption;
+  programHeader("Linked Lists");
 
-  do {
-    programHeader("Linked List");
-    printMenu(linkedListMenu, linkedListMenuSize);
-    getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
-      printf("Invalid input. Please enter a number.\n");
-      continue;
+  List list;
+  
+  system("cls");
+  while (1) {
+    ListResult listResult = initializeLists();
+    list = listResult.list;
+    list.listDataType = listResult.chosenDataType;
+    if (listResult.chosenDataType == -1) {
+      system("cls");
+      return;
     }
 
-    switch (chosenOption) {
-      case 1:
-        functionNotDone("Traverse");
-        // traverseList();
-        break;
-      case 2:
-        functionNotDone("Search");
-        // searchList();
-        break;
-      case 3:
-        functionNotDone("Insert");
-        // insert();
-        break;
-      case 4:
-        functionNotDone("Delete");
-        // delete();
-        break;
-      case 5:
-        functionNotDone("Sort");
-        // sortList();
-        break;
-      case 6:
-        functionNotDone("Merge Two Lists");
-        // mergeLists();
-        break;
-      case 7:
-        moveCursor(0, cursorYpos + 2);
-        clearLines(cursorYpos + 2, cursorYpos + 2);
-        promptExit();
-        break;
-      default:
-        clearInputBuffer(); // Clear invalid input
-        printf("\n");
-        displayCenterText("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
-        break;
-    }
-  } while (chosenOption != linkedListMenuSize);
+    char *listMenu[] = {
+      "Traverse", 
+      "Search", 
+      "Insert", 
+      "Delete", 
+      "Sort", 
+      "Merge two lists", 
+      "Exit"};
+    int listMenuSize = sizeof(listMenu) / sizeof(listMenu[0]);
 
+    system("cls");
+    int listMenuOption;
+    do {
+      programHeader("Linked List Operations");
+      printDataType("list", list.listDataType);
+      printMenu(listMenu, listMenuSize);
+      getCursorPos(&cursorXpos, &cursorYpos);
+      if (scanf("%d", &listMenuOption) != 1) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
+      }
+
+      clearLines(cursorYpos + 1, 24);
+      moveCursor(0, cursorYpos + 2);
+
+      switch (listMenuOption) {
+        case 1:
+          traverseList(&list);
+          break;
+        case 2:
+          searchList(&list); 
+          break;
+        case 3:
+          system("cls");
+          insertList(&list);
+          system("cls");
+          break;
+        case 4:
+          system("cls");
+          deleteList(&list);
+          system("cls");
+          break;
+        case 5:
+          system("cls");
+          programHeader("Sort");
+          printf("Original list: ");
+          traverseList(&list);
+          sortList(&list);
+          printf("Sorted list: ");
+          traverseList(&list);
+          promptExit();
+          system("cls");
+          break;
+        case 6:
+          system("cls");
+          programHeader("Merge Two Lists");
+          mergeLists(&list);
+          promptExit();
+          system("cls");
+          break;
+        case 7:
+          promptExit();
+          break;
+        default:
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
+      }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    } while (listMenuOption != listMenuSize);
+
+    system("cls");
+  }
 }
   void traverseList(List *list) {
     Node *current = list->head;
@@ -1323,7 +1360,7 @@ void linkedLists () {
         result.list = (List){NULL, sizeof(char), printChar, CHARACTER, 0};
         break;
       case STRING:
-        result.list = (List){NULL, sizeof(char *), printString, STRING, 0};
+        result.list = (List){NULL, sizeof(char *), printStr, STRING, 0};
         break;
       default:
         result.list = (List){NULL, 0, NULL, -1, 0};

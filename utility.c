@@ -201,16 +201,6 @@ void clearInputBuffer() {
   while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void printInt(void *data) {
-  printf(" %d ", *(int *)data);
-}
-void printChar(void *data) {
-  printf(" %c ", *(char *)data);
-}
-void printString(void *data) {
-  printf(" %s ", (char *)data);
-}
-
 int chooseDataType(char dataStructure[]) {
   int cursorXpos, cursorYpos;
   int chosenOption;
@@ -299,4 +289,27 @@ void *scanData(char prompt[], DataType dataType) {
     }
   }
   return data;
+}
+void printInt(void *data) {
+  printf(" %d ", *(int *)data);
+}
+void printChar(void *data) {
+  printf(" %c ", *(char *)data);
+}
+void printStr(void *data) {
+  printf(" %s ", (char *)data);
+}
+void printDataType(char dataStructure[], DataType dataType) {
+  printf("Your %s data type: ", dataStructure);
+  switch (dataType) {
+    case INTEGER:
+      printf("Integer\n");
+      break;
+    case CHARACTER:
+      printf("Character\n");
+      break;
+    case STRING:
+      printf("String\n");
+      break;
+  }
 }
