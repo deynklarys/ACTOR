@@ -22,13 +22,30 @@ char *concatenate ();
 int compareStr ();
 
 int scanPosition(char *prompt) {
+  int scanPositionPosX, scanPositionPosY;
   int position;
-  printf("Enter the position: ");
+  printf("Enter the position %s: ", prompt);
+  getCursorPos(&scanPositionPosX, &scanPositionPosY);
   if (scanf("%d", &position) != 1) {
+    clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+    moveCursor(0, scanPositionPosY + 1);
     printf("Invalid input. Please enter a number.\n");
     clearInputBuffer();
+    clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
+    moveCursor(0, scanPositionPosY);
     return -1;
   }
+  if (position < 1 || position > strlen(string) + 1) {
+    clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+    moveCursor(0, scanPositionPosY + 1);
+    clearInputBuffer();
+    printf("Invalid position. Please enter a valid position.\n");
+    clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
+    moveCursor(0, scanPositionPosY);
+    return -1;
+  }
+  clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+  moveCursor(0, scanPositionPosY + 1);
   return position;
 }
 char scanChar(char *prompt) {
@@ -164,15 +181,10 @@ int main () {
 void findChar () {
   while (1) {
     position = scanPosition("to find");
-    indexPos = position - 1;
     if (position == -1) {
       continue;
     }
-    if (indexPos < 0 || indexPos >= strlen(string)) {
-      printf("Invalid position. Please enter a valid position.\n");
-      continue;
-    }
-    printf("Character at position %d: %c\n", position, string[indexPos]);
+    printf("Character at position %d: %c\n", position, string[position - 1]);
     break;
   }
 }
