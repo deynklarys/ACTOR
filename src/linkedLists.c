@@ -45,13 +45,13 @@ void mergeLists(List *list);
 void sortList(List *list);
 
 void printInt(void *data) {
-  printf("%d -> ", *(int *)data);
+  printf(" %d ", *(int *)data);
 }
 void printChar(void *data) {
-  printf("%c -> ", *(char *)data);
+  printf(" %c ", *(char *)data);
 }
 void printString(void *data) {
-  printf("%s -> ", (char *)data);
+  printf(" %s ", (char *)data);
 }
 
 ListResult initializeLists () {
@@ -224,6 +224,7 @@ void traverseList(List *list) {
   while (current != NULL) {
     list->printFunc(current->data);
     current = current->next;
+    printf("->");
   }
   printf("NULL\n");
 }
@@ -566,7 +567,7 @@ void mergeLists(List *list1) {
   printf("Enter the number of nodes in the second list: ");
   scanf("%d", &nodes);
 
-  printf("Enter the second list. Press Enter after every data.\n");
+  printf("Enter the second list. Press Enter after every data.\n"); 
   while (nodes--) {
     data = scanData("Enter a data: ", list2.listDataType);
     Node *newNode = createNode(list2.dataSize);
