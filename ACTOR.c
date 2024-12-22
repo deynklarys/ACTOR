@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
-// #include "utility.h"
 
 // cd "c:\Academic-related_Programs\ACTOR\" ; if ($?) { gcc ACTOR.c -o ACTOR utility.c } ; if ($?) { .\ACTOR}
 
@@ -22,7 +21,6 @@ typedef enum {
 
 int cursorXpos, cursorYpos;
 
-// Screen handlers
 void welcomeScreen ();
 void dataStructures ();
   void linearDS();
@@ -276,7 +274,7 @@ int main () {
     /* Get the current position of the cursor after the prompt. This coordinate will be used to bring back the cursor at this position when the user inputs an invalid option and the option that they typed is cleared. */
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &mainOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer();
       printf("\n");
       displayCenterText("Invalid input. Please enter a number.\n");
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
@@ -308,7 +306,7 @@ int main () {
           Sleep(1000);
           break;
         default:
-          clearInputBuffer(); // Clear invalid input
+          clearInputBuffer();
           printf("\n");
           displayCenterText("Invalid input. Please enter a number.\n");
           clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
@@ -636,7 +634,7 @@ void nonLinearDS () {
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &nonLinearDSOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer(); 
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
@@ -653,7 +651,7 @@ void nonLinearDS () {
         promptExit();
         break;
       default:
-        clearInputBuffer(); // Clear invalid input
+        clearInputBuffer(); 
         printf("\n");
         displayCenterText("Invalid input. Please enter a number.\n");
         clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
@@ -688,7 +686,7 @@ void arrays () {
       if (scanf("%d", &chosenOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
-        clearInputBuffer(); // Clear invalid input
+        clearInputBuffer(); 
         printf("Invalid input. Please enter a number.\n");
         clearWord(cursorYpos, cursorXpos, SET_WIDTH);
         continue;
@@ -1004,7 +1002,7 @@ void arrays () {
           if (scanf("%d", &num) == 1) {
             array2.data.intArray[array2.size++] = num;
           } else {
-            clearInputBuffer(); // Clear invalid input
+            clearInputBuffer(); 
             break;
           }
         } while (getchar() != '\n' && array2.size < MAX_LENGTH_SIZE);
@@ -1014,7 +1012,7 @@ void arrays () {
           if (scanf(" %c", &ch) == 1) {
             array2.data.charArray[array2.size++] = ch;
           } else {
-            clearInputBuffer(); // Clear invalid input
+            clearInputBuffer(); 
             break;
           }
         } while (getchar() != '\n' && array2.size < MAX_LENGTH_SIZE);
@@ -1031,7 +1029,7 @@ void arrays () {
               break;
             }
           } else {
-            clearInputBuffer(); // Clear invalid input
+            clearInputBuffer(); 
             break;
           }
         } while (getchar() != '\n' && array2.size < MAX_LENGTH_SIZE);
@@ -1121,7 +1119,7 @@ void arrays () {
           if (scanf("%d", &num) == 1) {
             array->data.intArray[array->size++] = num;
           } else {
-            clearInputBuffer(); // Clear invalid input
+            clearInputBuffer(); 
             break;
           }
         } while (getchar() != '\n' && array->size < MAX_LENGTH_SIZE);
@@ -1131,7 +1129,7 @@ void arrays () {
           if (scanf(" %c", &ch) == 1) {
             array->data.charArray[array->size++] = ch;
           } else {
-            clearInputBuffer(); // Clear invalid input
+            clearInputBuffer(); 
             break;
           }
         } while (getchar() != '\n' && array->size < MAX_LENGTH_SIZE);
@@ -1148,7 +1146,7 @@ void arrays () {
               break;
             }
           } else {
-            clearInputBuffer(); // Clear invalid input
+            clearInputBuffer(); 
             break;
           }
         } while (getchar() != '\n' && array->size < MAX_LENGTH_SIZE);
@@ -2466,7 +2464,7 @@ void strings () {
       printf("Invalid input. Please enter a string.\n");
       return NULL;
     }
-    // Remove newline character if present
+    
     string[strcspn(string, "\n")] = '\0';
     return string;
   }
@@ -2521,7 +2519,7 @@ void linearDS () {
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &linearDSOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer(); 
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
@@ -2553,7 +2551,7 @@ void linearDS () {
         promptExit();
         break;
       default:
-        clearInputBuffer(); // Clear invalid input
+        clearInputBuffer(); 
         printf("\n");
         displayCenterText("Invalid input. Please enter a number.\n");
         clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
@@ -2571,7 +2569,7 @@ void dataStructures () {
     printMenu(dataStructuresMenu, dataStructuresMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &dataStructuresOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer(); 
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
@@ -2598,7 +2596,7 @@ void dataStructures () {
         promptExit();
         break;
       default:
-        clearInputBuffer(); // Clear invalid input
+        clearInputBuffer(); 
         printf("\n");
         displayCenterText("Invalid input. Please enter a number.\n");
         clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
@@ -2618,17 +2616,15 @@ void sorting() {
   printf("Enter elements (space-separated, press Enter to finish):\n");
 
   while (1) {
-      // Read an integer
       if (scanf("%d", &num) == 1) {
-          givenArray[arrSize++] = num;
+        givenArray[arrSize++] = num;
       } else {
-          break;
+        break;
       }
 
-      // Read the next character
       ch = getchar();
       if (ch == '\n') {
-          break;
+        break;
       }
   }
   
@@ -2808,7 +2804,7 @@ void algorithms() {
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
     if (scanf("%d", &algorithmsOption) != 1) {
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer(); 
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
@@ -2839,7 +2835,7 @@ void algorithms() {
           break;
         default:
           moveCursor(0, cursorYpos + 6);
-          clearInputBuffer(); // Clear invalid input
+          clearInputBuffer(); 
           displayCenterText("Invalid input. Please enter a number.\n");
           clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
           break; 
@@ -3150,7 +3146,7 @@ void sort(int array[], int size, int sortType) {
       heapSort(array, size);
       break;
     default:
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer(); 
       printf("\n");
       displayCenterText("Invalid input. Please enter a number.\n");
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
@@ -3164,22 +3160,17 @@ int binarySearch(int array[], int key, int low, int high) {
   if (high >= low) {
     int mid = low + (high - low) / 2;
 
-    // If found at mid, then return it
     if (key == array[mid])
       return mid;
 
-    // Search the right half
     if (key > array[mid])
       return binarySearch(array, key, mid + 1, high);
 
-    // Search the left half
     return binarySearch(array, key, low, mid - 1);
   }
   return -1;
 }
 int linearSearch(int array[], int n, int x) {
-  
-  // Going through array sequencially
   for (int i = 0; i < n; i++)
     if (array[i] == x)
       return i;
@@ -3398,7 +3389,7 @@ int chooseDataType(char dataStructure[]) {
     if (scanf("%d", &chosenOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
-      clearInputBuffer(); // Clear invalid input
+      clearInputBuffer(); 
       printf("Invalid input. Please enter a number.\n");
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
       moveCursor(menuCursorXpos, menuCursorYpos);
@@ -3463,7 +3454,7 @@ void *scanData(char prompt[], DataType dataType) {
         break;
       }
       case STRING: {
-        clearInputBuffer(); // Clear any leftover input
+        clearInputBuffer();
         char buffer[MAX_LENGTH_SIZE];
         if (fgets(buffer, MAX_LENGTH_SIZE, stdin) == NULL) {
           clearLines(scanDataCursorYpos + 1, scanDataCursorYpos + 1);
@@ -3473,7 +3464,6 @@ void *scanData(char prompt[], DataType dataType) {
           moveCursor(0, scanDataCursorYpos);
           continue;
         }
-        // Remove newline character if present
         buffer[strcspn(buffer, "\n")] = '\0';
         char *strData = (char *)malloc(strlen(buffer) + 1);
         if (strData == NULL) {
