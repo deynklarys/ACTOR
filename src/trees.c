@@ -6,6 +6,7 @@
 #include "../utility.h"
 
 int cursorXpos, cursorYpos;
+void *data;
 
 typedef struct TreeNode {
   void *data;
@@ -26,11 +27,95 @@ typedef struct {
   int chosenDataType;
 } TreeResult;
 
+TreeResult initializeTree();
+TreeNode *createNode(size_t dataSize);
+TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize);
+TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize);
+TreeNode *minValueNode(TreeNode *node);
+void inorderTraversal(TreeNode *root, void (*printFunc)(void *));
+void preorderTraversal(TreeNode *root, void (*printFunc)(void *));
+void postorderTraversal(TreeNode *root, void (*printFunc)(void *));
+void breadthFirstTraversal(TreeNode *root, void (*printFunc)(void *));
+void traverseTree(TreeNode *root, void (*printFunc)(void *));
+
+int main() {
+  programHeader("Trees");
+
+  Tree tree;
+
+  while (1) {
+    system("cls");
+    TreeResult treeResult = initializeTree();
+    tree = treeResult.tree;
+    tree.treeDataType = treeResult.chosenDataType;
+    if (treeResult.chosenDataType == -1) {
+      system("cls");
+      return 0;
+    }
+
+    char *treesMenu[] = {
+      "Insert a node",
+      "Delete a node",
+      "Traverse tree",
+      "Exit"
+    };
+    int treesMenuSize = sizeof(treesMenu) / sizeof(treesMenu[0]);
+    
+    int treeMenuOption;
+
+    system("cls");
+    do {
+      programHeader("Trees Operations");
+      printDataType("tree", tree.treeDataType);
+      printMenu(treesMenu, treesMenuSize);
+      getCursorPos(&cursorXpos, &cursorYpos);
+      if (scanf("%d", &treeMenuOption) != 1) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
+      }
+
+      clearLines(cursorYpos + 1, 23);
+      moveCursor(0, cursorYpos + 2);
+
+      switch (treeMenuOption) {
+        case 1:
+          data = scanData("Enter data to insert: ", tree.treeDataType);
+          tree.root = insertNode(tree.root, data, tree.dataSize);
+          tree.treeSize++;
+          break;
+        case 2:
+          data = scanData("Enter data to delete: ", tree.treeDataType);
+          tree.root = deleteNode(tree.root, data, tree.dataSize);
+          tree.treeSize--;
+          break;
+        case 3:
+          system("cls");
+          traverseTree(tree.root, tree.printFunc);
+          system("cls");
+          break;
+        case 4:
+          promptExit();
+          break;
+        default:
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
+          break;
+      }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    } while (treeMenuOption != treesMenuSize);
+  }
+
+  return 0;
+}
+
 TreeResult initializeTree() {
   char *message[] = {
-    "Trees are a type of non-linear data structure that consists of nodes connected by edges. The topmost node of the tree is called the root, and the nodes below it are called child nodes. Trees are used to represent hierarchical data, such as file systems, organization charts, and more.",
-    "There are different types of trees, such as binary trees, binary search trees, AVL trees, and more. Each type of tree has its own set of rules and properties.",
-    "Imagine a tree in your backyard. It has a trunk, branches, and leaves. In computer science, a tree is a way to organize information that looks a bit like a real tree turned upside down. The root is its trunk, nodes are the branches and leaves where each node holds a data, and edges are the connection between nodes like branches.",
+    "Trees are a type of non-linear data structure that consists of nodes connected by edges. Trees are used to represent hierarchical data, such as file systems, organization charts, and more.\n",
+    "Imagine a tree in your backyard. It has a trunk, branches, and leaves. In computer science, a tree looks a bit like a real tree turned upside down. The root is its trunk, nodes are the branches and leaves where each node holds a data, and edges are the connection between nodes like branches.\n",
     "In this program, you can create a binary tree and perform various operations on it.\n",
   };
   int messageSize = sizeof(message) / sizeof(message[0]);
@@ -53,6 +138,9 @@ TreeResult initializeTree() {
     case STRING:
       result.tree = (Tree){NULL, sizeof(char *), printStr, STRING, 0};
       break;
+    default:
+      result.tree = (Tree){NULL, 0, NULL, -1, 0};
+      break;
   }
   return result;
 }
@@ -63,11 +151,16 @@ TreeNode *createNode(size_t dataSize) {
     fprintf(stderr, "Memory allocation failed\n");
     exit(EXIT_FAILURE);
   }
-  newNode->data = malloc(dataSize);
-  if (newNode->data == NULL) {
-    fprintf(stderr, "Memory allocation failed\n");
-    free(newNode);
-    exit(EXIT_FAILURE);
+  if (dataSize == sizeof(char *)) {
+    newNode->data = malloc(strlen((char *)data) + 1);
+    strcpy((char *)newNode->data, (char *)data);
+  } else {
+    newNode->data = malloc(dataSize);
+    if (newNode->data == NULL) {
+      fprintf(stderr, "Memory allocation failed\n");
+      free(newNode);
+      exit(EXIT_FAILURE);
+    }
   }
   newNode->left = NULL;
   newNode->right = NULL;
@@ -164,7 +257,6 @@ void breadthFirstTraversal(TreeNode *root, void (*printFunc)(void *)) {
 }
 
 void traverseTree(TreeNode *root, void (*printFunc)(void *)) {
-  programHeader("Tree Traversal");
   char *traverseMenu[] = {
     "Depth-first traversal: In-order traversal",
     "Depth-first traversal: Pre-order traversal",
@@ -177,7 +269,9 @@ void traverseTree(TreeNode *root, void (*printFunc)(void *)) {
   int traverseMenuOption;
 
   do{
+    programHeader("Tree Traversal");
     printMenu(traverseMenu, traverseMenuSize);
+    
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &traverseMenuOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
@@ -188,7 +282,7 @@ void traverseTree(TreeNode *root, void (*printFunc)(void *)) {
       continue;
     }
 
-    clearLines(cursorYpos + 1, 24);
+    clearLines(cursorYpos + 1, 23);
     moveCursor(0, cursorYpos + 2);
 
     switch (traverseMenuOption) {
@@ -216,79 +310,7 @@ void traverseTree(TreeNode *root, void (*printFunc)(void *)) {
         printf("Invalid choice. Please choose a valid option.\n");
         break;
     }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (traverseMenuOption != traverseMenuSize);
   
-}
-
-int main() {
-  programHeader("Trees");
-
-  Tree tree;
-
-  system("cls");
-  while (1) {
-    TreeResult treeResult = initializeTree();
-    tree = treeResult.tree;
-    tree.treeDataType = treeResult.chosenDataType;
-    if (treeResult.chosenDataType == -1) {
-      system("cls");
-      return 0;
-    }
-
-    char *treesMenu[] = {
-      "Insert a node",
-      "Delete a node",
-      "Traverse tree",
-      "Exit"
-    };
-    int treesMenuSize = sizeof(treesMenu) / sizeof(treesMenu[0]);
-    
-    int treeMenuOption;
-
-    do {
-      programHeader("Trees Operations");
-      printDataType("tree", tree.treeDataType);
-      printMenu(treesMenu, treesMenuSize);
-      getCursorPos(&cursorXpos, &cursorYpos);
-      if (scanf("%d", &treeMenuOption) != 1) {
-        clearLines(cursorYpos + 1, cursorYpos + 1);
-        moveCursor(0, cursorYpos + 1);
-        clearInputBuffer();
-        printf("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-        continue;
-      }
-
-      clearLines(cursorYpos + 1, 24);
-      moveCursor(0, cursorYpos + 2);
-
-      switch (treeMenuOption) {
-        case 1:
-          void *data = scanData("Enter data to insert: ", tree.dataSize);
-          tree.root = insertNode(tree.root, data, tree.dataSize);
-          tree.treeSize++;
-          break;
-        case 2:
-          void *data = scanData("Enter data to delete: ", tree.dataSize);
-          tree.root = deleteNode(tree.root, data, tree.dataSize);
-          tree.treeSize--;
-          break;
-        case 3:
-          system("cls");
-          traverseTree(tree.root, tree.printFunc);
-          system("cls");
-          break;
-        case 4:
-          promptExit();
-          break;
-        default:
-          moveCursor(0, cursorYpos + 1);
-          printf("Invalid choice. Please choose a valid option.\n");
-          break;
-      }
-      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    } while (treeMenuOption != treesMenuSize);
-  }
-
-  return 0;
 }
