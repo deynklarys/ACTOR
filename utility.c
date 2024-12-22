@@ -245,48 +245,66 @@ int chooseDataType(char dataStructure[]) {
 }
 void *scanData(char prompt[], DataType dataType) {
   void *data = NULL;
-  printf("%s", prompt);
-  switch (dataType) {
-    case INTEGER: {
-      int *intData = (int *)malloc(sizeof(int));
-      if (scanf("%d", intData) != 1) {
-        printf("Invalid input. Please enter an integer.\n");
-        free(intData);
-        clearInputBuffer();
-        return NULL;
+  int scanDataCursorXpos, scanDataCursorYpos;
+  while (data == NULL) {
+    printf("%s", prompt);
+    getCursorPos(&scanDataCursorXpos, &scanDataCursorYpos);
+    switch (dataType) {
+      case INTEGER: {
+        int *intData = (int *)malloc(sizeof(int));
+        if (scanf("%d", intData) != 1) {
+          clearLines(scanDataCursorYpos + 1, scanDataCursorYpos + 1);
+          moveCursor(0, scanDataCursorYpos + 1);
+          clearInputBuffer();
+          printf("Invalid input. Please enter an integer.\n");
+          free(intData);
+          clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+          moveCursor(0, scanDataCursorYpos);
+          continue;
+        }
+        data = intData;
+        break;
       }
-      data = intData;
-      break;
+      case CHARACTER: {
+        char *charData = (char *)malloc(sizeof(char));
+        if (scanf(" %c", charData) != 1) {
+          clearLines(scanDataCursorYpos + 1, scanDataCursorYpos + 1);
+          moveCursor(0, scanDataCursorYpos + 1);
+          clearInputBuffer();
+          printf("Invalid input. Please enter a character.\n");
+          free(charData);
+          clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+          moveCursor(0, scanDataCursorYpos);
+          continue;
+        }
+        data = charData;
+        break;
+      }
+      case STRING: {
+        clearInputBuffer(); // Clear any leftover input
+        char buffer[STRING_MAX_LENGTH];
+        if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
+          clearLines(scanDataCursorYpos + 1, scanDataCursorYpos + 1);
+          moveCursor(0, scanDataCursorYpos + 1);
+          printf("Invalid input. Please enter a string.\n");
+          clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+          moveCursor(0, scanDataCursorYpos);
+          continue;
+        }
+        // Remove newline character if present
+        buffer[strcspn(buffer, "\n")] = '\0';
+        char *strData = (char *)malloc(strlen(buffer) + 1);
+        if (strData == NULL) {
+          fprintf(stderr, "Memory allocation failed\n");
+          continue;
+        }
+        strcpy(strData, buffer);
+        data = strData;
+        break;
+      }
     }
-    case CHARACTER: {
-      char *charData = (char *)malloc(sizeof(char));
-      if (scanf(" %c", charData) != 1) {
-        printf("Invalid input. Please enter a character.\n");
-        free(charData);
-        clearInputBuffer();
-        return NULL;
-      }
-      data = charData;
-      break;
-    }
-    case STRING: {
-      clearInputBuffer(); // Clear any leftover input
-      char buffer[STRING_MAX_LENGTH];
-      if (fgets(buffer, STRING_MAX_LENGTH, stdin) == NULL) {
-        printf("Invalid input. Please enter a string.\n");
-        return NULL;
-      }
-      // Remove newline character if present
-      buffer[strcspn(buffer, "\n")] = '\0';
-      char *strData = (char *)malloc(strlen(buffer) + 1);
-      if (strData == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        return NULL;
-      }
-      strcpy(strData, buffer);
-      data = strData;
-      break;
-    }
+    clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+    moveCursor(0, scanDataCursorYpos);
   }
   return data;
 }
