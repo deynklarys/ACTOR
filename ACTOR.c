@@ -155,7 +155,7 @@ void dataStructures ();
         int chosenDataType;
       } TreeResult;
       TreeResult initializeTree();
-      TreeNode *createNode(size_t dataSize);
+      TreeNode *createTreeNode(size_t dataSize);
       TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize);
       TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize);
       TreeNode *minValueNode(TreeNode *node);
@@ -432,7 +432,7 @@ void trees () {
     }
     return result;
   }
-  TreeNode *createNode(size_t dataSize) {
+  TreeNode *createTreeNode(size_t dataSize) {
     TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
     if (newNode == NULL) {
       fprintf(stderr, "Memory allocation failed\n");
@@ -455,7 +455,7 @@ void trees () {
   }
   TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize) {
     if (root == NULL) {
-      TreeNode *newNode = createNode(dataSize);
+      TreeNode *newNode = createTreeNode(dataSize);
       memcpy(newNode->data, data, dataSize);
       return newNode;
     }
@@ -2820,7 +2820,10 @@ void algorithms() {
 }
 
 void about() {
-  char *message[] = {"Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course. ACTOR is a project in Data Structures and Algorithms during the Academic Year 2024-2025.\n"};
+  char *message[] = {
+    "Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course.\n", 
+    "ACTOR is a project in Data Structures and Algorithms during the Academic Year 2024-2025. This project is solely built by Deanne Clarice Bea, a second-year Computer Science student at the Bicol University.\n"
+    };
   int messageSize = sizeof(message)/sizeof(message[0]);
 
   printWithinWidthCentered(message, messageSize, "About ACTOR");
