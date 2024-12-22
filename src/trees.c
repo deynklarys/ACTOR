@@ -144,7 +144,6 @@ TreeResult initializeTree() {
   }
   return result;
 }
-
 TreeNode *createNode(size_t dataSize) {
   TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
   if (newNode == NULL) {
@@ -166,7 +165,6 @@ TreeNode *createNode(size_t dataSize) {
   newNode->right = NULL;
   return newNode;
 }
-
 TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize) {
   if (root == NULL) {
     TreeNode *newNode = createNode(dataSize);
@@ -255,7 +253,6 @@ void breadthFirstTraversal(TreeNode *root, void (*printFunc)(void *)) {
     }
   }
 }
-
 void traverseTree(TreeNode *root, void (*printFunc)(void *)) {
   char *traverseMenu[] = {
     "Depth-first traversal: In-order traversal",
@@ -312,5 +309,5 @@ void traverseTree(TreeNode *root, void (*printFunc)(void *)) {
     }
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (traverseMenuOption != traverseMenuSize);
-  
 }
+
