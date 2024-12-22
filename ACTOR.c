@@ -14,6 +14,19 @@
 #define SET_HEIGHT 24
 
 typedef enum {
+  DATA_STRUCTURES_AND_ALGORITHMS,
+  DATA_STRUCTURES,
+  ALGORITHMS,
+  ARRAYS,
+  LINKED_LISTS,
+  STACKS,
+  QUEUES,
+  TREES,
+  SORTING_ALGORITHMS,
+  SEARCHING_ALGORITHMS
+} Topic;
+
+typedef enum {
   INTEGER = 1,
   CHARACTER = 2,
   STRING = 3
@@ -240,6 +253,7 @@ void printInt(void *data);
 void printChar(void *data);
 void printStr(void *data);
 void printDataType(char dataStructure[], DataType dataType);
+void displayTopicSummary(Topic topic);
 
 int main () {
   /*
@@ -267,7 +281,7 @@ int main () {
 
   int mainOption;
   do {
-    programHeader("Data Structures and Algorithms");
+    displayTopicSummary(DATA_STRUCTURES_AND_ALGORITHMS);
 
     printf("What do you want to learn about?\n");
     printMenu(mainMenu, mainMenuSize);
@@ -1091,14 +1105,7 @@ void arrays () {
     bubbleSortArray(array);
   }
   int initializeArray (Array *array) {
-    char *message[] = {"Arrays are a collection of elements of the same types of  data.", "Examples:",
-    "\t1, 2, 3, 4, 5 is an array of integers or numbers",
-    "\ta, b, c, d, e is an array of characters or letters",
-    "\tapple, banana, mango, orange is an array of strings or words",
-    "Each number, letter, or word in an array is called an element."};
-    int messageSize = sizeof(message)/sizeof(message[0]);
-
-    printWithinWidth(message, messageSize, "Arrays");
+    displayTopicSummary(ARRAYS);
 
     array->dataType = chooseDataType("array");
     if (array->dataType == -1) {
@@ -1735,15 +1742,7 @@ void linkedLists () {
     printf("\nList sorted.\n\n");
   }
   ListResult initializeLists () {
-    char *message[] = {"Lists are a collection of elements of the same types of  data.", "Examples:",
-      "\t1, 2, 3, 4, 5 is a list of numbers or integers",
-      "\ta, b, c, d, e is a list of characters",
-      "\t\"apple\", \"banana\", \"cherry\" is a list of strings",
-      "If you have encountered arrays, you would realize that arrays and lists are basically the same. The difference is how they are stored in the memory.",
-      "Each element in a list is called a node.\n"};
-    int messageSize = sizeof(message)/sizeof(message[0]);
-
-    printWithinWidth(message, messageSize, "Lists");
+    displayTopicSummary(LINKED_LISTS);
 
     ListResult result;
     result.chosenDataType = chooseDataType("list");
@@ -1843,10 +1842,7 @@ void stacks () {
   }
 }
   StackResult initializeStacks() {
-    char *message[] = {"Stacks are a type of data structure that follows the Last In First Out (LIFO) or the First In Last Out (FILO) principle.", "This means that the last element added to the stack will be the first one to be removed. Like a stack of books!\n"};
-    int messageSize = sizeof(message) / sizeof(message[0]);
-
-    printWithinWidth(message, messageSize, "Stacks");
+    displayTopicSummary(STACKS);
 
     StackResult result;
     result.chosenDataType = chooseDataType("stack");
@@ -2023,10 +2019,7 @@ void queues () {
   }
 }
   QueueResult initializeQueue() {
-    char *message[] = {"Queues are a type of data structure that follows the First In First Out (FIFO) principle.", "This means that the first element added to the queue will be the first one to be removed. Like a queue of people!\n"};
-    int messageSize = sizeof(message) / sizeof(message[0]);
-
-    printWithinWidth(message, messageSize, "Queues");
+    displayTopicSummary(QUEUES);
 
     QueueResult result;
     result.chosenDataType = chooseDataType("queue");
@@ -2565,7 +2558,8 @@ void dataStructures () {
   int dataStructuresMenuSize = sizeof(dataStructuresMenu) / sizeof(dataStructuresMenu[0]);
 
   do {
-    programHeader("Data Structures");
+    displayTopicSummary(DATA_STRUCTURES);
+
     printMenu(dataStructuresMenu, dataStructuresMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &dataStructuresOption) != 1) {
@@ -2606,7 +2600,7 @@ void dataStructures () {
 }
 
 void sorting() {
-  programHeader("Sorting Algorithms");
+  displayTopicSummary(SORTING_ALGORITHMS);
 
   int arrSize = 0;
   int givenArray[MAX_LENGTH_SIZE];
@@ -2690,7 +2684,8 @@ void sorting() {
   } while (sortType != sortMenuSize);
 }
 void searching() {
-  programHeader("Searching Algorithms");
+  displayTopicSummary(SEARCHING_ALGORITHMS);
+  
   int arrSize = 0;
   int givenArray[MAX_LENGTH_SIZE];
   int num;
@@ -2788,7 +2783,7 @@ void algorithms() {
   int algorithmsOption;
 
   do {
-    programHeader("Algorithms");
+    displayTopicSummary(ALGORITHMS);
 
     printf("What do you want to learn about?\n");  
     printMenu(algorithmsMenu, algoMenuSize);
@@ -3503,3 +3498,106 @@ void printDataType(char dataStructure[], DataType dataType) {
       break;
   }
 }
+void displayTopicSummary(Topic topic) {
+  char *dataStructsAndAlgoText[] = {
+    "Data Structures and Algorithms (DSA) are fundamental concepts in computer science that help in organizing and processing data efficiently.\n", 
+    "Understanding it is like having a toolbox of different containers and recipes to solve problems efficiently.\n",
+    "Data Structures are the different ways to store and organize data, while Algorithms are the step-by-step instructions to perform a specific task.\n"};
+  int dataStructsAndAlgoTextSize = sizeof(dataStructsAndAlgoText) / sizeof(dataStructsAndAlgoText[0]);
+
+  char *dataStructsText[] = {
+    "Data Structures are the different ways to store and organize data.\n", 
+    "It is like choosing the right container to store your food - a fridge for perishables, a pantry for dry goods, and a spice rack for seasonings!\n"};
+  int dataStructsTextSize = sizeof(dataStructsText) / sizeof(dataStructsText[0]);
+
+  char *algorithmsText[] = {
+    "Algorithms are step-by-step instructions to perform a specific task.\n", 
+    "It is like following a recipe to bake a cake - you need to follow the instructions in the right order to get the desired outcome!\n"};
+  int algorithmsTextSize = sizeof(algorithmsText) / sizeof(algorithmsText[0]);
+
+  char *arraysText[] = {
+    "An array is a collection of elements stored in contiguous memory locations.", 
+    "Example:",
+    "\t1, 2, 3, 4, 5 is an array of integers",
+    "\tA, B, C, D, E is an array of characters",
+    "\tapple, banana, cherry is an array of strings\n",
+
+    "Imagine a long row of lockers, each with a number on it. You can put one toy in each locker and easily find it by its number!\n"};
+  int arraysTextSize = sizeof(arraysText) / sizeof(arraysText[0]);
+
+  char *linkedListsText[] = {
+    "A linked list is a linear data structure where each element is a separate object called a node.\n",
+    "Example:", 
+    "\t1 -> 2 -> 3 -> 4 -> 5 is a linked list of integers", 
+    "\tA -> B -> C -> D -> E is a linked list of characters", 
+    "\tapple -> banana -> cherry is a linked list of strings\n",
+    "Think of a treasure hunt where each clue leads you to the next clue. Each clue (node) knows where the next clue is!\n"};
+  int linkedListsTextSize = sizeof(linkedListsText) / sizeof(linkedListsText[0]);
+
+  char *stacksText[] = {
+    "A stack is a linear data structure that follows the Last In First Out (LIFO) principle.\n", "Example:",
+    "\tPush 1, 2, 3, 4, 5 onto the stack",
+    "\tPop 5, 4, 3, 2, 1 from the stack\n", 
+    "It is like a stack of plates where the last plate placed is the first to be washed!\n"};
+  int stacksTextSize = sizeof(stacksText) / sizeof(stacksText[0]);
+
+  char *queuesText[] = {
+    "A queue is a linear data structure that follows the First In First Out (FIFO) principle.\n", "Example:",
+    "\tEnqueue 1, 2, 3, 4, 5 into the queue",
+    "\tDequeue 1, 2, 3, 4, 5 from the queue\n", 
+    "It is like a queue of people waiting in line where the first person to arrive is the first to be served!\n"};
+  int queuesTextSize = sizeof(queuesText) / sizeof(queuesText[0]);
+
+  char *treesText[] = {
+    "A tree is a non-linear data structure that consists of nodes connected by edges.\n",
+    "Example:",
+    "\t1 is the root node, 2 and 3 are its children, 4 and 5 are children of 2, and 6 and 7 are children of 3'n", 
+    "Think of a family tree, where you start with your grandparents at the top and branch out to your parents, aunts, uncles, and then to you and your cousins.\n"};
+  int treesTextSize = sizeof(treesText) / sizeof(treesText[0]);
+
+  char *sortingAlgorithmsText[] = {
+    "Sorting algorithms are used to arrange elements in a specific order.\n", 
+    "It is like organizing a messy bookshelf so that you can easily find the book you are looking for!\n"};
+  int sortingAlgorithmsTextSize = sizeof(sortingAlgorithmsText) / sizeof(sortingAlgorithmsText[0]);
+
+  char *searchingAlgorithmsText[] = {
+    "Searching algorithms are used to find the location of an element in a collection of elements.\n", 
+    "It is like looking for a specific book in a library without knowing its exact location!\n"};
+  int searchingAlgorithmsTextSize = sizeof(searchingAlgorithmsText) / sizeof(searchingAlgorithmsText[0]);
+  
+  switch (topic) {
+      case DATA_STRUCTURES_AND_ALGORITHMS:
+          printWithinWidth(dataStructsAndAlgoText, dataStructsAndAlgoTextSize, "Data Structures and Algorithms");
+          break;
+      case DATA_STRUCTURES:
+          printWithinWidth(dataStructsText, dataStructsTextSize, "Data Structures");
+          break;
+      case ALGORITHMS:
+          printWithinWidth(algorithmsText, algorithmsTextSize, "Algorithms");
+          break;
+      case ARRAYS:
+          printWithinWidth(arraysText, arraysTextSize, "Arrays");
+          break;
+      case LINKED_LISTS:
+          printWithinWidth(linkedListsText, linkedListsTextSize, "Linked Lists");
+          break;
+      case STACKS:
+          printWithinWidth(stacksText, stacksTextSize, "Stacks");
+          break;
+      case QUEUES:
+          printWithinWidth(queuesText, queuesTextSize, "Queues");
+          break;
+      case TREES:
+          printWithinWidth(treesText, treesTextSize, "Trees");
+          break;
+      case SORTING_ALGORITHMS:
+          printWithinWidth(sortingAlgorithmsText, sortingAlgorithmsTextSize, "Sorting Algorithms");
+          break;
+      case SEARCHING_ALGORITHMS:
+          printWithinWidth(searchingAlgorithmsText, searchingAlgorithmsTextSize, "Searching Algorithms");
+          break;
+      default:
+          printf("Invalid topic.\n");
+  }
+}
+
