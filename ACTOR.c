@@ -20,7 +20,6 @@ typedef enum {
   STRING = 3
 } DataType;
 
-int chosenOption;
 int cursorXpos, cursorYpos;
 
 // Screen handlers
@@ -2790,6 +2789,8 @@ void algorithms() {
   char *algorithmsMenu[] = {"Searching", "Sorting", "Exit"};
   int algoMenuSize = sizeof(algorithmsMenu) / sizeof(algorithmsMenu[0]);
 
+  int algorithmsOption;
+
   do {
     programHeader("Algorithms");
 
@@ -2806,19 +2807,19 @@ void algorithms() {
 
     // moves the cursor back to the input statement
     moveCursor(cursorXpos, cursorYpos);
-    if (scanf("%d", &chosenOption) != 1) {
+    if (scanf("%d", &algorithmsOption) != 1) {
       clearInputBuffer(); // Clear invalid input
       printf("Invalid input. Please enter a number.\n");
       continue;
     }
 
-    if (chosenOption == algoMenuSize) {
+    if (algorithmsOption == algoMenuSize) {
       moveCursor(0, cursorYpos + 3);
       promptExit();
       break;
     }
 
-      switch (chosenOption) {
+      switch (algorithmsOption) {
         case 1:
           system("cls");
           searching();
@@ -2844,7 +2845,7 @@ void algorithms() {
           break; 
       }
 
-  } while (chosenOption != algoMenuSize);
+  } while (algorithmsOption != algoMenuSize);
 }
 
 void about() {
