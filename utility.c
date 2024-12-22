@@ -12,22 +12,8 @@
 #define SET_WIDTH 80
 #define SET_HEIGHT 24
 
-int terminalWidth = 0;
-int terminalHeight = 0;
-char anyChar;
-int exitXpos, exitYpos;
-
-
 // Utility function definitions
-void getTerminalSize() {
-  /* Function to get the terminal size. */
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	terminalWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	terminalHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;  
 
-  printf("terminalWidth: %d \nterminalHeight: %d \n", terminalWidth, terminalHeight);
-}
 // Prints without the border. It can be later modified to include borderlines if I'm already certain that the application has borderlines throughout. 
 void displayCenterText(char *message) {
   int length = strlen(message);
@@ -94,6 +80,7 @@ void clearPrompts(char *header) {
   programHeader(header);
 }
 void promptExit(){
+  int exitXpos, exitYpos, anyChar;
     getCursorPos(&exitXpos, &exitYpos);
   do {
     moveCursor(0, exitYpos + 3);
