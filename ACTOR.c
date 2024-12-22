@@ -2,17 +2,23 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
-#include "utility.h"
+// #include "utility.h"
 
 // cd "c:\Academic-related_Programs\ACTOR\" ; if ($?) { gcc ACTOR.c -o ACTOR utility.c } ; if ($?) { .\ACTOR}
 
+#define MAX_LENGTH_SIZE 50
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
 #define SUBSTRINGS_MAX_LENGTH 500
-#define STRING_MAX_LENGTH 50
 #define true 1
 #define false 0
 #define SET_WIDTH 80
 #define SET_HEIGHT 24
+
+typedef enum {
+  INTEGER = 1,
+  CHARACTER = 2,
+  STRING = 3
+} DataType;
 
 int chosenOption;
 int cursorXpos, cursorYpos;
@@ -22,15 +28,14 @@ void welcomeScreen ();
 void dataStructures ();
   void linearDS();
     void arrays();
-      #define ARRAY_MAX_LENGTH 50
       #define INS 3
       #define DEL 4
       typedef struct {
         int dataType;
         union {
-          int intArray[ARRAY_MAX_LENGTH];
-          char charArray[ARRAY_MAX_LENGTH];
-          char *strArray[ARRAY_MAX_LENGTH];
+          int intArray[MAX_LENGTH_SIZE];
+          char charArray[MAX_LENGTH_SIZE];
+          char *strArray[MAX_LENGTH_SIZE];
         } data;
         int size;
       } Array;
@@ -38,7 +43,7 @@ void dataStructures ();
         union {
           int intKey;
           char charKey;
-          char strKey[STRING_MAX_LENGTH];
+          char strKey[MAX_LENGTH_SIZE];
         } dataKey;
       } Key;
       void traverseArray(Array *array);
@@ -88,7 +93,6 @@ void dataStructures ();
       void sortList(List *list);
       ListResult initializeLists ();
     void stacks();
-      #define STACK_MAX_SIZE 50
       typedef struct StackNode {
         void *data;
         struct StackNode *next;
@@ -112,7 +116,6 @@ void dataStructures ();
       void isEmptyStack(Stack *stack);
       StackResult initializeStacks();
     void queues();
-      #define QUEUE_MAX_SIZE 50
       typedef struct QueueNode {
         void *data;
         struct QueueNode *next;
@@ -166,7 +169,7 @@ void dataStructures ();
       void traverseTree(TreeNode *root, void (*printFunc)(void *));
   void strings();
     int position, length;
-    char string[STRING_MAX_LENGTH], stringToFind[STRING_MAX_LENGTH], stringToInsert[STRING_MAX_LENGTH], string2[STRING_MAX_LENGTH],charToBeInserted;
+    char string[MAX_LENGTH_SIZE], stringToFind[MAX_LENGTH_SIZE], stringToInsert[MAX_LENGTH_SIZE], string2[MAX_LENGTH_SIZE],charToBeInserted;
     void findChar ();
     char *replaceChar ();
     char *insertChar ();
@@ -215,6 +218,31 @@ void sort(int array[], int size, int sortType);
 int binarySearch(int array[], int key, int low, int high);
 int linearSearch(int array[], int n, int x);
 void search(int array[], int size, int key, int searchType);
+
+// Utility functions 
+void getTerminalSize();
+void displayCenterText(char *message);
+void hideCursor();
+void showCursor();
+void getCursorPos(int *Xpos, int *Ypos);
+void moveCursor(int Xpos, int Ypos);
+void clearLines(int startLine, int endLine);
+void clearWord(int Ypos, int startX, int endX);
+void clearPrompts(char *header);
+void promptExit();
+void programHeader(char *header);
+void printMenu(char *arrString[], int size);
+void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
+void printWithinWidthCentered(char *message[], int messageSize, char *header);
+void printWithinWidth(char *message[], int messageSize, char *header);
+void functionNotDone(char *header);
+void clearInputBuffer(); 
+int chooseDataType(char dataStructure[]);
+void *scanData(char prompt[], DataType dataType);
+void printInt(void *data);
+void printChar(void *data);
+void printStr(void *data);
+void printDataType(char dataStructure[], DataType dataType);
 
 int main () {
   /*
@@ -801,7 +829,7 @@ void arrays () {
     }
   }
   void insertArrayKey(Array *array, Key *key, int position) {
-    if (position < 0 || position > array->size || array->size >= ARRAY_MAX_LENGTH) {
+    if (position < 0 || position > array->size || array->size >= MAX_LENGTH_SIZE) {
       printf("Invalid position or array is full.\n");
       return;
     }
@@ -920,7 +948,7 @@ void arrays () {
       return;
     }
 
-    if (array1->size + array2->size > ARRAY_MAX_LENGTH) {
+    if (array1->size + array2->size > MAX_LENGTH_SIZE) {
       printf("Merged array exceeds maximum length.\n");
       return;
     }
@@ -980,7 +1008,7 @@ void arrays () {
             clearInputBuffer(); // Clear invalid input
             break;
           }
-        } while (getchar() != '\n' && array2.size < ARRAY_MAX_LENGTH);
+        } while (getchar() != '\n' && array2.size < MAX_LENGTH_SIZE);
         break;
       case CHARACTER:
         do {
@@ -990,7 +1018,7 @@ void arrays () {
             clearInputBuffer(); // Clear invalid input
             break;
           }
-        } while (getchar() != '\n' && array2.size < ARRAY_MAX_LENGTH);
+        } while (getchar() != '\n' && array2.size < MAX_LENGTH_SIZE);
         break;
       case STRING:
         do {
@@ -1007,7 +1035,7 @@ void arrays () {
             clearInputBuffer(); // Clear invalid input
             break;
           }
-        } while (getchar() != '\n' && array2.size < ARRAY_MAX_LENGTH);
+        } while (getchar() != '\n' && array2.size < MAX_LENGTH_SIZE);
         break;
     }  
     mergeTwoArrays(array1, &array2);
@@ -1097,7 +1125,7 @@ void arrays () {
             clearInputBuffer(); // Clear invalid input
             break;
           }
-        } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
+        } while (getchar() != '\n' && array->size < MAX_LENGTH_SIZE);
         break;
       case CHARACTER:
         do {
@@ -1107,7 +1135,7 @@ void arrays () {
             clearInputBuffer(); // Clear invalid input
             break;
           }
-        } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
+        } while (getchar() != '\n' && array->size < MAX_LENGTH_SIZE);
         break;
       case STRING:
         do {
@@ -1124,7 +1152,7 @@ void arrays () {
             clearInputBuffer(); // Clear invalid input
             break;
           }
-        } while (getchar() != '\n' && array->size < ARRAY_MAX_LENGTH);
+        } while (getchar() != '\n' && array->size < MAX_LENGTH_SIZE);
         break;
     }
   }
@@ -1857,7 +1885,7 @@ void stacks () {
     }
   }
   void pushStack(Stack *stack) {
-    if (stack->stackSize == STACK_MAX_SIZE) {
+    if (stack->stackSize == MAX_LENGTH_SIZE) {
       printf("Stack overflow\n");
       return;
     }
@@ -1908,7 +1936,7 @@ void stacks () {
     char *message[] = {
       "\nNote:", "This program implements a stack data structure using linked lists. As a result, the stack will only be full when the system runs out of memory.",
       "However, for practical purposes, the stack is considered full when it reaches a predefined maximum size. In this implementation, the maximum stack size is set to 50."};
-    if (stack->stackSize == STACK_MAX_SIZE) {
+    if (stack->stackSize == MAX_LENGTH_SIZE) {
       printf("Stack is full\n");
     } else {
       printf("Stack is not full\n");
@@ -2041,7 +2069,7 @@ void queues () {
     printf(" <- Rear\n");
   }
   void push(Queue *queue) {
-    if (queue->queueSize == QUEUE_MAX_SIZE) {
+    if (queue->queueSize == MAX_LENGTH_SIZE) {
       printf("Queue overflow\n");
       return;
     }
@@ -2095,7 +2123,7 @@ void queues () {
     printf("\n");
   }
   void isFull(Queue *queue) {
-    if (queue->queueSize == QUEUE_MAX_SIZE) {
+    if (queue->queueSize == MAX_LENGTH_SIZE) {
       printf("Queue is full\n");
     } else {
       printf("Queue is not full\n");
@@ -2321,7 +2349,7 @@ void strings () {
       if (string == NULL) {
         continue;
       }
-      for (int i = 0; i < STRING_MAX_LENGTH; i++) {
+      for (int i = 0; i < MAX_LENGTH_SIZE; i++) {
         if (string[i] == '\0') {
           printf("Length of the string: %d\n", i);
           return i;
@@ -2435,7 +2463,7 @@ void strings () {
     }
     printf("Enter the string: ");
     clearInputBuffer();
-    if (fgets(string, STRING_MAX_LENGTH, stdin) == NULL) {
+    if (fgets(string, MAX_LENGTH_SIZE, stdin) == NULL) {
       printf("Invalid input. Please enter a string.\n");
       return NULL;
     }
@@ -2584,7 +2612,7 @@ void sorting() {
   programHeader("Sorting Algorithms");
 
   int arrSize = 0;
-  int givenArray[ARRAY_MAX_LENGTH];
+  int givenArray[MAX_LENGTH_SIZE];
   int num;
   char ch;
   printf("Initialize your array for me to work on.\n\n");
@@ -2669,7 +2697,7 @@ void sorting() {
 void searching() {
   programHeader("Searching Algorithms");
   int arrSize = 0;
-  int givenArray[ARRAY_MAX_LENGTH];
+  int givenArray[MAX_LENGTH_SIZE];
   int num;
   char ch;
 
@@ -3177,5 +3205,310 @@ void search(int array[], int size, int key, int searchType) {
       printf("Element is not found in the array");
     else
       printf("Element is found at position %d", binaryResult + 1);
+  }
+}
+
+// Utility functions 
+void displayCenterText(char *message) {
+  int length = strlen(message);
+  int startIndex = (SET_WIDTH - length) / 2;
+  for (int i = 0; i < startIndex - 1; i++) {
+    printf(" ");
+  }
+  printf("%s", message);
+  startIndex = (length % 2 == 0) ? (startIndex - 1) : startIndex;
+  for (int i = 0; i < startIndex; i++) {
+    printf(" ");
+  }
+}
+void hideCursor() {
+  HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+  CONSOLE_CURSOR_INFO info;
+  info.dwSize = 100;
+  info.bVisible = FALSE;
+  SetConsoleCursorInfo(consoleHandle, &info);
+}
+void showCursor() {
+  /* Function to show the cursor */
+  HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+  CONSOLE_CURSOR_INFO info;
+  info.dwSize = 100;
+  info.bVisible = TRUE;
+  SetConsoleCursorInfo(consoleHandle, &info);
+}
+void getCursorPos(int *Xpos, int *Ypos) {
+  /* Function to get the current position of the cursor */
+  CONSOLE_SCREEN_BUFFER_INFO info;
+  GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+  *Xpos = info.dwCursorPosition.X;
+  *Ypos = info.dwCursorPosition.Y;
+}
+void moveCursor(int x, int y) {
+  /* Function to move the cursor at a specified coordinate in the terminal */
+  // First three lines are for program header
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD pos = {x, y};
+	SetConsoleCursorPosition(hConsole, pos);
+}
+void clearLines(int startLine, int endLine) {
+  /* Function to clear lines in the terminal given a starting and ending y-coordinate */
+  hideCursor();
+	for (int i = startLine; i <= endLine; i++) {
+		moveCursor(0, i);
+		for (int j = 0; j < SET_WIDTH; j++) {
+			printf(" ");
+		}
+	}
+  showCursor();
+}
+void clearWord(int y, int startCol, int endCol) {
+  /* Function to clear a specific portion of a line in the terminal */
+  moveCursor(startCol, y);
+  for (int i = 0; i < endCol - startCol; i++) {
+  printf(" ");
+  }
+}
+void clearPrompts(char *header) {
+  /* Function to clear the prompts of the program. It will essentially clear everything below the program header. */
+  system("cls");
+  programHeader(header);
+}
+void promptExit(){
+  int exitXpos, exitYpos, anyChar;
+    getCursorPos(&exitXpos, &exitYpos);
+  do {
+    moveCursor(0, exitYpos + 3);
+    displayCenterText("Press Enter To Exit");
+    hideCursor();
+    anyChar = _getch();
+    /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
+    showCursor();
+  } while (anyChar != '\r');
+}
+void programHeader(char *header) {
+  /* Move cursor at the top of the file */
+  moveCursor(0,0);
+  
+  for (int i = 1; i <= SET_WIDTH; i++) {
+    printf("-");
+  }
+  printf("\n");
+
+  displayCenterText(header);
+  printf("\n");
+
+  for (int i = 1; i <= SET_WIDTH; i++) {
+    printf("-");
+  }
+  printf("\n\n");
+}
+void printMenu(char *arrString[], int size) {
+  for (int i = 0; i < size; i++) {
+    printf("%d) %s\n", i+1, arrString[i]);
+  }
+  printf("Choose a number: ");
+}
+void splitStrings(char *message, char substrings[][SUBSTRINGS_MAX_LENGTH], int *count, int lineWidth) {
+  int messageLength = strlen(message);
+  int start = 0;
+
+  while (start < messageLength) {
+    int end = start + lineWidth;
+    if (end > messageLength) {
+      end = messageLength;
+    }
+
+    // Find the last space within the line width to avoid breaking words
+    while (end > start && message[end] != ' ' && message[end] != '\0') {
+      end--;
+    }
+
+    // If no space was found, break at the line width
+    if (end == start) {
+      end = start + lineWidth;
+    }
+
+    strncpy(substrings[*count], message + start, end - start);
+    substrings[*count][end - start] = '\0'; // Null-terminate the substring
+    (*count)++;
+
+    start = end + 1; // Move to the next part of the message
+  }
+}
+void printWithinWidthCentered(char *message[], int messageSize, char *header) {
+  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+  int paragraphSubstringsCount = 0;
+
+  int lineWidth = SET_WIDTH * 0.8; 
+
+  for (int i = 0; i < messageSize; i++) {
+    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+  }
+
+  programHeader(header);
+
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    displayCenterText(paragraphSubstrings[i]);
+    printf("\n");
+  }
+}
+void printWithinWidth(char *message[], int messageSize, char *header) {
+  char paragraphSubstrings[SUBSTRINGS_MAX_SUBSTRINGS][SUBSTRINGS_MAX_LENGTH];
+  int paragraphSubstringsCount = 0;
+
+  int lineWidth = SET_WIDTH * 0.9;
+
+  for (int i = 0; i < messageSize; i++) {
+    splitStrings(message[i], paragraphSubstrings, &paragraphSubstringsCount, lineWidth);
+  }
+
+  if (header != NULL) {
+    programHeader(header);
+  }
+
+  for (int i = 0; i < paragraphSubstringsCount; i++) {
+    printf("  %s\n", paragraphSubstrings[i]);
+  }
+}
+void functionNotDone(char *header) {
+  system("cls");
+  programHeader(header);
+  printf("\n\nFunction is not yet done...");
+  promptExit();
+  system("cls");
+}
+void clearInputBuffer() {
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int chooseDataType(char dataStructure[]) {
+  int cursorXpos, cursorYpos;
+  int chosenOption;
+  printf("Choose data type for your %s: \n", dataStructure);
+  char *dataTypeMenu[] = {"Integer", "Character", "String", "Exit"};
+  int dataTypeMenuSize = sizeof(dataTypeMenu) / sizeof(dataTypeMenu[0]);
+
+  int menuCursorXpos, menuCursorYpos;
+  getCursorPos(&menuCursorXpos, &menuCursorYpos);
+  do {
+    printMenu(dataTypeMenu, dataTypeMenuSize);
+    getCursorPos(&cursorXpos, &cursorYpos);
+    if (scanf("%d", &chosenOption) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer(); // Clear invalid input
+      printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(menuCursorXpos, menuCursorYpos);
+      continue;
+    }
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 2);
+    switch (chosenOption) {
+      case INTEGER:
+        return INTEGER;
+      case CHARACTER:
+        return CHARACTER;
+      case STRING:
+        return STRING;
+      case 4:
+        return -1;
+      default:
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        printf("Invalid choice. Please choose a valid option.\n");
+        break;
+    }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+    moveCursor(menuCursorXpos, menuCursorYpos);
+  } while (chosenOption != dataTypeMenuSize);
+}
+void *scanData(char prompt[], DataType dataType) {
+  void *data = NULL;
+  int scanDataCursorXpos, scanDataCursorYpos;
+  while (data == NULL) {
+    printf("%s", prompt);
+    getCursorPos(&scanDataCursorXpos, &scanDataCursorYpos);
+    switch (dataType) {
+      case INTEGER: {
+        int *intData = (int *)malloc(sizeof(int));
+        if (scanf("%d", intData) != 1) {
+          clearLines(scanDataCursorYpos + 1, scanDataCursorYpos + 1);
+          moveCursor(0, scanDataCursorYpos + 1);
+          clearInputBuffer();
+          printf("Invalid input. Please enter an integer.\n");
+          free(intData);
+          clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+          moveCursor(0, scanDataCursorYpos);
+          continue;
+        }
+        data = intData;
+        break;
+      }
+      case CHARACTER: {
+        char *charData = (char *)malloc(sizeof(char));
+        if (scanf(" %c", charData) != 1) {
+          clearLines(scanDataCursorYpos + 1, scanDataCursorYpos + 1);
+          moveCursor(0, scanDataCursorYpos + 1);
+          clearInputBuffer();
+          printf("Invalid input. Please enter a character.\n");
+          free(charData);
+          clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+          moveCursor(0, scanDataCursorYpos);
+          continue;
+        }
+        data = charData;
+        break;
+      }
+      case STRING: {
+        clearInputBuffer(); // Clear any leftover input
+        char buffer[MAX_LENGTH_SIZE];
+        if (fgets(buffer, MAX_LENGTH_SIZE, stdin) == NULL) {
+          clearLines(scanDataCursorYpos + 1, scanDataCursorYpos + 1);
+          moveCursor(0, scanDataCursorYpos + 1);
+          printf("Invalid input. Please enter a string.\n");
+          clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+          moveCursor(0, scanDataCursorYpos);
+          continue;
+        }
+        // Remove newline character if present
+        buffer[strcspn(buffer, "\n")] = '\0';
+        char *strData = (char *)malloc(strlen(buffer) + 1);
+        if (strData == NULL) {
+          fprintf(stderr, "Memory allocation failed\n");
+          continue;
+        }
+        strcpy(strData, buffer);
+        data = strData;
+        break;
+      }
+    }
+    clearWord(scanDataCursorYpos, scanDataCursorXpos, SET_WIDTH);
+    moveCursor(0, scanDataCursorYpos);
+  }
+  return data;
+}
+void printInt(void *data) {
+  printf(" %d ", *(int *)data);
+}
+void printChar(void *data) {
+  printf(" %c ", *(char *)data);
+}
+void printStr(void *data) {
+  printf(" %s ", (char *)data);
+}
+void printDataType(char dataStructure[], DataType dataType) {
+  printf("Your %s data type: ", dataStructure);
+  switch (dataType) {
+    case INTEGER:
+      printf("Integer\n");
+      break;
+    case CHARACTER:
+      printf("Character\n");
+      break;
+    case STRING:
+      printf("String\n");
+      break;
   }
 }
