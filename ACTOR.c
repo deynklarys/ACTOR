@@ -2775,17 +2775,7 @@ void algorithms() {
 
     printf("What do you want to learn about?\n");  
     printMenu(algorithmsMenu, algoMenuSize);
-
     getCursorPos(&cursorXpos, &cursorYpos);
-    
-    // Moves so that the output is below the input statement
-    moveCursor(0, cursorYpos + 2);
-    printf("Did you know?\n");
-    // Must make a function that prints within the set width
-    printf("Algorithms are like the special instructions that help you\nturn a bag of LEGO bricks into an amazing castle!\n");
-
-    // moves the cursor back to the input statement
-    moveCursor(cursorXpos, cursorYpos);
     if (scanf("%d", &algorithmsOption) != 1) {
       clearInputBuffer(); 
       printf("Invalid input. Please enter a number.\n");
@@ -3500,7 +3490,7 @@ void displayTopicSummary(Topic topic) {
 
   char *algorithmsText[] = {
     "Algorithms are step-by-step instructions to perform a specific task.\n", 
-    "It is like following a recipe to bake a cake - you need to follow the instructions in the right order to get the desired outcome!\n"};
+    "It is like the special instructions that help you turn a bag of LEGO bricks into an amazing castle!\n"};
   int algorithmsTextSize = sizeof(algorithmsText) / sizeof(algorithmsText[0]);
 
   char *arraysText[] = {
