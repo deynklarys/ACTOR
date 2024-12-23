@@ -24,8 +24,23 @@ typedef enum {
   STRINGS,
   TREES,
   SORTING_ALGORITHMS,
-  SEARCHING_ALGORITHMS
+  SEARCHING_ALGORITHMS,
+  LINEAR_SEARCH,
+  BINARY_SEARCH,
 } Topic;
+
+typedef enum {
+  SELECTION_SORT,
+  BUBBLE_SORT,
+  INSERTION_SORT,
+  COUNT_SORT,
+  RANDOM_SORT,
+  MERGE_SORT,
+  QUICK_SORT_L,
+  QUICK_SORT_H,
+  HEAP_SORT,
+  RADIX_SORT,
+} SortTopic;
 
 typedef enum {
   INTEGER = 1,
@@ -254,6 +269,7 @@ void printChar(void *data);
 void printStr(void *data);
 void printDataType(char dataStructure[], DataType dataType);
 void displayTopicSummary(Topic topic);
+void displaySortingTopicSummary(SortTopic sortTopic);
 
 int main () {
   /*
@@ -2615,7 +2631,7 @@ void sorting() {
   
   int beforeQueryPos, afterQueryPos;
 
-  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort", "Radix Sort", "Heap Sort", "Exit"};
+  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort using Lomuto's Partition", "Quick Sort using Hoare's Partition" "Radix Sort", "Heap Sort", "Exit"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
   int sortType;
 
@@ -3081,38 +3097,52 @@ void sort(int array[], int size, int sortType) {
     case 1:
       printf("Selection Sort:\n");
       selectionSort(array, size);
+      displaySortingTopicSummary(SELECTION_SORT);
       break;
     case 2:
       printf("Bubble Sort:\n");
       bubbleSort(array, size);
+      displaySortingTopicSummary(BUBBLE_SORT);
       break;
     case 3:
       printf("Insertion Sort:\n");
       insertionSort(array, size);
+      displaySortingTopicSummary(INSERTION_SORT);
       break;
     case 4:
       printf("Count Sort:\n");
       countSort(array, size);
+      displaySortingTopicSummary(COUNT_SORT);
       break;
     case 5:
       printf("Random Sort:\n");
       randomSort(array, size);
+      displaySortingTopicSummary(RANDOM_SORT);
       break;
     case 6:
       printf("Merge Sort:\n");
       mergeSort(array, 0, size - 1);
+      displaySortingTopicSummary(MERGE_SORT);
       break;
     case 7:
       printf("Quick Sort (Lomuto):\n");
       quickSortLomuto(array, 0, size - 1);
+      displaySortingTopicSummary(QUICK_SORT_L);
       break;
     case 8:
-      printf("Radix Sort:\n");
-      radixSort(array, size);
+      printf("Quick Sort (Hoare):\n");
+      quickSortHoare(array, 0, size - 1);
+      displaySortingTopicSummary(QUICK_SORT_H);
       break;
     case 9:
+      printf("Radix Sort:\n");
+      radixSort(array, size);
+      displaySortingTopicSummary(RADIX_SORT);
+      break;
+    case 10:
       printf("Heap Sort:\n");
       heapSort(array, size);
+      displaySortingTopicSummary(HEAP_SORT);
       break;
     default:
       clearInputBuffer(); 
@@ -3149,6 +3179,7 @@ void search(int array[], int size, int key, int searchType) {
   system("cls");
   if (searchType == 1) {
     programHeader("Linear Search");
+    displayTopicSummary(LINEAR_SEARCH);
     printf("Your Array:\n");
     printArray(array, size);
     int linearResult = linearSearch(array, size, key);
@@ -3158,9 +3189,10 @@ void search(int array[], int size, int key, int searchType) {
       printf("Element is found at index %d", linearResult + 1);
   } else if (searchType == 2) {
     programHeader("Binary Search");
+    displayTopicSummary(BINARY_SEARCH);
     printf("Your Array:\n");
     printArray(array, size);
-    sort (array, size, 9);
+    sort(array, size, 9);
     int binaryResult = binarySearch(array, key, 0, size - 1);
     if (binaryResult == -1)
       printf("Element is not found in the array");
@@ -3529,23 +3561,31 @@ void displayTopicSummary(Topic topic) {
     "Think of a family tree, where you start with your grandparents at the top and branch out to your parents, aunts, uncles, and then to you and your cousins.\n"};
   int treesTextSize = sizeof(treesText) / sizeof(treesText[0]);
 
-  char *sortingAlgorithmsText[] = {
-    "Sorting algorithms are used to arrange elements in a specific order.\n", 
-    "It is like organizing a messy bookshelf so that you can easily find the book you are looking for!\n"};
-  int sortingAlgorithmsTextSize = sizeof(sortingAlgorithmsText) / sizeof(sortingAlgorithmsText[0]);
-
   char *stringsText[] = {
     "A string is a sequence of characters terminated by a null character ('\\0'). Strings are typically represented as arrays of characters. The null character allows functions to determine the length of the string.\n",
     "Think of it like a necklace of beads, where each bead is a character and the clasp is the null character.\n",
     "Strings can be manipulated by finding, replacing, inserting, deleting characters, and more!\n"
   };
   int stringsTextSize = sizeof(stringsText) / sizeof(stringsText[0]);
+
+  char *sortingAlgorithmsText[] = {
+    "Sorting algorithms are used to arrange elements in a specific order.\n", 
+    "It is like organizing a messy bookshelf so that you can easily find the book you are looking for!\n"};
+  int sortingAlgorithmsTextSize = sizeof(sortingAlgorithmsText) / sizeof(sortingAlgorithmsText[0]);
   
   char *searchingAlgorithmsText[] = {
     "Searching algorithms are used to find the location of an element in a collection of elements.\n", 
     "It is like looking for a specific book in a library without knowing its exact location!\n"};
   int searchingAlgorithmsTextSize = sizeof(searchingAlgorithmsText) / sizeof(searchingAlgorithmsText[0]);
+
+  char *linearSearchText[] = {
+    "Linear Search is a simple search algorithm that sequentially checks each element in a collection until a match is found or the whole collection has been searched.\n"};
+  int linearSearchTextSize = sizeof(linearSearchText) / sizeof(linearSearchText[0]);
   
+  char *binarySearchText[] = {
+    "Binary Search is a search algorithm that finds the position of a target value within a sorted array.\n", 
+    "It compares the target value to the middle element of the array. If they are not equal, the half in which the target cannot lie is eliminated and the search continues on the remaining half.\n"};
+  int binarySearchTextSize = sizeof(binarySearchText) / sizeof(binarySearchText[0]);
   switch (topic) {
       case DATA_STRUCTURES_AND_ALGORITHMS:
           printWithinWidth(dataStructsAndAlgoText, dataStructsAndAlgoTextSize, "Data Structures and Algorithms");
@@ -3580,8 +3620,100 @@ void displayTopicSummary(Topic topic) {
       case SEARCHING_ALGORITHMS:
           printWithinWidth(searchingAlgorithmsText, searchingAlgorithmsTextSize, "Searching Algorithms");
           break;
+      case LINEAR_SEARCH:
+          printWithinWidth(linearSearchText, linearSearchTextSize, "Linear Search");
+          break;
+      case BINARY_SEARCH:
+          printWithinWidth(binarySearchText, binarySearchTextSize, "Binary Search");
+          break;
       default:
           printf("Invalid topic.\n");
   }
 }
 
+void displaySortingTopicSummary(SortTopic sortTopic) {
+  char *selectionSortText[] = {
+    "Selection Sort: Imagine picking the smallest candy from a jar and placing it in a line until the jar is empty. That's Selection Sort!\n"
+  };
+  int selectionSortTextSize = sizeof(selectionSortText) / sizeof(selectionSortText[0]);
+
+  char *bubbleSortText[] = {
+    "Bubble Sort: Think of bubbles rising in soda. The largest bubbles (numbers) float to the top first. That's Bubble Sort!\n"
+  };
+  int bubbleSortTextSize = sizeof(bubbleSortText) / sizeof(bubbleSortText[0]);
+
+  char *insertionSortText[] = {
+    "Insertion Sort: Like sorting playing cards in your hand, one card at a time, to get them in order. That's Insertion Sort!\n"
+  };
+  int insertionSortTextSize = sizeof(insertionSortText) / sizeof(insertionSortText[0]);
+
+  char *countSortText[] = {
+    "Count Sort: Counting how many of each type of candy you have and then lining them up. That's Count Sort!\n"
+  };
+  int countSortTextSize = sizeof(countSortText) / sizeof(countSortText[0]);
+
+  char *randomSortText[] = {
+    "Random Sort: Imagine shuffling a deck of cards until they magically end up in order. That's Random Sort!\n"
+  };
+  int randomSortTextSize = sizeof(randomSortText) / sizeof(randomSortText[0]);
+
+  char *mergeSortText[] = {
+    "Merge Sort: Splitting a big puzzle into smaller pieces, solving each, and then putting them back together. That's Merge Sort!\n"
+  };
+  int mergeSortTextSize = sizeof(mergeSortText) / sizeof(mergeSortText[0]);
+
+  char *quickSortLomutoText[] = {
+    "Quick Sort (Lomuto Partition): Picking a pivot candy (usually the last one), sorting smaller and larger candies around it, and repeating. That's Quick Sort with Lomuto Partition!\n", "Lomuto's partition scheme is simple but less efficient for certain inputs.\n"
+  };
+  int quickSortLomutoTextSize = sizeof(quickSortLomutoText) / sizeof(quickSortLomutoText[0]);
+
+  char *quickSortHoareText[] = {
+    "Quick Sort (Hoare Partition): Picking a pivot candy (usually the first one), sorting smaller and larger candies around it, and repeating. That's Quick Sort with Hoare Partition!\n", "Hoare's partition scheme is more efficient, especially for larger arrays.\n"
+  };
+  int quickSortHoareTextSize = sizeof(quickSortHoareText) / sizeof(quickSortHoareText[0]);
+
+  char *radixSortText[] = {
+    "Radix Sort: Imagine sorting a stack of papers by looking at the last digit of the page number, then the second last, and so on. That's Radix Sort!\n"
+  };
+  int radixSortTextSize = sizeof(radixSortText) / sizeof(radixSortText[0]);
+
+  char *heapSortText[] = {
+    "Heap Sort: Imagine a heap of toys where the largest toy is always on top. You keep removing the largest toy until the heap is empty. That's Heap Sort!\n"
+  };
+  int heapSortTextSize = sizeof(heapSortText) / sizeof(heapSortText[0]);
+
+  switch (sortTopic) {
+    case SELECTION_SORT:
+      printWithinWidth(selectionSortText, selectionSortTextSize, "Selection Sort");
+      break;
+    case BUBBLE_SORT:
+      printWithinWidth(bubbleSortText, bubbleSortTextSize, "Bubble Sort");
+      break;
+    case INSERTION_SORT:
+      printWithinWidth(insertionSortText, insertionSortTextSize, "Insertion Sort");
+      break;
+    case COUNT_SORT:
+      printWithinWidth(countSortText, countSortTextSize, "Count Sort");
+      break;
+    case RANDOM_SORT:
+      printWithinWidth(randomSortText, randomSortTextSize, "Random Sort");
+      break;
+    case MERGE_SORT:
+      printWithinWidth(mergeSortText, mergeSortTextSize, "Merge Sort");
+      break;
+    case QUICK_SORT_L:
+      printWithinWidth(quickSortLomutoText, quickSortLomutoTextSize, "Quick Sort");
+      break;
+    case QUICK_SORT_H:
+      printWithinWidth(quickSortHoareText, quickSortHoareTextSize, "Quick Sort");
+      break;
+    case RADIX_SORT:
+      printWithinWidth(radixSortText, radixSortTextSize, "Radix Sort");
+      break;
+    case HEAP_SORT:
+      printWithinWidth(heapSortText, heapSortTextSize, "Heap Sort");
+      break;
+    default: 
+      printf("Invalid topic.\n");
+  }
+}
