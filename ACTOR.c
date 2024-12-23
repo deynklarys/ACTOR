@@ -2831,7 +2831,7 @@ void algorithms() {
 
 void about() {
   char *message[] = {
-    "Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms, ACTOR serves to demonstrate the procedures included in the course.\n", 
+    "Analyze. Code. Test. Optimize. Repeat. To fully grasp the concepts of Data Structures and Algorithms. ACTOR serves to demonstrate the procedures included in the course. The project covers various data structures such as arrays, linked lists, stacks, queues, and trees, as well as algorithms for sorting and searching. It provides a hands-on approach to learning these fundamental concepts through interactive operations and visualizations.\n", 
     "ACTOR is a project in Data Structures and Algorithms during the Academic Year 2024-2025. This project is solely built by Deanne Clarice Bea, a second-year Computer Science student at the Bicol University.\n"
     };
   int messageSize = sizeof(message)/sizeof(message[0]);
