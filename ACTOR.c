@@ -379,6 +379,7 @@ void trees () {
     tree = treeResult.tree;
     tree.treeDataType = treeResult.chosenDataType;
     if (treeResult.chosenDataType == -1) {
+      promptExit();
       system("cls");
       return;
     }
@@ -440,14 +441,7 @@ void trees () {
   }
 }
   TreeResult initializeTree() {
-    char *message[] = {
-      "Trees are a type of non-linear data structure that consists of nodes connected by edges. Trees are used to represent hierarchical data, such as file systems, organization charts, and more.\n",
-      "Imagine a tree in your backyard. It has a trunk, branches, and leaves. In computer science, a tree looks a bit like a real tree turned upside down. The root is its trunk, nodes are the branches and leaves where each node holds a data, and edges are the connection between nodes like branches.\n",
-      "In this program, you can create a binary tree and perform various operations on it.\n",
-    };
-    int messageSize = sizeof(message) / sizeof(message[0]);
-
-    printWithinWidth(message, messageSize, "Trees");
+    displayTopicSummary(TREES);
 
     TreeResult result;
     result.chosenDataType = chooseDataType("tree");
@@ -683,6 +677,7 @@ void arrays () {
   while (1) {
 
     if (!initializeArray(&array)) {
+      promptExit();
       system("cls");
       return;
     }
@@ -1255,6 +1250,7 @@ void linkedLists () {
     list = listResult.list;
     list.listDataType = listResult.chosenDataType;
     if (listResult.chosenDataType == -1) {
+      promptExit();
       system("cls");
       return;
     }
@@ -1777,6 +1773,7 @@ void stacks () {
     stack = stackResult.stack;
     stack.stackDataType = stackResult.chosenDataType;
     if (stack.stackDataType == -1) {
+      promptExit();
       system("cls");
       return;
     }
@@ -1954,6 +1951,7 @@ void queues () {
     queue = queueResult.queue;
     queue.queueDataType = queueResult.chosenDataType;
     if (queue.queueDataType == -1) {
+      promptExit();
       system("cls");
       return;
     }
