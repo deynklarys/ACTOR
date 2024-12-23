@@ -642,9 +642,12 @@ void nonLinearDS () {
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &nonLinearDSOption) != 1) {
-      clearInputBuffer(); 
-      printf("Invalid input. Please enter a number.\n");
-      continue;
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
     }
 
     switch (nonLinearDSOption) {
@@ -659,12 +662,11 @@ void nonLinearDS () {
         promptExit();
         break;
       default:
-        clearInputBuffer(); 
-        printf("\n");
-        displayCenterText("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
         break;
     }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (nonLinearDSOption != linearDS_MenuSize);
 }
 void arrays () {
@@ -1958,7 +1960,7 @@ void queues () {
 
     char *queuesMenu[] = {"Add an item", "Remove an item","Check the front item", "Check if the queue is full", "Check if the queue is empty", "Exit"};
     int queuesMenuSize = sizeof(queuesMenu) / sizeof(queuesMenu[0]);
-    int chosenOption;
+    int queuesOption;
 
     system("cls");
     do {
@@ -1966,7 +1968,7 @@ void queues () {
       printDataType("queue", queue.queueDataType);
       printMenu(queuesMenu, queuesMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
-      if (scanf("%d", &chosenOption) != 1) {
+      if (scanf("%d", &queuesOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
         clearInputBuffer();
@@ -1978,7 +1980,7 @@ void queues () {
       clearLines(cursorYpos + 1, 24);
       moveCursor(0, cursorYpos + 2);
 
-      switch (chosenOption) {
+      switch (queuesOption) {
         case 1:
           system("cls");
           programHeader("Add an item");
@@ -2012,7 +2014,7 @@ void queues () {
           printf("Invalid choice. Please choose a valid option.\n");
       }
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-    } while (chosenOption != queuesMenuSize);
+    } while (queuesOption != queuesMenuSize);
     system("cls");
   }
 }
@@ -2500,9 +2502,12 @@ void linearDS () {
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &linearDSOption) != 1) {
-      clearInputBuffer(); 
-      printf("Invalid input. Please enter a number.\n");
-      continue;
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
     }
 
     switch (linearDSOption) {
@@ -2532,12 +2537,11 @@ void linearDS () {
         promptExit();
         break;
       default:
-        clearInputBuffer(); 
-        printf("\n");
-        displayCenterText("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
         break;
     }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (linearDSOption != linearDS_MenuSize);
 }
 void dataStructures () {
@@ -2551,9 +2555,12 @@ void dataStructures () {
     printMenu(dataStructuresMenu, dataStructuresMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &dataStructuresOption) != 1) {
-      clearInputBuffer(); 
-      printf("Invalid input. Please enter a number.\n");
-      continue;
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
     }
 
     switch (dataStructuresOption) {
@@ -2573,17 +2580,13 @@ void dataStructures () {
         system("cls");
         break;
       case 4:
-        moveCursor(0, cursorYpos + 2);
-        clearLines(cursorYpos + 2, cursorYpos + 2);
         promptExit();
         break;
       default:
-        clearInputBuffer(); 
-        printf("\n");
-        displayCenterText("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
-        break; 
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
     }
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (dataStructuresOption != dataStructuresMenuSize);
 }
 
@@ -2777,43 +2780,36 @@ void algorithms() {
     printMenu(algorithmsMenu, algoMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &algorithmsOption) != 1) {
-      clearInputBuffer(); 
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer();
       printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
       continue;
     }
 
-    if (algorithmsOption == algoMenuSize) {
-      moveCursor(0, cursorYpos + 3);
-      promptExit();
-      break;
+    clearLines(cursorYpos + 1, 23);
+    moveCursor(0, cursorYpos + 2);
+
+    switch (algorithmsOption) {
+      case 1:
+        system("cls");
+        searching();
+        system("cls");
+        break;
+      case 2:
+        system("cls");
+        sorting();
+        system("cls");
+        break;
+      case 3:
+        promptExit();
+        break;
+      default:
+          moveCursor(0, cursorYpos + 1);
+          printf("Invalid choice. Please choose a valid option.\n");
     }
-
-      switch (algorithmsOption) {
-        case 1:
-          system("cls");
-          searching();
-          system("cls");
-          break;
-        case 2:
-          system("cls");
-          sorting();
-          system("cls");
-          break;
-        case 3:
-          system("cls");
-          moveCursor(0, SET_HEIGHT / 2 - 1);
-          displayCenterText("Exiting Algorithms...");
-          hideCursor();
-          Sleep(1000);
-          break;
-        default:
-          moveCursor(0, cursorYpos + 6);
-          clearInputBuffer(); 
-          displayCenterText("Invalid input. Please enter a number.\n");
-          clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
-          break; 
-      }
-
+    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
   } while (algorithmsOption != algoMenuSize);
 }
 
