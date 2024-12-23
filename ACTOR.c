@@ -2613,7 +2613,7 @@ void sorting() {
   int givenArray[MAX_LENGTH_SIZE];
   int num;
   char ch;
-  printf("Initialize your array for me to work on.\n\n");
+  printf("Initialize your integer array for me to work on.\n\n");
   printf("Enter elements (space-separated, press Enter to finish):\n");
 
   while (1) {
@@ -2631,7 +2631,7 @@ void sorting() {
   
   int beforeQueryPos, afterQueryPos;
 
-  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort using Lomuto's Partition", "Quick Sort using Hoare's Partition" "Radix Sort", "Heap Sort", "Exit"};
+  char *sortMenu[] = {"Selection Sort", "Bubble Sort", "Insertion Sort", "Count Sort", "Random Sort", "Merge Sort", "Quick Sort using Lomuto's Partition", "Quick Sort using Hoare's Partition", "Radix Sort", "Heap Sort", "Exit"};
   int sortMenuSize = sizeof(sortMenu)/sizeof(sortMenu[0]); 
   int sortType;
 
@@ -2652,9 +2652,6 @@ void sorting() {
 
     if (sortType > 0 && sortType < sortMenuSize) {
       system("cls");
-      programHeader("Sorting Algorithms");
-      printf("Your Array:\n");
-      printArray(givenArray, arrSize);
       sort(givenArray, arrSize, sortType);
 
       char tryOthers;
@@ -2698,7 +2695,7 @@ void searching() {
   int num;
   char ch;
 
-  printf("Initialize your array for me to work on.\n\n");
+  printf("Initialize your integer array for me to work on.\n\n");
   printf("Enter elements (space-separated, press Enter to finish):\n");
 
   while (1) {
@@ -3091,58 +3088,76 @@ void heapSort(int array[], int size) {
   }
 }
 void sort(int array[], int size, int sortType) {
-  printf("Sorted array using ");
-
   switch (sortType) {
     case 1:
-      printf("Selection Sort:\n");
-      selectionSort(array, size);
       displaySortingTopicSummary(SELECTION_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Selection Sort:\n");
+      selectionSort(array, size);
       break;
     case 2:
-      printf("Bubble Sort:\n");
-      bubbleSort(array, size);
       displaySortingTopicSummary(BUBBLE_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Bubble Sort:\n");
+      bubbleSort(array, size);
       break;
     case 3:
-      printf("Insertion Sort:\n");
-      insertionSort(array, size);
       displaySortingTopicSummary(INSERTION_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Insertion Sort:\n");
+      insertionSort(array, size);
       break;
     case 4:
-      printf("Count Sort:\n");
-      countSort(array, size);
       displaySortingTopicSummary(COUNT_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Count Sort:\n");
+      countSort(array, size);
       break;
     case 5:
-      printf("Random Sort:\n");
-      randomSort(array, size);
       displaySortingTopicSummary(RANDOM_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Random Sort:\n");
+      randomSort(array, size);
       break;
     case 6:
-      printf("Merge Sort:\n");
-      mergeSort(array, 0, size - 1);
       displaySortingTopicSummary(MERGE_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Merge Sort:\n");
+      mergeSort(array, 0, size - 1);
       break;
     case 7:
-      printf("Quick Sort (Lomuto):\n");
-      quickSortLomuto(array, 0, size - 1);
       displaySortingTopicSummary(QUICK_SORT_L);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Quick Sort (Lomuto):\n");
+      quickSortLomuto(array, 0, size - 1);
       break;
     case 8:
-      printf("Quick Sort (Hoare):\n");
-      quickSortHoare(array, 0, size - 1);
       displaySortingTopicSummary(QUICK_SORT_H);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Quick Sort (Hoare):\n");
+      quickSortHoare(array, 0, size - 1);
       break;
     case 9:
-      printf("Radix Sort:\n");
-      radixSort(array, size);
       displaySortingTopicSummary(RADIX_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Radix Sort:\n");
+      radixSort(array, size);
       break;
     case 10:
-      printf("Heap Sort:\n");
-      heapSort(array, size);
       displaySortingTopicSummary(HEAP_SORT);
+      printf("Your Array:\n");
+      printArray(array, size);
+      printf("Sorted array using Heap Sort:\n");
+      heapSort(array, size);
       break;
     default:
       clearInputBuffer(); 
