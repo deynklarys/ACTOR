@@ -3,8 +3,6 @@
 #include <windows.h>
 #include <conio.h> // for _getch()
 
-// cd "c:\Academic-related_Programs\ACTOR\" ; if ($?) { gcc ACTOR.c -o ACTOR utility.c } ; if ($?) { .\ACTOR}
-
 #define MAX_LENGTH_SIZE 50
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
 #define SUBSTRINGS_MAX_LENGTH 500
