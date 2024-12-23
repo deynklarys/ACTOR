@@ -21,6 +21,7 @@ typedef enum {
   LINKED_LISTS,
   STACKS,
   QUEUES,
+  STRINGS,
   TREES,
   SORTING_ALGORITHMS,
   SEARCHING_ALGORITHMS
@@ -195,7 +196,6 @@ void dataStructures ();
     char *scanString(char *string);
     int scanLength(char *prompt);
     void printString(char string[], char *status);
-    void introduceStrings();
 void algorithms();
   void searching();
   void sorting();
@@ -2144,7 +2144,7 @@ void strings () {
 
   system("cls");
 
-  introduceStrings();
+  displayTopicSummary(STRINGS);
 
   strcpy(string, scanString(string));
   promptExit();
@@ -2490,16 +2490,6 @@ void strings () {
   void printString(char string[], char *status) {
     printf("Your %s string: ", status);
     printf("%s\n", string);
-  }
-  void introduceStrings() {
-    char *introduction[] = {
-      "A string is a sequence of characters terminated by a null character ('\\0'). Strings are typically represented as arrays of characters. The null character indicates the end of the string, allowing functions to determine the length of the string.",
-      "Think of it like a necklace of beads, where each bead is a character and the clasp is the null character.",
-      "Strings can be manipulated by finding, replacing, inserting, deleting characters, and more!\n"
-    };
-    int introductionSize = sizeof(introduction) / sizeof(introduction[0]);
-
-    printWithinWidth(introduction, introductionSize, "Strings");
   }
 void linearDS () {
   char *linearDS_Menu[] = {"Arrays", "Linked Lists", "Stacks", "Queues", "Exit"};
@@ -3560,6 +3550,13 @@ void displayTopicSummary(Topic topic) {
     "It is like organizing a messy bookshelf so that you can easily find the book you are looking for!\n"};
   int sortingAlgorithmsTextSize = sizeof(sortingAlgorithmsText) / sizeof(sortingAlgorithmsText[0]);
 
+  char *stringsText[] = {
+    "A string is a sequence of characters terminated by a null character ('\\0'). Strings are typically represented as arrays of characters. The null character allows functions to determine the length of the string.\n",
+    "Think of it like a necklace of beads, where each bead is a character and the clasp is the null character.\n",
+    "Strings can be manipulated by finding, replacing, inserting, deleting characters, and more!\n"
+  };
+  int stringsTextSize = sizeof(stringsText) / sizeof(stringsText[0]);
+  
   char *searchingAlgorithmsText[] = {
     "Searching algorithms are used to find the location of an element in a collection of elements.\n", 
     "It is like looking for a specific book in a library without knowing its exact location!\n"};
@@ -3586,6 +3583,9 @@ void displayTopicSummary(Topic topic) {
           break;
       case QUEUES:
           printWithinWidth(queuesText, queuesTextSize, "Queues");
+          break;
+      case STRINGS:
+          printWithinWidth(stringsText, stringsTextSize, "Strings");
           break;
       case TREES:
           printWithinWidth(treesText, treesTextSize, "Trees");
