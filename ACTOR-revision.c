@@ -2229,7 +2229,7 @@ void queues () {
   void printQueue(Queue *queue) {
     printf("\nYour queue: \n");
     if (queue->front == NULL) {
-      printf("Queue is empty\n");
+      printf("Queue is empty. Push some elements.\n");
       return;
     }
 
@@ -2246,7 +2246,7 @@ void queues () {
   }
   void push(Queue *queue) {
     if (queue->queueSize == MAX_LENGTH_SIZE) {
-      printf("Queue overflow\n");
+      printf("Queue overflow! Pop some elements.\n");
       return;
     }
 
@@ -2274,7 +2274,7 @@ void queues () {
   }
   void pop(Queue *queue) {
     if (queue->front == NULL) {
-      printf("Queue underflow\n");
+      printf("Queue underflow! Push more elements.\n");
       return;
     }
 
@@ -3753,7 +3753,7 @@ void displayTopicSummary(Topic topic) {
   int stacksTextSize = sizeof(stacksText) / sizeof(stacksText[0]);
 
   char *queuesText[] = {
-    "A queue is a linear data structure that follows the First In First Out (FIFO) principle.\n", "Example:",
+    "A queue is a linear data structure that follows the First In First Out (FIFO) principle. This implementation uses circular queue.\n", "Example:",
     "\tEnqueue 1, 2, 3, 4, 5 into the queue",
     "\tDequeue 1, 2, 3, 4, 5 from the queue\n", 
     "It is like a queue of people waiting in line where the first person to arrive is the first to be served!\n"};
