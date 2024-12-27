@@ -1,0 +1,20 @@
+error feedbacks 
+fix error
+ underflow explain you can insert more elements
+ overflow explain
+
+
+
+
+sorting algorithm is not possible sa array data structure because it only accepts one data type
+
+
+binary search fxi radix sort
+
+
+revisions: 
+- fix error handling
+- modified input handling in searching and sorting
+- copy the array and sort it
+- removed the separation of the data structure and algorithm
+
