@@ -719,9 +719,11 @@ void arrays () {
     int chosenOption;
 
     system("cls");
+    clearInputBuffer();
     do {
       programHeader("Array Operations");
       printDataType("array", array.dataType);
+      traverseArray(&array);
       printMenu(arraysMenu, arraysMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
@@ -1144,7 +1146,7 @@ void arrays () {
     }
     array->size = 0;
 
-    printf("Initialize your array to work on.\n\n");
+    printf("Initialize your array to work on with a maximum of %d elements.\n\n", MAX_LENGTH_SIZE);
     printf("Enter elements (space-separated, press Enter to finish):\n");
 
     int num;
@@ -1155,10 +1157,6 @@ void arrays () {
     switch (array->dataType) {
       case INTEGER: 
         do {
-          if (array->size >= MAX_LENGTH_SIZE) {
-            printf("Maximum length reached.\n");
-            break;
-          }
           if (scanf("%d", &num) == 1) {
             array->data.intArray[array->size++] = num;
           } else {
@@ -1169,10 +1167,6 @@ void arrays () {
         break;
       case CHARACTER:
         do {
-          if (array->size >= MAX_LENGTH_SIZE) {
-            printf("Maximum length reached.\n");
-            break;
-          }
           if (scanf(" %c", &ch) == 1) {
             array->data.charArray[array->size++] = ch;
           } else {
@@ -1183,10 +1177,6 @@ void arrays () {
         break;
       case STRING:
         do {
-          if (array->size >= MAX_LENGTH_SIZE) {
-            printf("Maximum length reached.\n");
-            break;
-          }
           if (scanf("%s", str) == 1) {
             array->data.strArray[array->size] = malloc(strlen(str) + 1); // Allocate memory for the string
             if (array->data.strArray[array->size] != NULL) {
@@ -1202,6 +1192,16 @@ void arrays () {
           }
         } while (getchar() != '\n' && array->size < MAX_LENGTH_SIZE);
         break;
+    }
+    if (array->size == 0) {
+      printf("Array is empty. Please enter at least one element.\n");
+      return 0;   
+    }
+    int c;
+    if ((c = getchar()) != '\n' && c != EOF) {
+      printf("Array Overflow! Array accepts a maximum number of %d elements.\n", MAX_LENGTH_SIZE);
+      promptContinue();
+      return 1;
     }
   }
   void printArrayPositions(Array *array, int operation) {
@@ -3332,6 +3332,18 @@ void promptExit(){
   do {
     moveCursor(0, exitYpos + 3);
     displayCenterText("Press Enter To Exit");
+    hideCursor();
+    anyChar = _getch();
+    /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
+    showCursor();
+  } while (anyChar != '\r');
+}
+void promptContinue(){
+  int continueXpos, continueYpos, anyChar;
+    getCursorPos(&continueXpos, &continueYpos);
+  do {
+    moveCursor(0, continueYpos + 3);
+    displayCenterText("Press Enter To Continue");
     hideCursor();
     anyChar = _getch();
     /*On Windows systems, pressing Enter generates a carriage return ('\r'), which is why the comparison is made with '\r'.*/
