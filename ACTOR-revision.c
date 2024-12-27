@@ -303,6 +303,7 @@ int main () {
     printMenu(mainMenu, mainMenuSize);
     /* Get the current position of the cursor after the prompt. This coordinate will be used to bring back the cursor at this position when the user inputs an invalid option and the option that they typed is cleared. */
     getCursorPos(&cursorXpos, &cursorYpos);
+    clearInputBuffer();
     if (scanf("%d", &mainOption) != 1) {
       clearInputBuffer();
       printf("\n");
@@ -431,6 +432,7 @@ void trees () {
       printDataType("tree", tree.treeDataType);
       printMenu(treesMenu, treesMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &treeMenuOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -622,6 +624,7 @@ void trees () {
       printMenu(traverseMenu, traverseMenuSize);
       
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &traverseMenuOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -672,6 +675,7 @@ void nonLinearDS () {
     programHeader("Linear Data Structures");
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
+    clearInputBuffer();
     if (scanf("%d", &nonLinearDSOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -725,6 +729,7 @@ void arrays () {
       printDataType("array", array.dataType);
       printMenu(arraysMenu, arraysMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &chosenOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -841,6 +846,7 @@ void arrays () {
 
     int result;
     switch (array->dataType) {
+      clearInputBuffer();
       case INTEGER:
         printf("Enter the number to search: ");
         scanf("%d", &key->dataKey.intKey);
@@ -914,6 +920,7 @@ void arrays () {
 
     switch (array->dataType){
       int position;
+      clearInputBuffer();
       case INTEGER:
         printf("Enter the number to insert: ");
         scanf("%d", &key->dataKey.intKey);
@@ -977,6 +984,7 @@ void arrays () {
 
     int position;
     printf("Enter the position of the element to delete from 1 to %d: ", array->size);
+    clearInputBuffer();
     scanf("%d", &position);
     deleteArrayKey(array, position - 1);
     traverseArray(array);
@@ -1039,6 +1047,7 @@ void arrays () {
     char str[50];
 
     switch (array2.dataType) {
+      clearInputBuffer();
       case INTEGER: 
         do {
           if (scanf("%d", &num) == 1) {
@@ -1149,6 +1158,7 @@ void arrays () {
     char str[50];
 
     switch (array->dataType) {
+      clearInputBuffer();
       case INTEGER: 
         do {
           if (array->size >= MAX_LENGTH_SIZE) {
@@ -1317,6 +1327,7 @@ void linkedLists () {
       printDataType("list", list.listDataType);
       printMenu(listMenu, listMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &listMenuOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -1445,6 +1456,7 @@ void linkedLists () {
       programHeader("Insert in a Linked List");
       printMenu(insertMenu, insertMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &insertOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -1581,6 +1593,7 @@ void linkedLists () {
       programHeader("Delete From a Linked List");
       printMenu(deleteMenu, deleteMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &deleteOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -1719,6 +1732,7 @@ void linkedLists () {
 
     int nodes;
     printf("Enter the number of nodes in the second list: ");
+    clearInputBuffer();
     scanf("%d", &nodes);
 
     printf("Enter the second list. Press Enter after every data.\n"); 
@@ -1833,6 +1847,7 @@ void stacks () {
       printDataType("stack", stack.stackDataType);
       printMenu(stacksMenu, stacksMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &stackOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -2011,6 +2026,7 @@ void queues () {
       printDataType("queue", queue.queueDataType);
       printMenu(queuesMenu, queuesMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
+      clearInputBuffer();
       if (scanf("%d", &queuesOption) != 1) {
         clearLines(cursorYpos + 1, cursorYpos + 1);
         moveCursor(0, cursorYpos + 1);
@@ -2205,6 +2221,7 @@ void strings () {
     getCursorPos(&cursorXpos, &cursorYpos);
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
     moveCursor(cursorXpos, cursorYpos);
+    clearInputBuffer();
     if (scanf("%d", &stringsOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
@@ -2485,6 +2502,7 @@ void strings () {
     int position;
     printf("Enter the position %s: ", prompt);
     getCursorPos(&scanPositionPosX, &scanPositionPosY);
+    clearInputBuffer();
     if (scanf("%d", &position) != 1) {
       clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
       moveCursor(0, scanPositionPosY + 1);
@@ -2512,6 +2530,7 @@ void strings () {
     char character;
     getCursorPos(&scanCharPosX, &scanCharPosY);
     printf("Enter the character %s: ", prompt);
+    clearInputBuffer();
     if (scanf(" %c", &character) != 1) {
       clearLines(scanCharPosY + 1, scanCharPosY + 1);
       moveCursor(0, scanCharPosY + 1);
@@ -2545,6 +2564,7 @@ void strings () {
     int length;
     printf("Enter the length  %s: ", prompt);
     getCursorPos(&scanLengthPosX, &scanLengthPosY);
+    clearInputBuffer();
     if (scanf("%d", &length) != 1) {
       clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
       moveCursor(0, scanLengthPosY + 1);
@@ -2575,19 +2595,22 @@ void linearDS () {
   int linearDS_MenuSize = sizeof(linearDS_Menu) / sizeof(linearDS_Menu[0]);
   int linearDSOption;
 
-
   do {
     programHeader("Linear Data Structures");
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
+    clearInputBuffer();
     if (scanf("%d", &linearDSOption) != 1) {
-        clearLines(cursorYpos + 1, cursorYpos + 1);
-        moveCursor(0, cursorYpos + 1);
-        clearInputBuffer();
-        printf("Invalid input. Please enter a number.\n");
-        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-        continue;
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer();
+      printf("Invalid input. Please enter a number.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      continue;
     }
+
+    clearLines(cursorYpos + 1, 24);
+    moveCursor(0, cursorYpos + 2);
 
     switch (linearDSOption) {
       case 1:
@@ -2633,6 +2656,7 @@ void sorting() {
   int arrSize = 0;
   printf("Enter the number of elements in the array: ");
   getCursorPos(&cursorXpos, &cursorYpos);
+  clearInputBuffer();
   while (arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
     if (scanf("%d", &arrSize) != 1 || arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
@@ -2653,6 +2677,7 @@ void sorting() {
   for (int i = 0; i < arrSize; i++) {
     printf("Enter element #%d: ", i + 1);
     getCursorPos(&cursorXpos, &cursorYpos);
+    clearInputBuffer();
     while (scanf("%d", &num) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
@@ -2682,6 +2707,7 @@ void sorting() {
     printMenu(sortMenu, sortMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     afterQueryPos = cursorYpos;
+    clearInputBuffer();
     scanf("%d", &sortType);
 
     if (sortType == sortMenuSize) {
@@ -2699,6 +2725,7 @@ void sorting() {
         printf("Do you want to try other sorting algorithms? [Y/N] ");
         getCursorPos(&cursorXpos, &cursorYpos);
         /* The space before %c in the format string is used to skip any leading whitespace characters, including newlines, which ensures that scanf waits for a non-whitespace character. */
+        clearInputBuffer();
         scanf(" %c", &tryOthers);
     
         if (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y') {
@@ -2736,9 +2763,10 @@ void searching() {
 
   printf("Initialize your integer array for me to work on.\n\n");
   int arrSize = 0;
-
+  
   printf("Enter the number of elements in the array: ");
   getCursorPos(&cursorXpos, &cursorYpos);
+  clearInputBuffer();
   while (arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
     if (scanf("%d", &arrSize) != 1 || arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
@@ -2758,11 +2786,19 @@ void searching() {
 
   for (int i = 0; i < arrSize; i++) {
     printf("Enter element #%d: ", i + 1);
-    if (scanf("%d", &num) == 1) {
-      givenArray[i] = num;
-    } else {
-      break;
+    getCursorPos(&cursorXpos, &cursorYpos);
+    clearInputBuffer();
+    while (scanf("%d", &num) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer();
+      printf("Invalid input. Please enter a valid integer.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(cursorXpos, cursorYpos);
     }
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 1);
+    givenArray[i] = num;
   }
 
   printf("\nYour array: ");
@@ -2774,6 +2810,7 @@ void searching() {
 
   printf("\nWhat element do you want to find? ");
   int key;
+  clearInputBuffer();
   scanf("%d", &key);
 
   int beforeQueryPos;
@@ -2791,6 +2828,7 @@ void searching() {
     printf("Note: Binary search will sort the array first and will return a\nposition based from the sorted array.");
 
     moveCursor(cursorXpos, cursorYpos);
+    clearInputBuffer();
     scanf("%d", &searchType);
 
     if (searchType == searchMenuSize) {
@@ -2806,6 +2844,7 @@ void searching() {
         printf("\n\nDo you want to try the other searching algorithms? [Y/N] ");
         getCursorPos(&cursorXpos, &cursorYpos);
         /* The space before %c in the format string is used to skip any leading whitespace characters, including newlines, which ensures that scanf waits for a non-whitespace character. */
+        clearInputBuffer();
         scanf(" %c", &tryOthers);
     
         if (tryOthers != 'n' && tryOthers != 'N' && tryOthers != 'y' && tryOthers != 'Y') {
@@ -3425,6 +3464,7 @@ int chooseDataType(char dataStructure[]) {
   do {
     printMenu(dataTypeMenu, dataTypeMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
+    clearInputBuffer();
     if (scanf("%d", &chosenOption) != 1) {
       clearLines(cursorYpos + 1, cursorYpos + 1);
       moveCursor(0, cursorYpos + 1);
@@ -3461,6 +3501,7 @@ void *scanData(char prompt[], DataType dataType) {
   while (data == NULL) {
     printf("%s", prompt);
     getCursorPos(&scanDataCursorXpos, &scanDataCursorYpos);
+    clearInputBuffer();
     switch (dataType) {
       case INTEGER: {
         int *intData = (int *)malloc(sizeof(int));
