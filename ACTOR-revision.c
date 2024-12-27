@@ -2628,44 +2628,46 @@ void sorting() {
 
   int givenArray[MAX_LENGTH_SIZE];
   int num;
-  char ch;
 
   printf("Initialize your integer array for me to work on.\n\n");
-  int arrSize = MAX_LENGTH_SIZE;
-  // int arrSize = scanInt("Enter the number of elements in the array: ");
-
-  printf("Enter elements (space-separated, press Enter to finish):\n");
-
-  int sizeCounter = 0;
-  while (1) {
-      if (sizeCounter >= MAX_LENGTH_SIZE) {
-        break;
+  int arrSize = 0;
+  printf("Enter the number of elements in the array: ");
+  getCursorPos(&cursorXpos, &cursorYpos);
+  while (arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
+    if (scanf("%d", &arrSize) != 1 || arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer();
+      if (arrSize > MAX_LENGTH_SIZE) {
+        printf("The maximum number of elements is %d.\n", MAX_LENGTH_SIZE);
+      } else{
+      printf("Invalid input. Please enter a valid number of elements.\n"); 
       }
-      // Read an integer
-      if (scanf("%d", &num) == 1) {
-        givenArray[sizeCounter++] = num;
-      } else {
-        break;
-      }
-
-      // Read the next character
-      ch = getchar();
-
-      if (ch == '\n') {
-        break;
-      }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(cursorXpos, cursorYpos);
+    }
   }
+  clearLines(cursorYpos + 1, cursorYpos + 1);
+  moveCursor(0, cursorYpos + 1);
 
-  if (sizeCounter > MAX_LENGTH_SIZE) {
-    printf("Array is full. The array accepts only %d elements.\n", MAX_LENGTH_SIZE);
-  }
-
-
-  printf("Your array: ");
   for (int i = 0; i < arrSize; i++) {
-    printf("%d ", givenArray[i]);
+    printf("Enter element #%d: ", i + 1);
+    getCursorPos(&cursorXpos, &cursorYpos);
+    while (scanf("%d", &num) != 1) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer();
+      printf("Invalid input. Please enter a valid integer.\n");
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(cursorXpos, cursorYpos);
+    }
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 1);
+    givenArray[i] = num;
   }
-  printf("\n");
+
+  printf("\nYour array: ");
+  printArray(givenArray, arrSize);
   
   int beforeQueryPos, afterQueryPos;
 
@@ -2725,48 +2727,52 @@ void sorting() {
     }
   } while (sortType != sortMenuSize);
 }
+
 void searching() {
   displayTopicSummary(SEARCHING_ALGORITHMS);
   
-  int arrSize = 0;
   int givenArray[MAX_LENGTH_SIZE];
   int num;
-  char ch;
 
   printf("Initialize your integer array for me to work on.\n\n");
-  printf("Enter elements (space-separated, press Enter to finish):\n");
+  int arrSize = 0;
 
-  while (1) {
-      if (arrSize > 10) {
-        break;
+  printf("Enter the number of elements in the array: ");
+  getCursorPos(&cursorXpos, &cursorYpos);
+  while (arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
+    if (scanf("%d", &arrSize) != 1 || arrSize <= 0 || arrSize > MAX_LENGTH_SIZE) {
+      clearLines(cursorYpos + 1, cursorYpos + 1);
+      moveCursor(0, cursorYpos + 1);
+      clearInputBuffer();
+      if (arrSize > MAX_LENGTH_SIZE) {
+        printf("The maximum number of elements is %d.\n", MAX_LENGTH_SIZE);
+      } else{
+      printf("Invalid input. Please enter a valid number of elements.\n"); 
       }
-      // Read an integer
-      if (scanf("%d", &num) == 1) {
-        if (arrSize > 10) {
-          break;
-        }
-        givenArray[arrSize++] = num;
-      } else {
-        break;
-      }
+      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+      moveCursor(cursorXpos, cursorYpos);
+    }
+  }
+  clearLines(cursorYpos + 1, cursorYpos + 1);
+  moveCursor(0, cursorYpos + 1);
 
-      // Read the next character
-      ch = getchar();
-
-      if (ch == '\n') {
-        break;
-      }
+  for (int i = 0; i < arrSize; i++) {
+    printf("Enter element #%d: ", i + 1);
+    if (scanf("%d", &num) == 1) {
+      givenArray[i] = num;
+    } else {
+      break;
+    }
   }
 
-  if (arrSize > 10) {
-    printf("Array is full. The array accepts only 10 elements.\n");
-  }
+  printf("\nYour array: ");
+  printArray(givenArray, arrSize);
 
   char *searchMenu[] = {"Linear Search", "Binary Search", "Exit"};
   int searchMenuSize = sizeof(searchMenu)/sizeof(searchMenu[0]);
   int searchType;
 
-  printf("\nWhat element is to be find? ");
+  printf("\nWhat element do you want to find? ");
   int key;
   scanf("%d", &key);
 
@@ -2775,6 +2781,7 @@ void searching() {
   do {
     getCursorPos(&cursorXpos, &cursorYpos);
     beforeQueryPos = cursorYpos;
+    printf("Searching for: %d\n", key);
     printf("What type of searching algorithm do you want to do?\n");
     printMenu(searchMenu, searchMenuSize);
 
@@ -2828,51 +2835,6 @@ void searching() {
     }
 
   } while (searchType != searchMenuSize);
-}
-void algorithms() {
-  char *algorithmsMenu[] = {"Searching", "Sorting", "Exit"};
-  int algoMenuSize = sizeof(algorithmsMenu) / sizeof(algorithmsMenu[0]);
-
-  int algorithmsOption;
-
-  do {
-    displayTopicSummary(ALGORITHMS);
-
-    printf("What do you want to learn about?\n");  
-    printMenu(algorithmsMenu, algoMenuSize);
-    getCursorPos(&cursorXpos, &cursorYpos);
-    if (scanf("%d", &algorithmsOption) != 1) {
-      clearLines(cursorYpos + 1, cursorYpos + 1);
-      moveCursor(0, cursorYpos + 1);
-      clearInputBuffer();
-      printf("Invalid input. Please enter a number.\n");
-      clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-      continue;
-    }
-
-    clearLines(cursorYpos + 1, 23);
-    moveCursor(0, cursorYpos + 2);
-
-    switch (algorithmsOption) {
-      case 1:
-        system("cls");
-        searching();
-        system("cls");
-        break;
-      case 2:
-        system("cls");
-        sorting();
-        system("cls");
-        break;
-      case 3:
-        promptExit();
-        break;
-      default:
-          moveCursor(0, cursorYpos + 1);
-          printf("Invalid choice. Please choose a valid option.\n");
-    }
-    clearWord(cursorYpos, cursorXpos, SET_WIDTH);
-  } while (algorithmsOption != algoMenuSize);
 }
 
 void about() {
@@ -3137,76 +3099,80 @@ void heapSort(int array[], int size) {
   }
 }
 void sort(int array[], int size, int sortType) {
+  // Create a copy of the original array
+  int sortedArray[MAX_LENGTH_SIZE];
+  memcpy(sortedArray, array, size * sizeof(int));
+
   switch (sortType) {
     case 1:
       displaySortingTopicSummary(SELECTION_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Selection Sort:\n");
-      selectionSort(array, size);
+      selectionSort(sortedArray, size);
       break;
     case 2:
       displaySortingTopicSummary(BUBBLE_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Bubble Sort:\n");
-      bubbleSort(array, size);
+      bubbleSort(sortedArray, size);
       break;
     case 3:
       displaySortingTopicSummary(INSERTION_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Insertion Sort:\n");
-      insertionSort(array, size);
+      insertionSort(sortedArray, size);
       break;
     case 4:
       displaySortingTopicSummary(COUNT_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Count Sort:\n");
-      countSort(array, size);
+      countSort(sortedArray, size);
       break;
     case 5:
       displaySortingTopicSummary(RANDOM_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Random Sort:\n");
-      randomSort(array, size);
+      randomSort(sortedArray, size);
       break;
     case 6:
       displaySortingTopicSummary(MERGE_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Merge Sort:\n");
-      mergeSort(array, 0, size - 1);
+      mergeSort(sortedArray, 0, size - 1);
       break;
     case 7:
       displaySortingTopicSummary(QUICK_SORT_L);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Quick Sort (Lomuto):\n");
-      quickSortLomuto(array, 0, size - 1);
+      quickSortLomuto(sortedArray, 0, size - 1);
       break;
     case 8:
       displaySortingTopicSummary(QUICK_SORT_H);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Quick Sort (Hoare):\n");
-      quickSortHoare(array, 0, size - 1);
+      quickSortHoare(sortedArray, 0, size - 1);
       break;
     case 9:
       displaySortingTopicSummary(RADIX_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Radix Sort:\n");
-      radixSort(array, size);
+      radixSort(sortedArray, size);
       break;
     case 10:
       displaySortingTopicSummary(HEAP_SORT);
       printf("Your Array:\n");
       printArray(array, size);
       printf("Sorted array using Heap Sort:\n");
-      heapSort(array, size);
+      heapSort(sortedArray, size);
       break;
     default:
       clearInputBuffer(); 
@@ -3215,7 +3181,7 @@ void sort(int array[], int size, int sortType) {
       clearWord(cursorYpos, strlen("Choose a number: "), SET_WIDTH);
       break;
   }
-  printArray(array, size);
+  printArray(sortedArray, size);
 }
 
 // Search functions
@@ -3250,14 +3216,22 @@ void search(int array[], int size, int key, int searchType) {
     if (linearResult == -1)
       printf("Element is not found in the array");
     else
-      printf("Element is found at index %d", linearResult + 1);
+      printf("Element is found at position %d", linearResult + 1);
   } else if (searchType == 2) {
     programHeader("Binary Search");
     displayTopicSummary(BINARY_SEARCH);
     printf("Your Array:\n");
     printArray(array, size);
-    sort(array, size, 9);
-    int binaryResult = binarySearch(array, key, 0, size - 1);
+    printf("Sorted array:\n");
+
+    // Create a copy of the original array
+    int sortedArray[MAX_LENGTH_SIZE];
+    memcpy(sortedArray, array, size * sizeof(int));
+
+    mergeSort(sortedArray, 0, size - 1);
+    printArray(sortedArray, size);
+
+    int binaryResult = binarySearch(sortedArray, key, 0, size - 1);
     if (binaryResult == -1)
       printf("Element is not found in the array");
     else
@@ -3780,4 +3754,23 @@ void displaySortingTopicSummary(SortTopic sortTopic) {
     default: 
       printf("Invalid topic.\n");
   }
+}
+
+
+int scanInt(char *prompt) {
+  int scanIntegerPosX, scanIntegerPosY;
+  int integer;
+  printf("%s", prompt);
+  getCursorPos(&scanIntegerPosX, &scanIntegerPosY);
+  clearInputBuffer();
+  if (scanf("%d", &integer) != 1) {
+    clearLines(scanIntegerPosY + 1, scanIntegerPosY + 1);
+    moveCursor(0, scanIntegerPosY + 1);
+    printf("Invalid input. Please enter a number.\n");
+    clearInputBuffer();
+    clearWord(scanIntegerPosY, scanIntegerPosX, SET_WIDTH);
+    moveCursor(0, scanIntegerPosY);
+    return -1;
+  }
+  return integer;
 }
