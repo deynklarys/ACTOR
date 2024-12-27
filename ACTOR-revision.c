@@ -720,7 +720,6 @@ void arrays () {
     int chosenOption;
 
     system("cls");
-    clearInputBuffer();
     do {
       programHeader("Array Operations");
       printDataType("array", array.dataType);
@@ -787,6 +786,10 @@ void arrays () {
   }
 }
   void traverseArray(Array *array) {
+    if (array->size == 0) {
+      printf("Array is empty. Add more elements.\n");
+      return;
+    }
     printf("Your array elements:  ");
     for (int i = 0; i < array->size; i++) {
       switch (array->dataType) {
@@ -1019,6 +1022,10 @@ void arrays () {
 
   }
   void deleteArrayKey(Array *array, int position) {
+    if (array->size == 0) {
+      printf("Array is empty. Add more elements.\n");
+      return;
+    }
     if (position < 0 || position >= array->size) {
       printf("Invalid position.\n");
       return;
@@ -1051,6 +1058,10 @@ void arrays () {
   }
   void deleteArray(Array *array) {
     programHeader("Delete from an Array");
+    if (array->size == 0) {
+      printf("Array is empty. Add more elements.\n");
+      return;
+    }
     traverseArray(array);
     printArrayPositions(array, DEL);
 
@@ -1229,7 +1240,6 @@ void arrays () {
     char ch;
     char str[50];
 
-    clearInputBuffer();
     switch (array->dataType) {
       case INTEGER: 
         do {
@@ -1273,11 +1283,13 @@ void arrays () {
       printf("Array is empty. Please enter at least one element.\n");
       return 0;   
     }
-    int c;
-    if ((c = getchar()) != '\n' && c != EOF) {
+    if (array->size >= MAX_LENGTH_SIZE) {
+      int c;
+      if ((c = getchar()) != '\n' && c != EOF) {
       printf("Array Overflow! Array accepts a maximum number of %d elements.\n", MAX_LENGTH_SIZE);
       promptContinue();
       return 1;
+      }
     }
   }
   void printArrayPositions(Array *array, int operation) {
