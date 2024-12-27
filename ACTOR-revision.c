@@ -2046,22 +2046,25 @@ void stacks () {
     return result;
   }
   void printStack(Stack *stack) {
-    printf("\nYour stack: \n");
     if (stack->top == NULL) {
       printf("Stack is empty\n");
       return;
     }
+    printf("\nYour stack: \n");
 
     StackNode *temp = stack->top;
+    int i = 1;
     while (temp != NULL) {
       stack->printFunc(temp->data);
+      if (i == 1) {printf(" <- Top of the stack");}
       temp = temp->next;
       printf("\n");
+      i++;
     }
   }
   void pushStack(Stack *stack) {
     if (stack->stackSize == MAX_LENGTH_SIZE) {
-      printf("Stack overflow\n");
+      printf("Stack overflow! Pop some elements.\n");
       return;
     }
 
@@ -2083,7 +2086,7 @@ void stacks () {
   }
   void popStack(Stack *stack) {
     if (stack->top == NULL) {
-      printf("Stack underflow\n");
+      printf("Stack underflow! Push more elements.\n");
       return;
     }
 
@@ -2099,7 +2102,7 @@ void stacks () {
   }
   void peekStack(Stack *stack) {
     if (stack->top == NULL) {
-      printf("Stack is empty\n");
+      printf("Stack is empty! Add more elements.\n");
       return;
     }
 
@@ -2110,7 +2113,7 @@ void stacks () {
   void isFullStack(Stack *stack) {
     char *message[] = {
       "\nNote:", "This program implements a stack data structure using linked lists. As a result, the stack will only be full when the system runs out of memory.",
-      "However, for practical purposes, the stack is considered full when it reaches a predefined maximum size. In this implementation, the maximum stack size is set to 50."};
+      "However, for practical purposes, the stack is considered full when it reaches a predefined maximum size. In this implementation, the maximum stack size is set to 10."};
     if (stack->stackSize == MAX_LENGTH_SIZE) {
       printf("Stack is full\n");
     } else {
