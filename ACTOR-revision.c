@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <windows.h>
 #include <conio.h> // for _getch()
-#include "utility.h"
 
 #define MAX_LENGTH_SIZE 10
 #define SUBSTRINGS_MAX_SUBSTRINGS 100 
@@ -49,239 +48,243 @@ typedef enum {
 
 int cursorXpos, cursorYpos;
 
+// Menu handlers
 void welcomeScreen ();
-void dataStructures ();
-  void linearDS();
-    void arrays();
-      #define INS 3
-      #define DEL 4
-      typedef struct {
-        int dataType;
-        union {
-          int intArray[10];
-          char charArray[10];
-          char *strArray[10];
-        } data;
-        int size;
-      } Array;
-      typedef struct {
-        union {
-          int intKey;
-          char charKey;
-          char strKey[10];
-        } dataKey;
-      } Key;
-      void traverseArray(Array *array);
-      int linearSearchArray(Array array, Key *key);
-      void searchArray(Array *array, Key *key);
-      void insertArray(Array *array, Key *key);
-      void deleteArray(Array *array);
-      void mergeArray(Array *array1);
-      void sortArray(Array *array);
-      void insertArrayKey(Array *array, Key *key, int position);
-      void deleteArrayKey(Array *array, int position);
-      void mergeTwoArrays(Array *array1, Array *array2);
-      void bubbleSortArray(Array *array);
-      int initializeArray(Array *array);
-      void printArrayPositions(Array *array, int operation);
-    void linkedLists();
-      void *data;
-      int *positionPtr;
-      typedef struct ListNode {
-        void *data;
-        struct ListNode *next;
-      } ListNode;
-      typedef struct {
-        ListNode *head;
-        size_t dataSize;
-        void (*printFunc)(void *);
-        int listDataType;
-        int listSize;
-      } List;
-      typedef struct {
-        List list;
-        int chosenDataType;
-      } ListResult;
-      void traverseList(List *list);
-      void searchList(List *list);
-        int compareData(void *data1, void *data2, int dataType);
-      void insertList(List *list);
-        void insertAtBeginning(List *list);
-        void insertAtIndex(List *list, int index);
-        void insertAtEnd(List *list);
-      void deleteList(List *list);
-        void deleteFromBeginning(List *list);
-        void deleteFromIndex(List *list, int index);
-        void deleteFromEnd(List *list);
-      void mergeLists(List *list);
-        void mergeTwoLists(List *list1, List *list2);
-      void sortList(List *list);
-      ListResult initializeLists ();
-    void stacks();
-      typedef struct StackNode {
-        void *data;
-        struct StackNode *next;
-      } StackNode;
-      typedef struct {
-        StackNode *top;
-        size_t dataSize;
-        void (*printFunc)(void *);
-        DataType stackDataType;
-        int stackSize;
-      } Stack;
-      typedef struct {
-        Stack stack;
-        int chosenDataType;
-      } StackResult;
-      void printStack(Stack *stack);
-      void pushStack(Stack *stack);
-      void popStack(Stack *stack);
-      void peekStack(Stack *stack);
-      void isFullStack(Stack *stack);
-      void isEmptyStack(Stack *stack);
-      StackResult initializeStacks();
-    void queues();
-      typedef struct QueueNode {
-        void *data;
-        struct QueueNode *next;
-      } QueueNode;
-      typedef struct {
-        QueueNode *front;
-        QueueNode *rear;
-        size_t dataSize;
-        void (*printFunc)(void *);
-        DataType queueDataType;
-        int queueSize;
-      } Queue;
-      typedef struct {
-        Queue queue;
-        int chosenDataType;
-      } QueueResult;
-      QueueResult initializeQueue();
-      void printQueue(Queue *queue);
-      void push(Queue *queue);
-      void pop(Queue *queue);
-      void peek(Queue *queue);
-      void isFull(Queue *queue);
-      void isEmpty(Queue *queue);
-  void nonLinearDS();
-    void trees();
-      typedef struct TreeNode {
-        void *data;
-        struct TreeNode *left;
-        struct TreeNode *right;
-      } TreeNode;
-      typedef struct {
-        TreeNode *root;
-        size_t dataSize;
-        void (*printFunc)(void *);
-        DataType treeDataType;
-        int treeSize;
-      } Tree;
-      typedef struct {
-        Tree tree;
-        int chosenDataType;
-      } TreeResult;
-      TreeResult initializeTree();
-      TreeNode *createTreeNode(size_t dataSize);
-      TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize);
-      TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize);
-      TreeNode *minValueNode(TreeNode *node);
-      void inorderTraversal(TreeNode *root, void (*printFunc)(void *));
-      void preorderTraversal(TreeNode *root, void (*printFunc)(void *));
-      void postorderTraversal(TreeNode *root, void (*printFunc)(void *));
-      void breadthFirstTraversal(TreeNode *root, void (*printFunc)(void *));
-      void traverseTree(TreeNode *root, void (*printFunc)(void *));
-  void strings();
-    int position, length;
-    char string[MAX_LENGTH_SIZE], stringToFind[MAX_LENGTH_SIZE], stringToInsert[MAX_LENGTH_SIZE], string2[MAX_LENGTH_SIZE],charToBeInserted;
-    void findChar ();
-    char *replaceChar ();
-    char *insertChar ();
-    char *deleteChar ();
-    int findStr ();
-    char *insertStr ();
-    void deleteStr ();
-    int strLength ();
-    char *concatenate ();
-    int compareStr ();
-    int scanPosition(char *prompt);
-    char scanChar(char *prompt);
-    char *scanString(char *string);
-    int scanLength(char *prompt);
-    void printString(char string[], char *status);
-void algorithms();
-  void searching();
-  void sorting();
+void linearDS();
+  void arrays();
+  void linkedLists();
+  void stacks();
+  void queues();
+  void trees();
+void nonLinearDS();
+  void trees();
+void strings();
+void searching();
+void sorting();
 void about();
 
-// Arrays Function Declarations
-  void printArray(int array[], int size);
-  void swap(int *a, int *b);
-void bubbleSort(int array[], int size);
-void selectionSort(int array[], int size);
-void insertionSort(int array[], int size);
-  int isArraySorted(int array[], int size);
-  void shuffle(int array[], int size);
-void randomSort(int array[], int size);
-  void merge(int array[], int leftIndex, int mid, int rightIndex);
-void mergeSort(int array[], int leftIndex, int rightIndex);
-  int partitionLomuto(int array[], int first, int last);
-  int partitionHoare(int array[], int first, int last);
-void quickSortLomuto(int array[], int first, int last);
-void quickSortHoare(int array[], int first, int last);
-  void countRadixSort(int array[], int size, int placeValue);
-void radixSort(int array[], int size);
-  void heapify(int array[], int size, int i);
-void heapSort(int array[], int size);
-void sort(int array[], int size, int sortType);
+// Arrays
+  #define INS 3
+  #define DEL 4
+  typedef struct {
+    int dataType;
+    union {
+      int intArray[MAX_LENGTH_SIZE];
+      char charArray[MAX_LENGTH_SIZE];
+      char *strArray[MAX_LENGTH_SIZE];
+    } data;
+    int size;
+  } Array;
+  typedef struct {
+    union {
+      int intKey;
+      char charKey;
+      char strKey[MAX_LENGTH_SIZE];
+    } dataKey;
+  } Key;
+  void traverseArray(Array *array);
+  int linearSearchArray(Array array, Key *key);
+  void searchArray(Array *array, Key *key);
+  void insertArray(Array *array, Key *key);
+  void deleteArray(Array *array);
+  void mergeArray(Array *array1);
+  void sortArray(Array *array);
+  void insertArrayKey(Array *array, Key *key, int position);
+  void deleteArrayKey(Array *array, int position);
+  void mergeTwoArrays(Array *array1, Array *array2);
+  void bubbleSortArray(Array *array);
+  int initializeArray(Array *array);
+  void printArrayPositions(Array *array, int operation);
 
-// Search functions
-int binarySearch(int array[], int key, int low, int high);
-int linearSearch(int array[], int n, int x);
-void search(int array[], int size, int key, int searchType);
+// Linked Lists
+  void *data;
+  int *positionPtr;
+  typedef struct ListNode {
+    void *data;
+    struct ListNode *next;
+  } ListNode;
+  typedef struct {
+    ListNode *head;
+    size_t dataSize;
+    void (*printFunc)(void *);
+    int listDataType;
+    int listSize;
+  } List;
+  typedef struct {
+    List list;
+    int chosenDataType;
+  } ListResult;
+  void traverseList(List *list);
+  void searchList(List *list);
+    int compareData(void *data1, void *data2, int dataType);
+  void insertList(List *list);
+    void insertAtBeginning(List *list);
+    void insertAtIndex(List *list, int index);
+    void insertAtEnd(List *list);
+  void deleteList(List *list);
+    void deleteFromBeginning(List *list);
+    void deleteFromIndex(List *list, int index);
+    void deleteFromEnd(List *list);
+  void mergeLists(List *list);
+    void mergeTwoLists(List *list1, List *list2);
+  void sortList(List *list);
+  ListResult initializeLists ();
+
+// Stacks
+  typedef struct StackNode {
+    void *data;
+    struct StackNode *next;
+  } StackNode;
+  typedef struct {
+    StackNode *top;
+    size_t dataSize;
+    void (*printFunc)(void *);
+    DataType stackDataType;
+    int stackSize;
+  } Stack;
+  typedef struct {
+    Stack stack;
+    int chosenDataType;
+  } StackResult;
+  void printStack(Stack *stack);
+  void pushStack(Stack *stack);
+  void popStack(Stack *stack);
+  void peekStack(Stack *stack);
+  void isFullStack(Stack *stack);
+  void isEmptyStack(Stack *stack);
+  StackResult initializeStacks();
+
+// Queues
+  typedef struct QueueNode {
+    void *data;
+    struct QueueNode *next;
+  } QueueNode;
+  typedef struct {
+    QueueNode *front;
+    QueueNode *rear;
+    size_t dataSize;
+    void (*printFunc)(void *);
+    DataType queueDataType;
+    int queueSize;
+  } Queue;
+  typedef struct {
+    Queue queue;
+    int chosenDataType;
+  } QueueResult;
+  QueueResult initializeQueue();
+  void printQueue(Queue *queue);
+  void push(Queue *queue);
+  void pop(Queue *queue);
+  void peek(Queue *queue);
+  void isFull(Queue *queue);
+  void isEmpty(Queue *queue);
+
+// Trees
+  typedef struct TreeNode {
+    void *data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+  } TreeNode;
+  typedef struct {
+    TreeNode *root;
+    size_t dataSize;
+    void (*printFunc)(void *);
+    DataType treeDataType;
+    int treeSize;
+  } Tree;
+  typedef struct {
+    Tree tree;
+    int chosenDataType;
+  } TreeResult;
+  TreeResult initializeTree();
+  TreeNode *createTreeNode(size_t dataSize);
+  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize);
+  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize);
+  TreeNode *minValueNode(TreeNode *node);
+  void inorderTraversal(TreeNode *root, void (*printFunc)(void *));
+  void preorderTraversal(TreeNode *root, void (*printFunc)(void *));
+  void postorderTraversal(TreeNode *root, void (*printFunc)(void *));
+  void breadthFirstTraversal(TreeNode *root, void (*printFunc)(void *));
+  void traverseTree(TreeNode *root, void (*printFunc)(void *));
+
+// Strings
+  int position;
+  int length;
+  char string[MAX_LENGTH_SIZE];
+  char stringToFind[MAX_LENGTH_SIZE];
+  char stringToInsert[MAX_LENGTH_SIZE];
+  char string2[MAX_LENGTH_SIZE];
+  char charToBeInserted;
+  void findChar ();
+  char *replaceChar ();
+  char *insertChar ();
+  char *deleteChar ();
+  int findStr ();
+  char *insertStr ();
+  void deleteStr ();
+  int strLength ();
+  char *concatenate ();
+  int compareStr ();
+  int scanPosition(char *prompt);
+  char scanChar(char *prompt);
+  char *scanString(char *string);
+  int scanLength(char *prompt);
+  void printString(char string[], char *status);
+
+// Sorting 
+    void printArray(int array[], int size);
+    void swap(int *a, int *b);
+  void sort(int array[], int size, int sortType);
+  void bubbleSort(int array[], int size);
+  void selectionSort(int array[], int size);
+  void insertionSort(int array[], int size);
+  void randomSort(int array[], int size);
+    int isArraySorted(int array[], int size);
+    void shuffle(int array[], int size);
+  void mergeSort(int array[], int leftIndex, int rightIndex);
+    void merge(int array[], int leftIndex, int mid, int rightIndex);
+  void quickSortLomuto(int array[], int first, int last);
+    int partitionLomuto(int array[], int first, int last);
+  void quickSortHoare(int array[], int first, int last);
+    int partitionHoare(int array[], int first, int last);
+  void radixSort(int array[], int size);
+    void countRadixSort(int array[], int size, int placeValue);
+  void heapSort(int array[], int size);
+    void heapify(int array[], int size, int i);
+
+// Searching
+  void search(int array[], int size, int key, int searchType);
+  int binarySearch(int array[], int key, int low, int high);
+  int linearSearch(int array[], int n, int x);
 
 // Utility functions 
-void getTerminalSize();
-void displayCenterText(char *message);
-void hideCursor();
-void showCursor();
-void getCursorPos(int *Xpos, int *Ypos);
-void moveCursor(int Xpos, int Ypos);
-void clearLines(int startLine, int endLine);
-void clearWord(int Ypos, int startX, int endX);
-void clearPrompts(char *header);
-void promptExit();
-void programHeader(char *header);
-void printMenu(char *arrString[], int size);
-void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
-void printWithinWidthCentered(char *message[], int messageSize, char *header);
-void printWithinWidth(char *message[], int messageSize, char *header);
-void functionNotDone(char *header);
+  void hideCursor();
+  void showCursor();
+  void getCursorPos(int *Xpos, int *Ypos);
+  void moveCursor(int Xpos, int Ypos);
+  void clearLines(int startLine, int endLine);
+  void clearWord(int Ypos, int startX, int endX);
+  void clearPrompts(char *header);
+
+  void programHeader(char *header);
+  void promptExit();
+  void displayCenterText(char *message);
+  void displayTopicSummary(Topic topic);
+  void displaySortingTopicSummary(SortTopic sortTopic);
+  void printMenu(char *arrString[], int size);
+  void printInt(void *data);
+  void printChar(void *data);
+  void printStr(void *data);
+  void printDataType(char dataStructure[], DataType dataType);
+  void printWithinWidthCentered(char *message[], int messageSize, char *header);
+  void printWithinWidth(char *message[], int messageSize, char *header);
+    void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
+
 void clearInputBuffer(); 
 int chooseDataType(char dataStructure[]);
 void *scanData(char prompt[], DataType dataType);
-void printInt(void *data);
-void printChar(void *data);
-void printStr(void *data);
-void printDataType(char dataStructure[], DataType dataType);
-void displayTopicSummary(Topic topic);
-void displaySortingTopicSummary(SortTopic sortTopic);
 
 int main () {
-  /*
-    If the terminal screen is not 80 by 24 size, it will recommend to adjust the window size for better experience
-    int terminalWidth = 0;
-    int terminalHeight = 0;
-
-    getTerminalSize();
-
-    if (terminalWidth != SET_WIDTH && terminalHeight != SET_HEIGHT) {
-      print("The terminal size is not suitable for this program. It must be 80 characters  width and 24 lines height. Please resize the program and rerun the program. Thank you!");
-      return 0;
-    }
-  
-  */
   welcomeScreen();
 
   getch(); // Use _getch() to read a single character without echoing
@@ -2628,8 +2631,8 @@ void sorting() {
   char ch;
 
   printf("Initialize your integer array for me to work on.\n\n");
-
-  int arrSize = scanInt("Enter the number of elements in the array: ");
+  int arrSize = MAX_LENGTH_SIZE;
+  // int arrSize = scanInt("Enter the number of elements in the array: ");
 
   printf("Enter elements (space-separated, press Enter to finish):\n");
 
