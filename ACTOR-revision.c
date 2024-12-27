@@ -1170,14 +1170,13 @@ void arrays () {
     }
     if (array2.size == 0) {
       printf("Array is empty. Please enter at least one element.\n");
-      return 0;   
+      return;   
     }
     if (array2.size >= MAX_LENGTH_SIZE) {
       int c;
       if ((c = getchar()) != '\n' && c != EOF) {
       printf("Array Overflow! Array accepts a maximum number of %d elements.\n", MAX_LENGTH_SIZE);
-      promptContinue();
-      return 1;
+      clearInputBuffer();
       }
     }
     mergeTwoArrays(array1, &array2);
