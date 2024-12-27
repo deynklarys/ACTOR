@@ -3843,7 +3843,6 @@ void displayTopicSummary(Topic topic) {
           printf("Invalid topic.\n");
   }
 }
-
 void displaySortingTopicSummary(SortTopic sortTopic) {
   char *selectionSortText[] = {
     "Selection Sort: Imagine picking the smallest candy from a jar and placing it in a line until the jar is empty. That's Selection Sort!\n"
@@ -3929,22 +3928,4 @@ void displaySortingTopicSummary(SortTopic sortTopic) {
     default: 
       printf("Invalid topic.\n");
   }
-}
-
-
-int scanInt(char *prompt) {
-  int scanIntegerPosX, scanIntegerPosY;
-  int integer;
-  printf("%s", prompt);
-  getCursorPos(&scanIntegerPosX, &scanIntegerPosY);
-  if (scanf("%d", &integer) != 1) {
-    clearLines(scanIntegerPosY + 1, scanIntegerPosY + 1);
-    moveCursor(0, scanIntegerPosY + 1);
-    printf("Invalid input. Please enter a number.\n");
-    clearInputBuffer();
-    clearWord(scanIntegerPosY, scanIntegerPosX, SET_WIDTH);
-    moveCursor(0, scanIntegerPosY);
-    return -1;
-  }
-  return integer;
 }
