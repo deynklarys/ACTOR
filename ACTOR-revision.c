@@ -2227,11 +2227,11 @@ void queues () {
     return result;
   }
   void printQueue(Queue *queue) {
-    printf("\nYour queue: \n");
     if (queue->front == NULL) {
       printf("Queue is empty. Push some elements.\n");
       return;
     }
+    printf("\nYour queue: \n");
 
     QueueNode *temp = queue->front;
     printf("Front -> ");
@@ -2436,7 +2436,7 @@ void strings () {
   char *insertChar () {
     while (1) {
       if (strlen(string) > MAX_LENGTH_SIZE) {
-        printf("String overflow.\n");
+        printf("String overflow. Delete some characters.\n");
         break;
       }
       position = scanPosition("to insert");
@@ -2458,7 +2458,7 @@ void strings () {
   char *deleteChar () {
     while (1) {
       if (strlen(string) == 0) {
-        printf("String is empty\n");
+        printf("String is empty. Insert some characters.\n");
         break;
       }
       position = scanPosition("to delete");
@@ -2482,7 +2482,7 @@ void strings () {
   int findStr () {
     while (1) {
       if (strlen(string) == 0) {
-        printf("String is empty\n");
+        printf("String is empty. Insert some characters.\n");
         break;
       }
       strcpy(stringToFind, scanString(stringToFind));
@@ -2510,14 +2510,17 @@ void strings () {
   }
   char *insertStr () {
     while (1) {
-
+      if (strlen(string) > MAX_LENGTH_SIZE) {
+        printf("String overflow. Delete some characters.\n");
+        break;
+      }
       int position = scanPosition("to insert");
       if (position == -1) {
         continue;
       }
       strcpy(stringToInsert, scanString(stringToInsert));
       if (strlen(string) + strlen(stringToInsert) > MAX_LENGTH_SIZE) {
-        printf("String overflow.\n");
+        printf("String overflow. Delete some characters.\n");
         break;
       }
       for (int i = strlen(string); i >= position - 1; i--) {
@@ -2535,7 +2538,7 @@ void strings () {
   void deleteStr () {
     while (1) {
       if (strlen(string) == 0) {
-        printf("String is empty\n");
+        printf("String is empty. Add some charecters.\n");
         break;
       }
       int position = scanPosition("to delete");
@@ -2579,6 +2582,10 @@ void strings () {
         continue;
       }
       int totalLength = strlen(string) + strlen(string2);
+      if (totalLength > MAX_LENGTH_SIZE) {
+        printf("String overflow. Delete some characters.\n");
+        break;
+      }
       char *concatenatedString = (char *)malloc(totalLength + 1);
       if (concatenatedString == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
@@ -2597,6 +2604,7 @@ void strings () {
     }
   }
   int compareStr () {
+    printf("  Note: Comparing two strings is done by comparing the ASCII values of the characters\n  and the length of each string.\n");
     while (1) {
       strcpy(string,scanString(string));  
       strcpy(string2,scanString(string2));
