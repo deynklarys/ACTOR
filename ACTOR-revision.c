@@ -1522,7 +1522,7 @@ void linkedLists () {
   }
   void searchList(List *list) {
     if (list->head == NULL) {
-      printf("List is empty.\n");
+      printf("List is empty. Add more elements.\n");
       return;
     }
 
@@ -1555,6 +1555,11 @@ void linkedLists () {
       "Exit"};
     int insertMenuSize = sizeof(insertMenu) / sizeof(insertMenu[0]);
     int insertOption;
+
+    if (list->listSize >= MAX_LENGTH_SIZE) {
+      printf("List is full. Insert more elements by deleting other elements.\n");
+      return;
+    }
 
     do {
       programHeader("Insert in a Linked List");
@@ -1691,6 +1696,10 @@ void linkedLists () {
     int deleteMenuSize = sizeof(deleteMenu) / sizeof(deleteMenu[0]);
     int deleteOption;
 
+    if (list->head == NULL) {
+      printf("List is empty. Add more elements.\n");
+      return;
+    }
 
     do {
       programHeader("Delete From a Linked List");
@@ -1835,7 +1844,22 @@ void linkedLists () {
     int nodes;
     clearInputBuffer();
     printf("Enter the number of nodes in the second list: ");
-    scanf("%d", &nodes);
+    do {
+      getCursorPos(&cursorXpos, &cursorYpos);
+      if (scanf("%d", &nodes) != 1) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        continue;
+        if (list1->listSize + nodes >= MAX_LENGTH_SIZE) {
+          printf("List Overflow! List accepts a maximum number of %d elements.\n", MAX_LENGTH_SIZE);
+          return;
+        }
+      }
+    } while (nodes < 0 || nodes > MAX_LENGTH_SIZE);
+
 
     printf("Enter the second list. Press Enter after every data.\n"); 
     while (nodes--) {
