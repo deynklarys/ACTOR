@@ -13,8 +13,9 @@ binary search fxi radix sort
 
 
 revisions: 
+- removed the separation of the data structure and algorithm
 - fix error handling
 - modified input handling in searching and sorting
 - copy the array and sort it
-- removed the separation of the data structure and algorithm
+- improved the error handling in arrays
 
