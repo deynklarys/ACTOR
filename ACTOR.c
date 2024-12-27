@@ -258,7 +258,6 @@ void printMenu(char *arrString[], int size);
 void splitStrings (char *inputStr, char paragraphSubstrings[][SUBSTRINGS_MAX_LENGTH], int *paragraphSubstringsCount, int minCharWidth);
 void printWithinWidthCentered(char *message[], int messageSize, char *header);
 void printWithinWidth(char *message[], int messageSize, char *header);
-void functionNotDone(char *header);
 void clearInputBuffer(); 
 int chooseDataType(char dataStructure[]);
 void *scanData(char prompt[], DataType dataType);
@@ -3375,13 +3374,6 @@ void printWithinWidth(char *message[], int messageSize, char *header) {
   for (int i = 0; i < paragraphSubstringsCount; i++) {
     printf("  %s\n", paragraphSubstrings[i]);
   }
-}
-void functionNotDone(char *header) {
-  system("cls");
-  programHeader(header);
-  printf("\n\nFunction is not yet done...");
-  promptExit();
-  system("cls");
 }
 void clearInputBuffer() {
   int c;

@@ -3423,13 +3423,6 @@ void printWithinWidth(char *message[], int messageSize, char *header) {
     printf("  %s\n", paragraphSubstrings[i]);
   }
 }
-void functionNotDone(char *header) {
-  system("cls");
-  programHeader(header);
-  printf("\n\nFunction is not yet done...");
-  promptExit();
-  system("cls");
-}
 void clearInputBuffer() {
   int c;
   while ((c = getchar()) != '\n' && c != EOF);
