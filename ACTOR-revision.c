@@ -839,35 +839,103 @@ void arrays () {
     traverseArray(array);
     printf("\n\n");
 
-    // do while loop to check if the user wants to search another element
+    printf("How would you like to search?\n");
+    char *searchMenu[] = {"By the element", "By the position"};
+    int searchMenuSize = sizeof(searchMenu) / sizeof(searchMenu[0]);
+    int searchOption;
+
+    printMenu(searchMenu, searchMenuSize);
+    do {
+      getCursorPos(&cursorXpos, &cursorYpos);
+      if (scanf("%d", &searchOption) != 1) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid input. Please enter a number.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        moveCursor(cursorXpos, cursorYpos);
+        continue;
+      }
+      if (searchOption < 1 || searchOption > searchMenuSize) {
+        clearLines(cursorYpos + 1, cursorYpos + 1);
+        moveCursor(0, cursorYpos + 1);
+        clearInputBuffer();
+        printf("Invalid choice. Please choose a valid option.\n");
+        clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+        moveCursor(cursorXpos, cursorYpos);
+        continue;
+      }
+    } while (searchOption < 1 || searchOption > searchMenuSize);
+
+    clearLines(cursorYpos + 1, cursorYpos + 1);
+    moveCursor(0, cursorYpos + 2);
 
     int result;
     clearInputBuffer();
-    switch (array->dataType) {
-      case INTEGER:
-        printf("Enter the number to search: ");
-        scanf("%d", &key->dataKey.intKey);
-        result = linearSearchArray(*array, key);
-        break;
-      case CHARACTER:
-        printf("Enter the character to search: ");
-        scanf(" %c", &key->dataKey.charKey);
-        result = linearSearchArray(*array, key);
-        break;
-      case STRING:
-        printf("Enter the string to search: ");
-        scanf("%s", key->dataKey.strKey);
-        result = linearSearchArray(*array, key);
-        break;
-      default:
-        printf("Unknown data type.\n");
-        return;
-    }
-
-    if (result == -1) {
-      printf("Element not found.\n");
-    } else {
-      printf("Element found at position %d.\n", result + 1);
+    if (searchOption == 1) {
+      switch (array->dataType) {
+        case INTEGER:
+          printf("Enter the number to search: ");
+          scanf("%d", &key->dataKey.intKey);
+          result = linearSearchArray(*array, key);
+          break;
+        case CHARACTER:
+          printf("Enter the character to search: ");
+          scanf(" %c", &key->dataKey.charKey);
+          result = linearSearchArray(*array, key);
+          break;
+        case STRING:
+          printf("Enter the string to search: ");
+          scanf("%s", key->dataKey.strKey);
+          result = linearSearchArray(*array, key);
+          break;
+        default:
+          printf("Unknown data type.\n");
+          return;
+      }
+      if (result == -1) {
+        printf("Element not found.\n");
+      } else {
+        printf("Element found at position %d.\n", result + 1);
+      }
+    } else if (searchOption == 2) {
+      do {
+        printf("Enter the position of the element to search from 1 to %d: ", array->size);
+        getCursorPos(&cursorXpos, &cursorYpos);
+        if (scanf("%d", &position) != 1) {
+          clearLines(cursorYpos + 1, cursorYpos + 1);
+          moveCursor(0, cursorYpos + 1);
+          clearInputBuffer();
+          printf("Invalid input. Please enter a number.\n");
+          clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+          moveCursor(0, cursorYpos);
+          continue;
+        }
+        if (position < 1 || position > array->size) {
+          clearLines(cursorYpos + 1, cursorYpos + 1);
+          moveCursor(0, cursorYpos + 1);
+          clearInputBuffer();
+          printf("Invalid position.\n");
+          clearWord(cursorYpos, cursorXpos, SET_WIDTH);
+          moveCursor(0, cursorYpos);
+          continue;
+        }
+      } while (position < 1 || position > array->size);
+      position--;
+      switch (array->dataType) {
+        case INTEGER:
+          printf("Element at position %d is %d.\n", position + 1, array->data.intArray[position]);
+          break;
+        case CHARACTER:
+          printf("Element at position %d is %c.\n", position + 1, array->data.charArray[position]);
+          break;
+        case STRING:
+          printf("Element at position %d is %s.\n", position + 1, array->data.strArray[position]);
+          break;
+        default:
+          printf("Unknown data type.\n");
+          return;
+      }
     }
   }
   void insertArrayKey(Array *array, Key *key, int position) {
