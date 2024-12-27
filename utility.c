@@ -35,7 +35,6 @@ void hideCursor() {
   SetConsoleCursorInfo(consoleHandle, &info);
 }
 void showCursor() {
-  /* Function to show the cursor */
   HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
   CONSOLE_CURSOR_INFO info;
   info.dwSize = 100;
@@ -43,15 +42,12 @@ void showCursor() {
   SetConsoleCursorInfo(consoleHandle, &info);
 }
 void getCursorPos(int *Xpos, int *Ypos) {
-  /* Function to get the current position of the cursor */
   CONSOLE_SCREEN_BUFFER_INFO info;
   GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
   *Xpos = info.dwCursorPosition.X;
   *Ypos = info.dwCursorPosition.Y;
 }
 void moveCursor(int x, int y) {
-  /* Function to move the cursor at a specified coordinate in the terminal */
-  // First three lines are for program header
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD pos = {x, y};
 	SetConsoleCursorPosition(hConsole, pos);
@@ -318,3 +314,23 @@ void printDataType(char dataStructure[], DataType dataType) {
       break;
   }
 }
+
+int scanInt(char *prompt) {
+  int scanIntegerPosX, scanIntegerPosY;
+  int integer;
+  printf("%s", prompt);
+  getCursorPos(&scanIntegerPosX, &scanIntegerPosY);
+  if (scanf("%d", integer) != 1) {
+    clearLines(scanIntegerPosY + 1, scanIntegerPosY + 1);
+    moveCursor(0, scanIntegerPosY + 1);
+    printf("Invalid input. Please enter a number.\n");
+    clearInputBuffer();
+    clearWord(scanIntegerPosY, scanIntegerPosX, SET_WIDTH);
+    moveCursor(0, scanIntegerPosY);
+    return -1;
+  }
+
+  clearLines(scanIntegerPosY + 1, scanIntegerPosY + 1);
+  moveCursor(0, scanIntegerPosY + 1);
+  return integer;
+  }

@@ -41,4 +41,6 @@ void printChar(void *data);
 void printStr(void *data);
 void printDataType(char dataStructure[], DataType dataType);
 
+int scanInt(char *prompt);
+
 #endif // UTILITY_H

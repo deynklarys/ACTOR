@@ -1122,14 +1122,13 @@ void arrays () {
     array2.dataType = array1->dataType;
     array2.size = 0;
 
-    printf("Initialize your second array to work on.\n\n");
+    printf("Initialize your second array to work on with a maximum of %d elements.\n\n", MAX_LENGTH_SIZE);
     printf("Enter elements (space-separated, press Enter to finish):\n");
 
     int num;
     char ch;
     char str[50];
 
-    clearInputBuffer();
     switch (array2.dataType) {
       case INTEGER: 
         do {
@@ -1168,7 +1167,19 @@ void arrays () {
           }
         } while (getchar() != '\n' && array2.size < MAX_LENGTH_SIZE);
         break;
-    }  
+    }
+    if (array2.size == 0) {
+      printf("Array is empty. Please enter at least one element.\n");
+      return 0;   
+    }
+    if (array2.size >= MAX_LENGTH_SIZE) {
+      int c;
+      if ((c = getchar()) != '\n' && c != EOF) {
+      printf("Array Overflow! Array accepts a maximum number of %d elements.\n", MAX_LENGTH_SIZE);
+      promptContinue();
+      return 1;
+      }
+    }
     mergeTwoArrays(array1, &array2);
   }
   void bubbleSortArray (Array *array) {
