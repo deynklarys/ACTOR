@@ -268,6 +268,7 @@ void about();
 
   void programHeader(char *header);
   void promptExit();
+  void promptContinue();
   void displayCenterText(char *message);
   void displayTopicSummary(Topic topic);
   void displaySortingTopicSummary(SortTopic sortTopic);
@@ -3330,7 +3331,7 @@ void promptExit(){
   int exitXpos, exitYpos, anyChar;
     getCursorPos(&exitXpos, &exitYpos);
   do {
-    moveCursor(0, exitYpos + 3);
+    moveCursor(0, exitYpos + 2);
     displayCenterText("Press Enter To Exit");
     hideCursor();
     anyChar = _getch();
@@ -3342,7 +3343,7 @@ void promptContinue(){
   int continueXpos, continueYpos, anyChar;
     getCursorPos(&continueXpos, &continueYpos);
   do {
-    moveCursor(0, continueYpos + 3);
+    moveCursor(0, continueYpos + 2);
     displayCenterText("Press Enter To Continue");
     hideCursor();
     anyChar = _getch();
