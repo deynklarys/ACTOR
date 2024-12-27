@@ -939,8 +939,12 @@ void arrays () {
     }
   }
   void insertArrayKey(Array *array, Key *key, int position) {
-    if (position < 0 || position > array->size || array->size >= MAX_LENGTH_SIZE) {
-      printf("Invalid position or array is full.\n");
+    if (position < 0 || position > array->size) {
+      printf("Invalid position.\n");
+      return;
+    }
+    if (array->size >= MAX_LENGTH_SIZE) {
+      printf("Array is full. Insert more elements by deleting other elements.\n");
       return;
     }
 
@@ -981,7 +985,10 @@ void arrays () {
     traverseArray(array);
     printArrayPositions(array, INS);
 
-    // do while loop to check if the user wants to insert another element
+    if (array->size >= MAX_LENGTH_SIZE) {
+      printf("Array is full. Insert more elements by deleting other elements.\n");
+      return;
+    }
 
     clearInputBuffer();
     switch (array->dataType){
@@ -1275,18 +1282,24 @@ void arrays () {
   }
   void printArrayPositions(Array *array, int operation) {
     printf("Position of elements: ");
+    int lastPosition = array->size + 1;
+    if (array->size == MAX_LENGTH_SIZE) {
+      lastPosition = array->size;
+    }
     switch (operation) {
       case INS:
         switch (array->dataType) {
           case INTEGER:
-            for (int i = 0; i < array->size + 1; i++) {
-              char intStr[10];
+            for (int i = 0; i < lastPosition; i++) {
               int intLength = 0;
-              if (i == array->size) {
+              if (i == array->size && array->size < MAX_LENGTH_SIZE) {
                 intLength = 3;
               } else {
-                sprintf(intStr, "%d", array->data.intArray[i] + 1);
-                intLength = strlen(intStr);
+                int temp = array->data.intArray[i];
+                while (temp != 0) {
+                  temp /= 10;
+                  intLength++;
+                }
               }
               int mid = intLength / 2;
               mid = intLength % 2 == 0 ? mid : mid + 1;
@@ -1297,14 +1310,14 @@ void arrays () {
             }
             break;
           case CHARACTER:
-            for (int i = 0; i < array->size + 1; i++) {
+            for (int i = 0; i < lastPosition; i++) {
               printf("%d ", i + 1);
             }
             break;
           case STRING:
-            for (int i = 0; i < array->size + 1; i++) {
+            for (int i = 0; i < lastPosition; i++) {
               int strLength = strlen(array->data.strArray[i]);
-              if (i == array->size) {
+              if (i == array->size && array->size < MAX_LENGTH_SIZE) {
                 strLength = 5;
               }
               int mid = strLength / 2;
@@ -1323,9 +1336,16 @@ void arrays () {
         switch (array->dataType) {
           case INTEGER:
             for (int i = 0; i < array->size; i++) {
-              char intStr[10];
-              sprintf(intStr, "%d", array->data.intArray[i] + 1);
-              int intLength = strlen(intStr);
+              int intLength = 0;
+              if (i == array->size && array->size < MAX_LENGTH_SIZE) {
+                intLength = 3;
+              } else {
+                int temp = array->data.intArray[i];
+                while (temp != 0) {
+                  temp /= 10;
+                  intLength++;
+                }
+              }
               int mid = intLength / 2;
               mid = intLength % 2 == 0 ? mid : mid + 1;
               for (int j = 1; j <= intLength; j++) {
