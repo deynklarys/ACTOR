@@ -51,6 +51,9 @@ void preorderTraversal(TreeNode *root, void (*printFunc)(void *));
 void postorderTraversal(TreeNode *root, void (*printFunc)(void *));
 void breadthFirstTraversal(TreeNode *root, void (*printFunc)(void *));
 void traverseTree(TreeNode *root, void (*printFunc)(void *));
+void printTree(TreeNode *root, void (*printFunc)(void *));
+void printLevel(TreeNode *root, void (*printFunc)(void *), int level, int indentSpace);
+int treeHeight(TreeNode *root);
 
 int main() {
   programHeader("Trees");
@@ -72,6 +75,8 @@ int main() {
     char *treesMenu[] = {
       "Insert a node",
       "Delete a node",
+      "Search for a node",
+      "Visualize tree",
       "Traverse tree",
       "Exit"
     };
@@ -109,11 +114,29 @@ int main() {
           tree.treeSize--;
           break;
         case 3:
+          data = scanData("Enter data to search: ", tree.treeDataType);
+          TreeNode *foundNode = searchNode(tree.root, data, cmpFunc);
+          if (foundNode != NULL) {
+            printf("Node found: ");
+            tree.printFunc(foundNode->data);
+            printf("\n");
+          } else {
+            printf("Node not found.\n");
+          }
+          break;
+        case 4:
+          system("cls");
+          programHeader("Tree Visualization");
+          printTree(tree.root, tree.printFunc);
+          promptExit();
+          system("cls");
+          break;
+        case 5:
           system("cls");
           traverseTree(tree.root, tree.printFunc);
           system("cls");
           break;
-        case 4:
+        case 6:
           promptExit();
           break;
         default:
@@ -228,6 +251,16 @@ TreeNode *minValueNode(TreeNode *node) {
   }
   return current;
 }
+TreeNode *searchNode(TreeNode *root, void *data, int (*cmp)(const void *, const void *)) {
+    if (root == NULL || cmp(data, root->data) == 0) {
+      return root;
+    }
+    if (cmp(data, root->data) < 0) {
+      return searchNode(root->left, data, cmp);
+    } else {
+      return searchNode(root->right, data, cmp);
+    }
+}
 void inorderTraversal(TreeNode *root, void (*printFunc)(void *)) {
   if (root != NULL) {
     inorderTraversal(root->left, printFunc);
@@ -328,3 +361,46 @@ void traverseTree(TreeNode *root, void (*printFunc)(void *)) {
   } while (traverseMenuOption != traverseMenuSize);
 }
 
+void printTree(TreeNode *root, void (*printFunc)(void *)) {
+  int h = treeHeight(root);
+  int indentSpace = 4; // Adjust this value for more or less indentation
+  for (int i = 1; i <= h; i++) {
+    printLevel(root, printFunc, i, indentSpace * (h - i));
+    printf("\n");
+  }
+}
+
+void printLevel(TreeNode *root, void (*printFunc)(void *), int level, int indentSpace) {
+  if (root == NULL) {
+    for (int i = 0; i < indentSpace; i++) {
+      printf(" ");
+    }
+    return;
+  }
+  if (level == 1) {
+    for (int i = 0; i < indentSpace; i++) {
+      printf(" ");
+    }
+    printFunc(root->data);
+    for (int i = 0; i < indentSpace; i++) {
+      printf(" ");
+    }
+  } else if (level > 1) {
+    printLevel(root->left, printFunc, level - 1, indentSpace / 2);
+    printLevel(root->right, printFunc, level - 1, indentSpace / 2);
+  }
+}
+
+int treeHeight(TreeNode *root) {
+  if (root == NULL) {
+      return 0;
+  } else {
+    int leftHeight = treeHeight(root->left);
+    int rightHeight = treeHeight(root->right);
+    if (leftHeight > rightHeight) {
+      return (leftHeight + 1);
+    } else {
+      return (rightHeight + 1);
+    }
+  }
+}
