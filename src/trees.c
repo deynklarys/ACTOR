@@ -18,6 +18,7 @@ typedef struct {
   TreeNode *root;
   size_t dataSize;
   void (*printFunc)(void *);
+  int (*compareFunc)(const void *, const void *);
   DataType treeDataType;
   int treeSize;
 } Tree;
@@ -27,10 +28,23 @@ typedef struct {
   int chosenDataType;
 } TreeResult;
 
+int compareInt(const void *a, const void *b) {
+  return (*(int *)a - *(int *)b);
+}
+
+int compareChar(const void *a, const void *b) {
+  return (*(char *)a - *(char *)b);
+}
+
+int compareStr(const void *a, const void *b) {
+  return strcmp(*(char **)a, *(char **)b);
+}
+
 TreeResult initializeTree();
 TreeNode *createNode(size_t dataSize);
-TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize);
-TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize);
+TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *));
+TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *));
+TreeNode *searchNode(TreeNode *root, void *data, int (*cmp)(const void *, const void *));
 TreeNode *minValueNode(TreeNode *node);
 void inorderTraversal(TreeNode *root, void (*printFunc)(void *));
 void preorderTraversal(TreeNode *root, void (*printFunc)(void *));
@@ -42,11 +56,13 @@ int main() {
   programHeader("Trees");
 
   Tree tree;
+  int (*cmpFunc)(const void *, const void *);
 
   while (1) {
     system("cls");
     TreeResult treeResult = initializeTree();
     tree = treeResult.tree;
+    cmpFunc = treeResult.tree.compareFunc;
     tree.treeDataType = treeResult.chosenDataType;
     if (treeResult.chosenDataType == -1) {
       system("cls");
@@ -84,12 +100,12 @@ int main() {
       switch (treeMenuOption) {
         case 1:
           data = scanData("Enter data to insert: ", tree.treeDataType);
-          tree.root = insertNode(tree.root, data, tree.dataSize);
+          tree.root = insertNode(tree.root, data, tree.dataSize, cmpFunc);
           tree.treeSize++;
           break;
         case 2:
           data = scanData("Enter data to delete: ", tree.treeDataType);
-          tree.root = deleteNode(tree.root, data, tree.dataSize);
+          tree.root = deleteNode(tree.root, data, tree.dataSize, cmpFunc);
           tree.treeSize--;
           break;
         case 3:
@@ -130,20 +146,21 @@ TreeResult initializeTree() {
 
   switch (result.chosenDataType) {
     case INTEGER:
-      result.tree = (Tree){NULL, sizeof(int), printInt, INTEGER, 0};
+      result.tree = (Tree){NULL, sizeof(int), printInt, compareInt, INTEGER, 0};
       break;
     case CHARACTER:
-      result.tree = (Tree){NULL, sizeof(char), printChar, CHARACTER, 0};
+      result.tree = (Tree){NULL, sizeof(char), printChar, compareChar, CHARACTER, 0};
       break;
     case STRING:
-      result.tree = (Tree){NULL, sizeof(char *), printStr, STRING, 0};
+      result.tree = (Tree){NULL, sizeof(char *), printStr, compareStr, STRING, 0};
       break;
     default:
-      result.tree = (Tree){NULL, 0, NULL, -1, 0};
+      result.tree = (Tree){NULL, 0, NULL, NULL, -1, 0};
       break;
   }
   return result;
 }
+
 TreeNode *createNode(size_t dataSize) {
   TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
   if (newNode == NULL) {
@@ -165,27 +182,27 @@ TreeNode *createNode(size_t dataSize) {
   newNode->right = NULL;
   return newNode;
 }
-TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize) {
+TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *)) {
   if (root == NULL) {
     TreeNode *newNode = createNode(dataSize);
     memcpy(newNode->data, data, dataSize);
     return newNode;
   }
-  if (data < root->data) {
-    root->left = insertNode(root->left, data, dataSize);
-  } else if (data > root->data) {
-    root->right = insertNode(root->right, data, dataSize);
+  if (cmp(data, root->data) < 0) {
+    root->left = insertNode(root->left, data, dataSize, cmp);
+  } else if (cmp(data, root->data) > 0) {
+    root->right = insertNode(root->right, data, dataSize, cmp);
   }
   return root;
 }
-TreeNode *deleteNode (TreeNode *root, void *data, size_t dataSize) {
+TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *)) {
   if (root == NULL) {
     return root;
   }
-  if (data < root->data) {
-    root->left = deleteNode(root->left, data, dataSize);
-  } else if (data > root->data) {
-    root->right = deleteNode(root->right, data, dataSize);
+  if (cmp(data, root->data) < 0) {
+    root->left = deleteNode(root->left, data, dataSize, cmp);
+  } else if (cmp(data, root->data) > 0) {
+    root->right = deleteNode(root->right, data, dataSize, cmp);
   } else {
     if (root->left == NULL) {
       TreeNode *temp = root->right;
@@ -200,7 +217,7 @@ TreeNode *deleteNode (TreeNode *root, void *data, size_t dataSize) {
     }
     TreeNode *temp = minValueNode(root->right);
     memcpy(root->data, temp->data, dataSize);
-    root->right = deleteNode(root->right, temp->data, dataSize);
+    root->right = deleteNode(root->right, temp->data, dataSize, cmp);
   }
   return root;
 }
