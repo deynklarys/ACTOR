@@ -557,11 +557,12 @@ void trees () {
     return root;
   }
   TreeNode *minValueNode(TreeNode *node) {
-    TreeNode *current = node;
-    while (current && current->left != NULL) {
-      current = current->left;
+    if (node == NULL) {
+      return NULL;
+    } else if (node->left != NULL) {
+      return minValueNode(node->left);
     }
-    return current;
+    return node;
   }
   void inorderTraversal(TreeNode *root, void (*printFunc)(void *)) {
     if (root != NULL) {
