@@ -189,6 +189,7 @@ void about();
     TreeNode *root;
     size_t dataSize;
     void (*printFunc)(void *);
+    int (*compareFunc)(const void *, const void *);
     DataType treeDataType;
     int treeSize;
   } Tree;
@@ -197,6 +198,9 @@ void about();
     int chosenDataType;
   } TreeResult;
   TreeResult initializeTree();
+  int compareInt(const void *a, const void *b);
+  int compareChar(const void *a, const void *b);
+  int compareStr(const void *a, const void *b);
   TreeNode *createTreeNode(size_t dataSize);
   TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize);
   TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize);
@@ -206,6 +210,9 @@ void about();
   void postorderTraversal(TreeNode *root, void (*printFunc)(void *));
   void breadthFirstTraversal(TreeNode *root, void (*printFunc)(void *));
   void traverseTree(TreeNode *root, void (*printFunc)(void *));
+  void printTree(TreeNode *root, void (*printFunc)(void *));
+  void printLevel(TreeNode *root, void (*printFunc)(void *), int level, int indentSpace);
+  int treeHeight(TreeNode *root);
 
 // Strings
   int position;
@@ -403,21 +410,24 @@ void trees () {
   programHeader("Trees");
 
   Tree tree;
+  int (*cmpFunc)(const void *, const void *);
 
   while (1) {
     system("cls");
     TreeResult treeResult = initializeTree();
     tree = treeResult.tree;
+    cmpFunc = treeResult.tree.compareFunc;
     tree.treeDataType = treeResult.chosenDataType;
     if (treeResult.chosenDataType == -1) {
-      promptExit();
       system("cls");
-      return;
+      return 0;
     }
 
     char *treesMenu[] = {
       "Insert a node",
       "Delete a node",
+      "Search for a node",
+      "Visualize tree",
       "Traverse tree",
       "Exit"
     };
@@ -446,20 +456,38 @@ void trees () {
       switch (treeMenuOption) {
         case 1:
           data = scanData("Enter data to insert: ", tree.treeDataType);
-          tree.root = insertNode(tree.root, data, tree.dataSize);
+          tree.root = insertNode(tree.root, data, tree.dataSize, cmpFunc);
           tree.treeSize++;
           break;
         case 2:
           data = scanData("Enter data to delete: ", tree.treeDataType);
-          tree.root = deleteNode(tree.root, data, tree.dataSize);
+          tree.root = deleteNode(tree.root, data, tree.dataSize, cmpFunc);
           tree.treeSize--;
           break;
         case 3:
+          data = scanData("Enter data to search: ", tree.treeDataType);
+          TreeNode *foundNode = searchNode(tree.root, data, cmpFunc);
+          if (foundNode != NULL) {
+            printf("Node found: ");
+            tree.printFunc(foundNode->data);
+            printf("\n");
+          } else {
+            printf("Node not found.\n");
+          }
+          break;
+        case 4:
+          system("cls");
+          programHeader("Tree Visualization");
+          printTree(tree.root, tree.printFunc);
+          promptExit();
+          system("cls");
+          break;
+        case 5:
           system("cls");
           traverseTree(tree.root, tree.printFunc);
           system("cls");
           break;
-        case 4:
+        case 6:
           promptExit();
           break;
         default:
@@ -480,21 +508,21 @@ void trees () {
       return result;
     }
 
-    switch (result.chosenDataType) {
-      case INTEGER:
-        result.tree = (Tree){NULL, sizeof(int), printInt, INTEGER, 0};
-        break;
-      case CHARACTER:
-        result.tree = (Tree){NULL, sizeof(char), printChar, CHARACTER, 0};
-        break;
-      case STRING:
-        result.tree = (Tree){NULL, sizeof(char *), printStr, STRING, 0};
-        break;
-      default:
-        result.tree = (Tree){NULL, 0, NULL, -1, 0};
-        break;
-    }
-    return result;
+  switch (result.chosenDataType) {
+    case INTEGER:
+      result.tree = (Tree){NULL, sizeof(int), printInt, compareInt, INTEGER, 0};
+      break;
+    case CHARACTER:
+      result.tree = (Tree){NULL, sizeof(char), printChar, compareChar, CHARACTER, 0};
+      break;
+    case STRING:
+      result.tree = (Tree){NULL, sizeof(char *), printStr, compareStr, STRING, 0};
+      break;
+    default:
+      result.tree = (Tree){NULL, 0, NULL, NULL, -1, 0};
+      break;
+  }
+  return result;
   }
   TreeNode *createTreeNode(size_t dataSize) {
     TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
@@ -519,14 +547,14 @@ void trees () {
   }
   TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize) {
     if (root == NULL) {
-      TreeNode *newNode = createTreeNode(dataSize);
+      TreeNode *newNode = createNode(dataSize);
       memcpy(newNode->data, data, dataSize);
       return newNode;
     }
-    if (data < root->data) {
-      root->left = insertNode(root->left, data, dataSize);
-    } else if (data > root->data) {
-      root->right = insertNode(root->right, data, dataSize);
+    if (cmp(data, root->data) < 0) {
+      root->left = insertNode(root->left, data, dataSize, cmp);
+    } else if (cmp(data, root->data) > 0) {
+      root->right = insertNode(root->right, data, dataSize, cmp);
     }
     return root;
   }
@@ -534,10 +562,10 @@ void trees () {
     if (root == NULL) {
       return root;
     }
-    if (data < root->data) {
-      root->left = deleteNode(root->left, data, dataSize);
-    } else if (data > root->data) {
-      root->right = deleteNode(root->right, data, dataSize);
+    if (cmp(data, root->data) < 0) {
+      root->left = deleteNode(root->left, data, dataSize, cmp);
+    } else if (cmp(data, root->data) > 0) {
+      root->right = deleteNode(root->right, data, dataSize, cmp);
     } else {
       if (root->left == NULL) {
         TreeNode *temp = root->right;
@@ -552,7 +580,7 @@ void trees () {
       }
       TreeNode *temp = minValueNode(root->right);
       memcpy(root->data, temp->data, dataSize);
-      root->right = deleteNode(root->right, temp->data, dataSize);
+      root->right = deleteNode(root->right, temp->data, dataSize, cmp);
     }
     return root;
   }
@@ -662,6 +690,49 @@ void trees () {
       }
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
     } while (traverseMenuOption != traverseMenuSize);
+  }
+  void printTree(TreeNode *root, void (*printFunc)(void *)) {
+    int h = treeHeight(root);
+    int indentSpace = 4; // Adjust this value for more or less indentation
+    for (int i = 1; i <= h; i++) {
+      printLevel(root, printFunc, i, indentSpace * (h - i));
+      printf("\n");
+    }
+  }
+
+  void printLevel(TreeNode *root, void (*printFunc)(void *), int level, int indentSpace) {
+    if (root == NULL) {
+      for (int i = 0; i < indentSpace; i++) {
+        printf(" ");
+      }
+      return;
+    }
+    if (level == 1) {
+      for (int i = 0; i < indentSpace; i++) {
+        printf(" ");
+      }
+      printFunc(root->data);
+      for (int i = 0; i < indentSpace; i++) {
+        printf(" ");
+      }
+    } else if (level > 1) {
+      printLevel(root->left, printFunc, level - 1, indentSpace / 2);
+      printLevel(root->right, printFunc, level - 1, indentSpace / 2);
+    }
+  }
+
+  int treeHeight(TreeNode *root) {
+    if (root == NULL) {
+        return 0;
+    } else {
+      int leftHeight = treeHeight(root->left);
+      int rightHeight = treeHeight(root->right);
+      if (leftHeight > rightHeight) {
+        return (leftHeight + 1);
+      } else {
+        return (rightHeight + 1);
+      }
+    }
   }
 void nonLinearDS () {
   char *linearDS_Menu[] = {"Trees", "Exit"};
@@ -3703,6 +3774,15 @@ void printChar(void *data) {
 }
 void printStr(void *data) {
   printf(" %s ", (char *)data);
+}
+int compareInt(const void *a, const void *b) {
+  return (*(int *)a - *(int *)b);
+}
+int compareChar(const void *a, const void *b) {
+  return (*(char *)a - *(char *)b);
+}
+int compareStr(const void *a, const void *b) {
+  return strcmp(*(char **)a, *(char **)b);
 }
 void printDataType(char dataStructure[], DataType dataType) {
   printf("Your %s data type: ", dataStructure);
