@@ -46,6 +46,12 @@ typedef enum {
   STRING = 3
 } DataType;
 
+typedef enum {
+  INSERTION,
+  DELETION,
+  NO_CHANGE
+} Operation;
+
 int cursorXpos, cursorYpos;
 
 // Menu handlers
@@ -64,8 +70,6 @@ void sorting();
 void about();
 
 // Arrays
-  #define INS 3
-  #define DEL 4
   typedef struct {
     int dataType;
     union {
@@ -233,9 +237,9 @@ void about();
   int strLength ();
   char *concatenate ();
   int comparingTwoStr ();
-  int scanPosition(char *prompt);
+  int scanPosition(char *prompt, int operation);
   char scanChar(char *prompt);
-  char *scanString(char *string);
+  char *scanString(char *string, char *prompt);
   int scanLength(char *prompt);
   void printString(char string[], char *status);
 
@@ -1081,7 +1085,7 @@ void arrays () {
   void insertArray(Array *array, Key *key) {
     programHeader("Insert in an Array");
     traverseArray(array);
-    printArrayPositions(array, INS);
+    printArrayPositions(array, INSERTION);
 
     if (array->size >= MAX_LENGTH_SIZE) {
       printf("Array is full. Insert more elements by deleting other elements.\n");
@@ -1158,7 +1162,7 @@ void arrays () {
       return;
     }
     traverseArray(array);
-    printArrayPositions(array, DEL);
+    printArrayPositions(array, DELETION);
 
     int position;
     clearInputBuffer();
@@ -1270,7 +1274,7 @@ void arrays () {
     if (array2.size >= MAX_LENGTH_SIZE) {
       int c;
       if ((c = getchar()) != '\n' && c != EOF) {
-      printf("Array Overflow! Array accepts a maximum number of %d elements.\n", MAX_LENGTH_SIZE);
+      printf("Array Overflow! Array exceeds maximum number of %d elements. Truncating input.\n", MAX_LENGTH_SIZE);
       clearInputBuffer();
       }
     }
@@ -1405,7 +1409,7 @@ void arrays () {
       lastPosition = array->size;
     }
     switch (operation) {
-      case INS:
+      case INSERTION:
         switch (array->dataType) {
           case INTEGER:
             for (int i = 0; i < lastPosition; i++) {
@@ -1450,7 +1454,7 @@ void arrays () {
             printf("Unknown data type.\n");
         }
         break;
-      case DEL:
+      case DELETION:
         switch (array->dataType) {
           case INTEGER:
             for (int i = 0; i < array->size; i++) {
@@ -1540,7 +1544,7 @@ void linkedLists () {
         continue;
       }
 
-      clearLines(cursorYpos + 1, 24);
+      clearLines(cursorYpos + 1, 28);
       moveCursor(0, cursorYpos + 2);
 
       switch (listMenuOption) {
@@ -1673,7 +1677,7 @@ void linkedLists () {
         continue;
       }
 
-      clearLines(cursorYpos + 1, 24);
+      clearLines(cursorYpos + 1, 28);
       moveCursor(0, cursorYpos + 2);
 
       if (insertOption > 0 && insertOption < insertMenuSize) {
@@ -2084,7 +2088,7 @@ void stacks () {
         continue;
       }
       
-      clearLines(cursorYpos + 1, 24);
+      clearLines(cursorYpos + 1, 28);
       moveCursor(0, cursorYpos + 2);
 
       switch (stackOption) {
@@ -2268,7 +2272,7 @@ void queues () {
         continue;
       }
 
-      clearLines(cursorYpos + 1, 24);
+      clearLines(cursorYpos + 1, 28);
       moveCursor(0, cursorYpos + 2);
 
       switch (queuesOption) {
@@ -2437,8 +2441,7 @@ void strings () {
 
   displayTopicSummary(STRINGS);
 
-  strcpy(string, scanString(string));
-  promptExit();
+  strcpy(string, scanString(string, "Enter your string: "));
 
   system("cls");
   do {
@@ -2447,6 +2450,7 @@ void strings () {
     clearLines(cursorYpos, cursorYpos + 1);
     moveCursor(0, cursorYpos);   
     printString(string, "");
+    printf("String length: %d\n", strlen(string));
 
     printf("\nWhat do you want to do?\n");
     printMenu(stringsMenu, stringsMenuSize);
@@ -2461,7 +2465,7 @@ void strings () {
       clearWord(cursorYpos, cursorXpos, SET_WIDTH);
       continue;
     }
-    clearLines(cursorYpos + 1, 24);
+    clearLines(cursorYpos + 1, 28);
     moveCursor(0, cursorYpos + 2);
 
     switch (stringsOption) {
@@ -2513,7 +2517,7 @@ void strings () {
         printf("String is empty\n");
         break;
       }
-      position = scanPosition("to find");
+      position = scanPosition("to find", NO_CHANGE);
       if (position == -1) {
         continue;
       }
@@ -2527,7 +2531,7 @@ void strings () {
         printf("String is empty\n");
         break;
       }
-      position = scanPosition("to replace");
+      position = scanPosition("to replace",NO_CHANGE);
       if (position == -1) {
         continue;
       }
@@ -2540,11 +2544,11 @@ void strings () {
   }
   char *insertChar () {
     while (1) {
-      if (strlen(string) > MAX_LENGTH_SIZE) {
+      if (strlen(string) >= MAX_LENGTH_SIZE) {
         printf("String overflow. Delete some characters.\n");
         break;
       }
-      position = scanPosition("to insert");
+      position = scanPosition("to insert", INSERTION);
       if (position == -1) {
         continue;
       }
@@ -2566,7 +2570,7 @@ void strings () {
         printf("String is empty. Insert some characters.\n");
         break;
       }
-      position = scanPosition("to delete");
+      position = scanPosition("to delete", DELETION);
       if (position == -1) {
         continue;
       }
@@ -2590,7 +2594,7 @@ void strings () {
         printf("String is empty. Insert some characters.\n");
         break;
       }
-      strcpy(stringToFind, scanString(stringToFind));
+      strcpy(stringToFind, scanString(stringToFind, "Enter the substring to find"));
       if (stringToFind == NULL) {
         continue;
       }
@@ -2615,15 +2619,15 @@ void strings () {
   }
   char *insertStr () {
     while (1) {
-      if (strlen(string) > MAX_LENGTH_SIZE) {
+      if (strlen(string) >= MAX_LENGTH_SIZE) {
         printf("String overflow. Delete some characters.\n");
         break;
       }
-      int position = scanPosition("to insert");
+      int position = scanPosition("to insert", INSERTION);
       if (position == -1) {
         continue;
       }
-      strcpy(stringToInsert, scanString(stringToInsert));
+      strcpy(stringToInsert, scanString(stringToInsert, "Enter your string to insert"));
       if (strlen(string) + strlen(stringToInsert) > MAX_LENGTH_SIZE) {
         printf("String overflow. Delete some characters.\n");
         break;
@@ -2641,16 +2645,33 @@ void strings () {
     return string;
   }
   void deleteStr () {
+    int deleteStrXpos, deleteStrYpos;
+    getCursorPos(&deleteStrXpos, &deleteStrYpos);
     while (1) {
+      moveCursor(0, deleteStrYpos);
       if (strlen(string) == 0) {
         printf("String is empty. Add some charecters.\n");
         break;
       }
-      int position = scanPosition("to delete");
+      int position = scanPosition("to delete", DELETION);
       if (position == -1) {
         continue;
       }
-      length = scanLength("to delete");
+      do {
+        clearLines(deleteStrYpos + 1, deleteStrYpos + 1);
+        moveCursor(0, deleteStrYpos + 1);
+        length = scanLength("to delete");
+        if (length == -1) {
+          continue;
+        }
+        if (position + length - 1 > strlen(string)) {
+          printf("Length exceeds the string length. Please enter a valid length.\n");
+          continue;
+        }
+        clearLines(deleteStrYpos + 2, deleteStrYpos + 2);
+        moveCursor(0, deleteStrYpos + 2);
+        break;
+      } while (length == -1 || position + length - 1 > strlen(string));
       for (int i = position - 1; i < strlen(string) - length; i++) {
         string[i] = string[i + length];
       }
@@ -2682,12 +2703,12 @@ void strings () {
   }
   char *concatenate () {
     while (1) {
-      strcpy(string2,scanString(string2));
+      strcpy(string2,scanString(string2, "Enter the second string: "));
       if (string2 == NULL) {
         continue;
       }
       int totalLength = strlen(string) + strlen(string2);
-      if (totalLength > MAX_LENGTH_SIZE) {
+      if (totalLength > MAX_LENGTH_SIZE * 2) {
         printf("String overflow. Delete some characters.\n");
         break;
       }
@@ -2705,14 +2726,18 @@ void strings () {
       }
       concatenatedString[i + j] = '\0';
       printf("Concatenated string: %s\n", concatenatedString);
+
+      char *concatenateMessage[] = {
+        "Note: The concatenated string is stored in a new string with a maximum length of twice the maximum length of the original strings. The original strings remain unchanged."};
+      printWithinWidth(concatenateMessage, 1, NULL);
       return concatenatedString;
     }
   }
   int comparingTwoStr () {
     printf("  Note: Comparing two strings is done by comparing the ASCII values of the characters\n  and the length of each string.\n");
     while (1) {
-      strcpy(string,scanString(string));  
-      strcpy(string2,scanString(string2));
+      strcpy(string,scanString(string, "Enter the first string: "));  
+      strcpy(string2,scanString(string2, "Enter the second string: "));
       if (string2 == NULL) {
         continue;
       }
@@ -2736,7 +2761,7 @@ void strings () {
     }
     return 0;
   }
-  int scanPosition(char *prompt) {
+  int scanPosition(char *prompt, int operation) {
     int scanPositionPosX, scanPositionPosY;
     int position;
     printf("Enter the position %s: ", prompt);
@@ -2750,14 +2775,26 @@ void strings () {
       moveCursor(0, scanPositionPosY);
       return -1;
     }
-    if (position < 1 || position > strlen(string) + 1) {
-      clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
-      moveCursor(0, scanPositionPosY + 1);
-      clearInputBuffer();
-      printf("Invalid position. Please enter a valid position.\n");
-      clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
-      moveCursor(0, scanPositionPosY);
-      return -1;
+    if (operation == INSERTION) {
+      if (position < 1 || position > strlen(string) + 1) {
+        clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+        moveCursor(0, scanPositionPosY + 1);
+        clearInputBuffer();
+        printf("Position exceeds string length. Please enter a valid position.\n");
+        clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
+        moveCursor(0, scanPositionPosY);
+        return -1;
+      }
+    } else {
+      if (position < 1 || position > strlen(string)) {
+        clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
+        moveCursor(0, scanPositionPosY + 1);
+        clearInputBuffer();
+        printf("Position exceeds string length. Please enter a valid position.\n");
+        clearWord(scanPositionPosY, scanPositionPosX, SET_WIDTH);
+        moveCursor(0, scanPositionPosY);
+        return -1;
+      }
     }
     clearLines(scanPositionPosY + 1, scanPositionPosY + 1);
     moveCursor(0, scanPositionPosY + 1);
@@ -2781,19 +2818,30 @@ void strings () {
     moveCursor(0, scanCharPosY + 1);
     return character;
   }
-  char *scanString(char *string) {
-    if (string == NULL) {
+  char *scanString(char *string, char *prompt) {
+    char *stringTemp = (char *)malloc(MAX_LENGTH_SIZE * 3);
+    if (stringTemp == NULL) {
       fprintf(stderr, "Memory allocation failed\n");
       return NULL;
     }
     clearInputBuffer();
-    printf("Enter the string: ");
-    if (fgets(string, MAX_LENGTH_SIZE, stdin) == NULL) {
-      printf("Invalid input. Please enter a string.\n");
+    printf("%s", prompt);
+    scanf("%[^\n]", stringTemp);
+
+    if (strlen(stringTemp) == 0) {
+      printf("String is empty. Please enter a string.\n");
       return NULL;
     }
+    if (strlen(stringTemp) > MAX_LENGTH_SIZE) {
+      printf("String overflow. It exceeds maximum length of %d characters. Truncating input.\n", MAX_LENGTH_SIZE);
+      stringTemp[MAX_LENGTH_SIZE] = '\0';
+      promptContinue();
+      clearInputBuffer();
+    } else {
+      stringTemp[strlen(stringTemp)] = '\0';
+    }
     
-    string[strcspn(string, "\n")] = '\0';
+    strcpy(string, stringTemp);
     return string;
   }
   int scanLength(char *prompt) {
@@ -2813,7 +2861,7 @@ void strings () {
     if (length < 1 || length > strlen(string)) {
       clearLines(scanLengthPosY + 1, scanLengthPosY + 1);
       moveCursor(0, scanLengthPosY + 1);
-      printf("Invalid length. Please enter a valid length.\n");
+      printf("Length exceeds the string length. Please enter a valid length.\n");
       clearWord(scanLengthPosY, scanLengthPosX, SET_WIDTH);
       moveCursor(0, scanLengthPosY);
       return -1;
@@ -2845,7 +2893,7 @@ void linearDS () {
       continue;
     }
 
-    clearLines(cursorYpos + 1, 24);
+    clearLines(cursorYpos + 1, 28);
     moveCursor(0, cursorYpos + 2);
 
     switch (linearDSOption) {
