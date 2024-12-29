@@ -202,8 +202,8 @@ void about();
   int compareChar(const void *a, const void *b);
   int compareStr(const void *a, const void *b);
   TreeNode *createTreeNode(size_t dataSize);
-  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *));
-  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *));
+  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *), int *treeSize);
+  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *), int *treeSize);
   TreeNode *searchNode(TreeNode *root, void *data, int (*cmp)(const void *, const void *));
   TreeNode *minValueNode(TreeNode *node);
   void inorderTraversal(TreeNode *root, void (*printFunc)(void *));
@@ -441,7 +441,7 @@ void trees () {
       programHeader("Trees Operations");
       printDataType("tree", tree.treeDataType);
       printf("Tree size: %d\n", tree.treeSize);
-      
+
       printf("What do you want to do?\n");
       printMenu(treesMenu, treesMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
@@ -460,12 +460,12 @@ void trees () {
       switch (treeMenuOption) {
         case 1:
           data = scanData("Enter data to insert: ", tree.treeDataType);
-          tree.root = insertNode(tree.root, data, tree.dataSize, cmpFunc);
+          tree.root = insertNode(tree.root, data, tree.dataSize, cmpFunc, &tree.treeSize);
           tree.treeSize++;
           break;
         case 2:
           data = scanData("Enter data to delete: ", tree.treeDataType);
-          tree.root = deleteNode(tree.root, data, tree.dataSize, cmpFunc);
+          tree.root = deleteNode(tree.root, data, tree.dataSize, cmpFunc, &tree.treeSize);
           tree.treeSize--;
           break;
         case 3:
@@ -549,27 +549,36 @@ void trees () {
     newNode->right = NULL;
     return newNode;
   }
-  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *)) {
+  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *), int *treeSize) {
+    if (*treeSize >= MAX_LENGTH_SIZE) {
+      printf("Tree is full. Cannot insert more nodes.\n");
+      return root;
+    }
     if (root == NULL) {
       TreeNode *newNode = createTreeNode(dataSize);
       memcpy(newNode->data, data, dataSize);
+      (*treeSize)++;
       return newNode;
     }
     if (cmp(data, root->data) < 0) {
-      root->left = insertNode(root->left, data, dataSize, cmp);
+      root->left = insertNode(root->left, data, dataSize, cmp, treeSize);
     } else if (cmp(data, root->data) > 0) {
-      root->right = insertNode(root->right, data, dataSize, cmp);
+      root->right = insertNode(root->right, data, dataSize, cmp, treeSize);
     }
     return root;
   }
-  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *)) {
+  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *), int *treeSize) {
+    if (*treeSize == 0) {
+      printf("Tree is empty. Add more nodes.\n");
+      return root;
+    }
     if (root == NULL) {
       return root;
     }
     if (cmp(data, root->data) < 0) {
-      root->left = deleteNode(root->left, data, dataSize, cmp);
+      root->left = deleteNode(root->left, data, dataSize, cmp, treeSize);
     } else if (cmp(data, root->data) > 0) {
-      root->right = deleteNode(root->right, data, dataSize, cmp);
+      root->right = deleteNode(root->right, data, dataSize, cmp, treeSize);
     } else {
       if (root->left == NULL) {
         TreeNode *temp = root->right;
@@ -584,7 +593,7 @@ void trees () {
       }
       TreeNode *temp = minValueNode(root->right);
       memcpy(root->data, temp->data, dataSize);
-      root->right = deleteNode(root->right, temp->data, dataSize, cmp);
+      root->right = deleteNode(root->right, temp->data, dataSize, cmp, treeSize);
     }
     return root;
   }
