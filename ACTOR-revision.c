@@ -2866,7 +2866,7 @@ void sorting() {
   int givenArray[MAX_LENGTH_SIZE];
   int num;
 
-  printf("Initialize your integer array for me to work on.\n\n");
+  printf("Initialize your array to work on with a maximum of %d elements.\n\n", MAX_LENGTH_SIZE);
   int arrSize = 0;
   printf("Enter the number of elements in the array: ");
   getCursorPos(&cursorXpos, &cursorYpos);
@@ -2904,6 +2904,10 @@ void sorting() {
     givenArray[i] = num;
   }
 
+  getCursorPos(&cursorXpos, &cursorYpos);
+  clearLines(cursorYpos - arrSize - 2, cursorYpos);
+  moveCursor(0, cursorYpos - arrSize - 2);
+
   printf("\nYour array: ");
   printArray(givenArray, arrSize);
   
@@ -2916,7 +2920,7 @@ void sorting() {
   do {
     getCursorPos(&cursorXpos, &cursorYpos);
     beforeQueryPos = cursorYpos;
-    printf("\nWhat type of sorting algorithm do you want to do?\n");
+    printf("What type of sorting algorithm do you want to do?\n");
     printMenu(sortMenu, sortMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     afterQueryPos = cursorYpos;
@@ -2974,7 +2978,7 @@ void searching() {
   int givenArray[MAX_LENGTH_SIZE];
   int num;
 
-  printf("Initialize your integer array for me to work on.\n\n");
+  printf("Initialize your array to work on with a maximum of %d elements.\n\n", MAX_LENGTH_SIZE);
   int arrSize = 0;
   
   printf("Enter the number of elements in the array: ");
@@ -3014,6 +3018,10 @@ void searching() {
     givenArray[i] = num;
   }
 
+  getCursorPos(&cursorXpos, &cursorYpos);
+  clearLines(cursorYpos - arrSize - 2, cursorYpos);
+  moveCursor(0, cursorYpos - arrSize - 2);
+
   printf("\nYour array: ");
   printArray(givenArray, arrSize);
 
@@ -3022,7 +3030,7 @@ void searching() {
   int searchType;
 
   clearInputBuffer();
-  printf("\nWhat element do you want to find? ");
+  printf("What element do you want to find? ");
   int key;
   scanf("%d", &key);
 
@@ -3037,7 +3045,7 @@ void searching() {
 
     getCursorPos(&cursorXpos, &cursorYpos);
     int notePos = cursorYpos + 2;
-    moveCursor(0, notePos);
+    moveCursor(0, cursorYpos + 2);
     printf("Note: Binary search will sort the array first and will return a\nposition based from the sorted array.");
 
     moveCursor(cursorXpos, cursorYpos);
