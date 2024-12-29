@@ -202,8 +202,9 @@ void about();
   int compareChar(const void *a, const void *b);
   int compareStr(const void *a, const void *b);
   TreeNode *createTreeNode(size_t dataSize);
-  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize);
-  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize);
+  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *));
+  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *));
+  TreeNode *searchNode(TreeNode *root, void *data, int (*cmp)(const void *, const void *));
   TreeNode *minValueNode(TreeNode *node);
   void inorderTraversal(TreeNode *root, void (*printFunc)(void *));
   void preorderTraversal(TreeNode *root, void (*printFunc)(void *));
@@ -231,7 +232,7 @@ void about();
   void deleteStr ();
   int strLength ();
   char *concatenate ();
-  int compareStr ();
+  int comparingTwoStr ();
   int scanPosition(char *prompt);
   char scanChar(char *prompt);
   char *scanString(char *string);
@@ -420,7 +421,7 @@ void trees () {
     tree.treeDataType = treeResult.chosenDataType;
     if (treeResult.chosenDataType == -1) {
       system("cls");
-      return 0;
+      return;
     }
 
     char *treesMenu[] = {
@@ -545,9 +546,9 @@ void trees () {
     newNode->right = NULL;
     return newNode;
   }
-  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize) {
+  TreeNode *insertNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *)) {
     if (root == NULL) {
-      TreeNode *newNode = createNode(dataSize);
+      TreeNode *newNode = createTreeNode(dataSize);
       memcpy(newNode->data, data, dataSize);
       return newNode;
     }
@@ -558,7 +559,7 @@ void trees () {
     }
     return root;
   }
-  TreeNode *deleteNode (TreeNode *root, void *data, size_t dataSize) {
+  TreeNode *deleteNode(TreeNode *root, void *data, size_t dataSize, int (*cmp)(const void *, const void *)) {
     if (root == NULL) {
       return root;
     }
@@ -584,6 +585,16 @@ void trees () {
     }
     return root;
   }
+  TreeNode *searchNode(TreeNode *root, void *data, int (*cmp)(const void *, const void *)) {
+    if (root == NULL || cmp(data, root->data) == 0) {
+      return root;
+    }
+    if (cmp(data, root->data) < 0) {
+      return searchNode(root->left, data, cmp);
+    } else {
+      return searchNode(root->right, data, cmp);
+    }
+}
   TreeNode *minValueNode(TreeNode *node) {
     if (node == NULL) {
       return NULL;
@@ -1369,6 +1380,7 @@ void arrays () {
       int c;
       if ((c = getchar()) != '\n' && c != EOF) {
       printf("Array Overflow! Array accepts a maximum number of %d elements.\n", MAX_LENGTH_SIZE);
+      clearInputBuffer();
       promptContinue();
       return 1;
       }
@@ -2460,7 +2472,7 @@ void strings () {
         concatenate();
         break;
       case 10:
-        compareStr();
+        comparingTwoStr();
         break;
       case 11:
         promptExit();
@@ -2675,7 +2687,7 @@ void strings () {
       return concatenatedString;
     }
   }
-  int compareStr () {
+  int comparingTwoStr () {
     printf("  Note: Comparing two strings is done by comparing the ASCII values of the characters\n  and the length of each string.\n");
     while (1) {
       strcpy(string,scanString(string));  
