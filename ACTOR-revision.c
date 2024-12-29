@@ -440,6 +440,9 @@ void trees () {
     do {
       programHeader("Trees Operations");
       printDataType("tree", tree.treeDataType);
+      printf("Tree size: %d\n", tree.treeSize);
+      
+      printf("What do you want to do?\n");
       printMenu(treesMenu, treesMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &treeMenuOption) != 1) {
@@ -710,7 +713,6 @@ void trees () {
       printf("\n");
     }
   }
-
   void printLevel(TreeNode *root, void (*printFunc)(void *), int level, int indentSpace) {
     if (root == NULL) {
       for (int i = 0; i < indentSpace; i++) {
@@ -731,7 +733,6 @@ void trees () {
       printLevel(root->right, printFunc, level - 1, indentSpace / 2);
     }
   }
-
   int treeHeight(TreeNode *root) {
     if (root == NULL) {
         return 0;
@@ -753,6 +754,7 @@ void nonLinearDS () {
 
   do {
     programHeader("Linear Data Structures");
+    printf("What do you want to learn about?\n");
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &nonLinearDSOption) != 1) {
@@ -807,6 +809,7 @@ void arrays () {
       programHeader("Array Operations");
       printDataType("array", array.dataType);
       traverseArray(&array);
+      printf("\nWhat do you want to do?\n");
       printMenu(arraysMenu, arraysMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &chosenOption) != 1) {
@@ -1514,6 +1517,9 @@ void linkedLists () {
     do {
       programHeader("Linked List Operations");
       printDataType("list", list.listDataType);
+      printf("List size: %d\n", list.listSize);
+      
+      printf("What do you want to do?\n");
       printMenu(listMenu, listMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &listMenuOption) != 1) {
@@ -2055,6 +2061,9 @@ void stacks () {
     do {
       programHeader("Stacks Operations");
       printDataType("stack", stack.stackDataType);
+      printf("Stack size: %d\n", stack.stackSize);
+
+      printf("What do you want to do?\n");
       printMenu(stacksMenu, stacksMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &stackOption) != 1) {
@@ -2236,6 +2245,9 @@ void queues () {
     do {
       programHeader("Queues Operations");
       printDataType("queue", queue.queueDataType);
+      printf("Queue size: %d\n", queue.queueSize);
+
+      printf("What do you want to do?\n");
       printMenu(queuesMenu, queuesMenuSize);
       getCursorPos(&cursorXpos, &cursorYpos);
       if (scanf("%d", &queuesOption) != 1) {
@@ -2426,8 +2438,8 @@ void strings () {
     clearLines(cursorYpos, cursorYpos + 1);
     moveCursor(0, cursorYpos);   
     printString(string, "");
-    printf("\n");
-    
+
+    printf("\nWhat do you want to do?\n");
     printMenu(stringsMenu, stringsMenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     clearWord(cursorYpos, cursorXpos, SET_WIDTH);
@@ -2812,6 +2824,7 @@ void linearDS () {
 
   do {
     programHeader("Linear Data Structures");
+    printf("What do you want to learn about?\n");
     printMenu(linearDS_Menu, linearDS_MenuSize);
     getCursorPos(&cursorXpos, &cursorYpos);
     if (scanf("%d", &linearDSOption) != 1) {
