@@ -225,6 +225,7 @@ void about();
   char string[MAX_LENGTH_SIZE];
   char stringToFind[MAX_LENGTH_SIZE];
   char stringToInsert[MAX_LENGTH_SIZE];
+  char string1[MAX_LENGTH_SIZE];
   char string2[MAX_LENGTH_SIZE];
   char charToBeInserted;
   void findChar ();
@@ -2703,11 +2704,12 @@ void strings () {
   }
   char *concatenate () {
     while (1) {
+      strcpy(string1,scanString(string1, "Enter the first string: "));
       strcpy(string2,scanString(string2, "Enter the second string: "));
       if (string2 == NULL) {
         continue;
       }
-      int totalLength = strlen(string) + strlen(string2);
+      int totalLength = strlen(string1) + strlen(string2);
       if (totalLength > MAX_LENGTH_SIZE * 2) {
         printf("String overflow. Delete some characters.\n");
         break;
@@ -2718,7 +2720,7 @@ void strings () {
         return NULL;
       }
       int i, j;
-      for (i = 0; i < strlen(string); i++) {
+      for (i = 0; i < strlen(string1); i++) {
         concatenatedString[i] = string[i];
       }
       for (j = 0; j < strlen(string2); j++) {
@@ -2734,25 +2736,27 @@ void strings () {
     }
   }
   int comparingTwoStr () {
-    printf("  Note: Comparing two strings is done by comparing the ASCII values of the characters\n  and the length of each string.\n");
+    char *compareMessage[] = {"Note: Comparing two strings is done by comparing the ASCII values of the characters and the length of each string."};
+    printWithinWidth(compareMessage, 1, NULL);
+
     while (1) {
-      strcpy(string,scanString(string, "Enter the first string: "));  
+      strcpy(string1,scanString(string1, "Enter the first string: "));  
       strcpy(string2,scanString(string2, "Enter the second string: "));
-      if (string2 == NULL) {
+      if (string2 == NULL || string1 == NULL) {
         continue;
       }
-      if (strlen(string) < strlen(string2)) {
+      if (strlen(string1) < strlen(string2)) {
         printf("String 1 is less than string 2\n");
         return -1;
-      } else if (strlen(string) > strlen(string2)) {
+      } else if (strlen(string1) > strlen(string2)) {
         printf("String 1 is greater than string 2\n");
         return 1;
-      } else if (strlen(string) == strlen(string2)) {
-        for (int i = 0; i < strlen(string); i++) {
-          if (string[i] < string2[i]) {
+      } else if (strlen(string1) == strlen(string2)) {
+        for (int i = 0; i < strlen(string1); i++) {
+          if (string1[i] < string2[i]) {
             printf("String 1 is less than string 2\n");
             return -1;
-          } else if (string[i] > string2[i]) {
+          } else if (string1[i] > string2[i]) {
             printf("String 1 is greater than string 2\n");
             return 1;
           }
